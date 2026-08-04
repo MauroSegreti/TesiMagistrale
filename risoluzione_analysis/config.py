@@ -16,7 +16,7 @@ PT_BINS = [
 ]
 
 TREE_NAME = "AnalysisTree"
-MAX_EVENTS = 2_000_000
+MAX_EVENTS = -1 # tutti gli eventi (37+milioni)
 
 # truthmuon_IFFType == 4 corrisponde a "PromptMuon" (vedi tabella IFFType
 # condivisa da Luca): i muoni truth "prompt" richiesti come selezione extra.
