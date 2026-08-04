@@ -30,7 +30,7 @@ ETA_BINS = [
 ]
 
 TREE_NAME = "AnalysisTree"
-MAX_EVENTS = -1  # -1 = nessun limite, processa l'intero dataset
+MAX_EVENTS = -1 # -1 = nessun limite, processa l'intero dataset
 
 # Selezione sui soli muoni truth "prompt", come nell'altra analisi
 PROMPT_IFF_TYPE = 4

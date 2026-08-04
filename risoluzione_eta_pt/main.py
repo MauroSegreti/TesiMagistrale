@@ -5,8 +5,8 @@ Entry point: RMS della risoluzione in p_T vs |eta_truth|, per bin di p_T
 Uso: python3 main.py <input_path>
 
 Genera in output:
-- images/plot_RMS_vs_eta.png
-- images/plot_RMS_vs_eta.pdf
+- images/plot_RMS_vs_eta.png / .pdf
+- images/table_RMS_vs_eta.pdf  (stessa tabella stampata a console)
 """
 
 import sys
@@ -16,6 +16,7 @@ from chain_builder import build_chain
 from histograms import build_histogram_grid
 from event_loop import process_events
 from plotting import build_rms_graphs, draw_rms_vs_eta
+from report import build_table_pdf
 import style
 
 style.apply_style()
@@ -31,10 +32,12 @@ def main(input_path):
     print(f"\n[INFO] Muoni prompt processati = {total_prompt}")
     print(f"[INFO] Muoni riempiti negli istogrammi = {filled_muons}")
 
-    graphs = build_rms_graphs(histos)
+    graphs, results = build_rms_graphs(histos)
     draw_rms_vs_eta(graphs)
+    build_table_pdf(results)
 
     print("\n[INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)")
+    print("[INFO] Tabella salvata in images/table_RMS_vs_eta.pdf")
 
 
 if __name__ == "__main__":
