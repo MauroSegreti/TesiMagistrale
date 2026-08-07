@@ -1,194 +1,163 @@
-# Analisi risoluzione in pT dei muoni
+# Risoluzione in $p_T$ dei muoni — Z→μμ
 
-Misura la risoluzione in curvatura dei muoni ricostruiti confrontandoli con i
-corrispondenti muoni truth, inclusivamente e in bin di pT truth.
+Misuro la risoluzione in $p_T$ dei muoni confrontando il $p_T$ ricostruito con
+quello a livello di truth, su un campione MC di Z→μμ (mc23e, PerfectAlignment).
 
-## Come si lancia
+La variabile che studio è la risoluzione in curvatura:
+
+$$\frac{1/p_T^{reco} - 1/p_T^{truth}}{1/p_T^{truth}} = \frac{p_T^{truth}}{p_T^{reco}} - 1$$
+
+La riempio in 7 bin di $p_T^{truth}$ (0-20, 20-30, 30-40, 40-50, 50-80, 80-120,
+120-500 GeV) e prendo l'RMS di ogni distribuzione come stima della risoluzione.
+Tutto viene fatto due volte: una inclusiva e una sui soli muoni **prompt**
+(`truthmuon_IFFType == 4`).
+
+## Il problema: 100M di eventi
+
+Il dataset sono 30 file per un totale di circa 100 milioni di eventi. Girando
+`main.py` in interattivo su lxplus il job crashava: le sessioni interattive
+vengono uccise (limite di tempo, memoria, o connessione che cade). Dopo una
+notte intera ero arrivato a ~50M eventi e poi ho perso tutto.
+
+## La soluzione: HTCondor
+
+Su consiglio di Luca sono passato alle code batch di HTCondor. Invece di un
+processo unico che macina 100M eventi in serie, lancio **30 job in parallelo**,
+uno per file di input, che girano su macchine diverse e sono completamente
+staccati dalla mia sessione — posso chiudere il terminale e tornare il giorno
+dopo.
+
+Il guadagno è sostanziale: da una notte intera (senza nemmeno arrivare in fondo)
+a circa **mezz'ora**, perché ogni job vede solo ~3.3M eventi invece di 100M.
+Alla fine unisco gli output con `hadd`.
+
+## Comandi principali
+
+Setup dell'ambiente, per accedere ai dataset con rucio:
 
 ```bash
-python3 main.py /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root
+setupATLAS
+voms-proxy-init -voms atlas
+lsetup rucio
 ```
 
+Il setup di ROOT non lo faccio a mano: sta dentro gli script generati da
+`gen_jobs.sh`, così ogni job di condor se lo fa da solo sulla macchina su cui
+gira (`lsetup "root 6.40.02-x86_64-el9-gcc15-opt"`, la stessa versione che uso
+in interattivo).
 
-## Cosa produce
+Generazione degli script di job e submit:
 
-- `output_risoluzione.root` — tutti gli istogrammi e i due `TGraphErrors`
-- `images/h_res_all.png|.pdf` — istogramma inclusivo
-- `images/plot_range_<bin>.png|.pdf` — un plot per ciascun bin di pT
-- `images/plot_bins_overlay.png|.pdf` — tutti i bin sovrapposti, normalizzati ad
-  area unitaria (confronta le *forme*, non i conteggi)
-- `images/rms_vs_pt.png|.pdf` — RMS vs pT truth
+```bash
+cd ~/TesiMagistrale/risoluzione_analysis
 
-Ognuno di questi esiste anche in versione `_prompt`, ottenuta selezionando solo
-i muoni truth con `truthmuon_IFFType == 4`.
-
-## La grandezza misurata
-
-Per ogni muone reco con un match truth valido:
-
-```
-res = (1/pT_reco - 1/pT_truth) / (1/pT_truth) = pT_truth/pT_reco - 1
+grep MAX_EVENTS config.py        # deve essere -1 per girare su tutto
+./gen_jobs.sh                    # crea jobs/do_0.sh ... do_29.sh + files.txt
+condor_submit condorSub.sub      # 30 job
 ```
 
-È la risoluzione in **curvatura** (1/pT), la variabile naturale per lo studio
-dell'allineamento: gli effetti di misalignment sono uno shift additivo in 1/pT.
-I pT nella ntupla sono in MeV, il codice divide per 1000 e lavora in GeV.
+Monitoraggio:
 
----
+```bash
+condor_q                         # IDLE = in coda, RUN = in esecuzione
+watch -n 30 condor_q             # aggiorna da solo
+tail -f logs/do_0.sh.out         # progresso di un singolo job
+condor_q -hold                   # perché un job è in stato held
+```
 
-## Struttura dei file
+Prima del submit completo conviene provare **un solo job**, molto più rapido da
+debuggare:
 
-### `config.py`
+```bash
+sed 's|jobs/do_\*.sh|jobs/do_0.sh|' condorSub.sub > condorTest.sub
+condor_submit condorTest.sub
+cat logs/do_0.sh.err
+```
 
-Solo costanti — è l'unico file da toccare per cambiare la configurazione.
+Merge e plot finali, quando `condor_q` è vuoto:
 
-| `PT_BINS` | Lista dei bin di pT. Ogni voce ha `name` (usato nei nomi degli istogrammi e dei file), 
-`min`/`max` (estremi in GeV, intervallo chiuso a sinistra e aperto a destra), 
-`x_center`/`x_err` (punto e barra orizzontale nel grafico RMS vs pT). 
+```bash
+ls -d /eos/user/m/masegret/risoluzione_out/job_*/output_risoluzione.root | wc -l   # 30
+grep -l Traceback logs/*.err                                                       # nulla
+python3 merge.py /eos/user/m/masegret/risoluzione_out
+```
 
-| `TREE_NAME` | Nome del TTree dentro i file ROOT (`AnalysisTree`). 
+Per guardare i PNG dal browser li copio su EOS e li apro da
+[cernbox.cern.ch](https://cernbox.cern.ch):
 
-| `MAX_EVENTS` | Limite di eventi. `-1` = tutti. Mettilo a `100000` per un test rapido prima del run completo. |
-| `PROMPT_IFF_TYPE` | Valore di `truthmuon_IFFType` corrispondente ai muoni prompt (`4`). 
-| `ACTIVE_BRANCHES` | I soli branch letti dal disco. Serve a non decomprimere l'intera ntupla a ogni evento. 
-| `OUTPUT_ROOT_FILE`, `IMAGES_DIR` | Nomi di output. |
+```bash
+cp -r images output_risoluzione.root /eos/user/m/masegret/risoluzione_out/
+```
 
-### `chain_builder.py` — I/O
+## I file
 
-**`build_chain(tree_name, path)`**
-Costruisce e restituisce la `TChain`. Riconosce i tre tipi di input descritti
-sopra. Stampa quanti file ha aggiunto e il totale di entries; solleva un errore
-se la chain risulta vuota, così un path sbagliato o un nome di tree errato si
-manifesta subito invece di produrre istogrammi vuoti dopo ore di run.
+**`config.py`** — tutti i parametri in un posto solo: definizione dei bin di
+$p_T$, nome del TTree (`AnalysisTree`), `MAX_EVENTS` (a `-1` per girare su tutto,
+un valore positivo per i test rapidi), i branch da attivare e i nomi degli
+output.
 
-**`enable_branches(chain, branches)`**
-Disattiva tutti i branch e riattiva solo quelli in `ACTIVE_BRANCHES`. Con ntuple
-larghe questo è il singolo fattore che più incide sul tempo di esecuzione: ROOT
-legge e decomprime solo le colonne che servono davvero.
+**`chain_builder.py`** — costruisce la `TChain` a partire da una directory, da
+una lista `.txt` o da un singolo file `.root`. Il controllo sulla directory
+viene prima di quello sull'estensione, perché le directory create da rucio si
+chiamano anche loro `*.ANALYSIS.root`. Attiva solo i branch che servono, così
+non legge dal disco roba inutile.
 
-### `histograms.py` — definizione degli istogrammi
+**`histograms.py`** — crea gli istogrammi di risoluzione (100 bin tra -0.2 e
+0.2): uno inclusivo più uno per ciascun bin di $p_T$, in due set separati per
+inclusivo e prompt.
 
-**`make_resolution_histo(name, title_prefix)`**
-Crea un `TH1F` con il binning standard della risoluzione: 100 bin tra -0.2 e
-+0.2. `SetDirectory(0)` scollega l'istogramma dal file ROOT corrente, così
-l'ordine in cui apri il `TFile` non può farteli sparire.
+**`event_loop.py`** — il loop sugli eventi. Per ogni muone ricostruito segue
+`muon_truthmuon_index` per risalire al muone truth associato, scarta i match non
+validi, calcola la risoluzione e riempie l'istogramma inclusivo, quello del bin
+di appartenenza e, se `IFFType == 4`, i corrispondenti prompt.
 
-**`build_histogram_set(suffix="")`**
-Restituisce la coppia `(h_all, histos_pt)`: l'istogramma inclusivo e un
-dizionario `{nome_bin: TH1F}` con un istogramma per ciascun bin di `PT_BINS`.
-Il `suffix` genera in un colpo solo il set parallelo per la selezione prompt
-(`""` → inclusivo, `"_prompt"` → prompt), evitando di duplicare il codice.
+**`plotting.py`** — costruisce il `TGraphErrors` di RMS vs $p_T$ e salva tutti i
+plot in PNG e PDF: distribuzione inclusiva, un plot per bin, l'overlay
+normalizzato di tutti i bin e il grafico finale della risoluzione.
 
-### `event_loop.py` — il loop
+**`style.py`** — stile ATLAS-like (font, margini, tick su tutti i lati, niente
+box delle statistiche) e la palette di colori usata nell'overlay.
 
-**`_find_bin(pt_truth)`**
-Restituisce il nome del bin di pT che contiene `pt_truth`, oppure `None` se il
-valore cade fuori dall'ultimo bin (sopra 500 GeV). Funzione ausiliaria: prima
-questa ricerca era duplicata per l'inclusivo e per il prompt.
+**`main.py`** — mette insieme tutto: costruisce la chain, gira il loop, salva
+istogrammi e grafici nel `.root` e produce le immagini. È quello che lancia ogni
+job di condor, su un file alla volta.
 
-**`process_events(chain, h_all, histos_pt, h_all_prompt, histos_pt_prompt)`**
-Il cuore dell'analisi. Per ogni evento:
+**`gen_jobs.sh`** — genera uno script `jobs/do_N.sh` per ogni file di input. Ogni
+script fa il setup di ATLAS/ROOT, imposta il `PYTHONPATH` sulla directory di
+analisi e lancia `main.py` dentro una sua cartella `job_N/` su EOS, così i 30
+job non si sovrascrivono a vicenda l'output e le immagini.
 
-1. legge i quattro branch necessari;
-2. per ogni muone reco `j` recupera l'indice del truth associato da
-   `muon_truthmuon_index[j]`;
-3. **scarta** i muoni con indice negativo (nessun match truth) o fuori range —
-   questo è il taglio principale di qualità;
-4. converte in GeV e scarta i pT non positivi;
-5. calcola `res` e riempie l'istogramma inclusivo più quello del bin di pT;
-6. se `truthmuon_IFFType[idx_truth] == 4` riempie anche il set prompt.
+**`condorSub.sub`** — il file di submit. `queue name matching files
+(jobs/do_*.sh)` fa partire un job per ogni script generato. Gli output vanno su
+EOS e non su AFS, perché i nodi di condor hanno accesso in scrittura ad AFS poco
+affidabile.
 
-Restituisce `(filled_muons, filled_muons_prompt)`, i contatori di muoni
-effettivamente usati — utile come sanity check: il rapporto prompt/inclusivo su
-un campione Z→μμ deve essere alto (i muoni non-prompt sono contaminazione da
-decadimenti in volo, heavy flavour, fake).
+**`merge.py`** — unisce i 30 output con `hadd` e **ricalcola** il
+`TGraphErrors` degli RMS. Questo passaggio è necessario: gli istogrammi si
+sommano correttamente, ma `hadd` su un `TGraph` si limita a impilare i 30
+grafici uno sull'altro invece di combinarli. Rigenera anche tutti i plot con la
+statistica completa e stampa il numero di muoni per bin.
 
-Progresso stampato ogni 100k eventi con `flush=True`, così la barra si aggiorna
-anche quando l'output è rediretto su file in batch.
+**`fix_xcenter.py`** — sposta i punti del grafico RMS vs $p_T$ dal centro
+geometrico del bin al $\langle p_T \rangle$ reale dei muoni che ci cadono
+dentro. Serve soprattutto per l'ultimo bin (120-500 GeV): lo spettro cade
+ripidamente, quindi quasi tutti i muoni stanno vicino a 120-150 GeV e mettere il
+punto a 310 GeV è fuorviante. Gira in interattivo su un file solo, perché per
+una media basta pochissima statistica, e aggiorna `config.py` (con backup in
+`config.py.bak`). Dopo basta rilanciare `merge.py`, non serve rifare i job.
 
-### `plotting.py` — disegno e salvataggio
+## Note
 
-**`make_rms_graph(histos_pt, name, title)`**
-Estrae `GetRMS()` e `GetRMSError()` da ciascun istogramma di bin e li impacchetta
-in un `TGraphErrors`: punti in `x_center`, barre orizzontali `x_err` (larghezza
-del bin), barre verticali dall'errore sull'RMS. È il plot finale della
-risoluzione in funzione del pT.
+Nel grafico RMS vs $p_T$ le barre orizzontali sono la **larghezza dei bin**, non
+un errore: quella dell'ultimo punto è larga perché il bin va da 120 a 500 GeV.
+Gli errori statistici sono quelli verticali, e con la statistica piena sono
+molto piccoli.
 
-**`_save(canvas, basename)`**
-Salva ogni canvas in `images/` sia in PNG (per condividere) sia in PDF
-(vettoriale, per tesi e paper). Crea la cartella se non esiste.
+## Da controllare
 
-**`draw_inclusive(h_all, suffix)`**
-Istogramma inclusivo riempito, con legenda che riporta entries, media e RMS.
+Il conteggio dà circa 12 muoni per evento, mentre in uno Z→μμ me ne aspetterei
+~2. Va capito se l'ntupla salva molti candidati muone o se più muoni ricostruiti
+puntano allo stesso indice truth: nel secondo caso ci sono duplicati e la
+statistica effettiva è più bassa di quella nominale.
 
-**`draw_single_bins(histos_pt, suffix)`**
-Un file per bin di pT, con entries e RMS in legenda.
-
-**`draw_bins_overlay(histos_pt, suffix)`**
-Tutti i bin nello stesso canvas con colori distinti, normalizzati ad area
-unitaria per confrontarne la larghezza. Lavora su **cloni** degli istogrammi:
-la normalizzazione non tocca gli originali, quindi il file ROOT e gli altri plot
-conservano i conteggi assoluti.
-
-**`draw_rms_graph(graph, suffix)`**
-Il grafico RMS vs pT, con griglia.
-
-**`save_all_plots(h_all, histos_pt, graph, suffix)`**
-Chiama le quattro funzioni sopra nell'ordine giusto (i singoli bin prima
-dell'overlay).
-
-### `style.py` — estetica
-
-**`PALETTE`**
-Sette colori scelti per restare distinguibili anche stampati in bianco e nero.
-
-**`apply_style()`**
-Definisce e applica globalmente un `TStyle` in stile ATLAS: font Helvetica (42),
-tick su tutti e quattro i lati, niente stat box né titolo automatico, margini
-generosi per le label degli assi, linee spesse. Attiva anche la **batch mode**,
-necessaria per girare su lxplus senza display X11. Va chiamata una volta sola in
-cima a `main.py`, prima di creare qualunque canvas.
-
-**`style_histo(h, color, fill=False)`**
-Applica colore e spessore linea a un istogramma; con `fill=True` aggiunge un
-riempimento semitrasparente.
-
-**`make_legend(x1, y1, x2, y2)`**
-Legenda senza bordo né sfondo, con font e dimensioni coerenti col resto.
-
-### `main.py` — orchestrazione
-
-Nell'ordine: applica lo stile, costruisce i due set di istogrammi, apre la chain
-e limita i branch, lancia il loop, costruisce i due grafici RMS, scrive tutto
-nel file ROOT, genera i plot, stampa il riassunto.
-
----
-
-## Modifiche rispetto alla versione precedente
-
-1. **Input `.txt` (bug bloccante).** `build_chain` gestiva solo path terminanti
-   in `.root` o cartelle: con il file lista che stai usando la chain sarebbe
-   rimasta vuota e avresti ottenuto istogrammi a zero entries senza alcun
-   errore. Ora legge le liste, e in più fallisce esplicitamente se la chain è
-   vuota.
-2. **Batch mode.** Senza `SetBatch(True)` il job prova ad aprire finestre X11 e
-   su lxplus/condor si pianta o rallenta parecchio.
-3. **Overlay non distruttivo.** `draw_bins_overlay` normalizzava gli istogrammi
-   *reali*: i plot dei singoli bin, disegnati dopo, mostravano un asse Y
-   normalizzato con l'etichetta "Muoni / bin". Ora lavora su cloni.
-4. **Scrittura prima del disegno** in `main.py`, per la stessa ragione.
-5. **Lettura selettiva dei branch**, per il tempo di esecuzione.
-6. Rimosso un loop vuoto senza effetto in `style.py`; deduplicata la ricerca del
-   bin di pT in `event_loop.py`.
-
-## Prima del run completo
-
-37M eventi con un loop Python su `TChain` sono lenti (ordine di ore). Consigli:
-
-- prova prima con `MAX_EVENTS = 100000` in `config.py` e controlla che i
-  contatori finali non siano zero;
-- lancia il run completo dentro `tmux`/`screen`, o su HTCondor, non da sessione
-  SSH interattiva;
-- se i tempi restano proibitivi, la stessa analisi si riscrive in `RDataFrame`
-  (loop compilato + multithreading) con un guadagno di uno o due ordini di
-  grandezza.
+Prossimo passo: ripetere l'analisi sul campione Z′.
