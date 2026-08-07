@@ -1,0 +1,14 @@
+executable = $(name)
+
+output = logs/$Fnx(name).out
+error  = logs/$Fnx(name).err
+log    = logs/$Fnx(name).log
+
+notification = error
+notify_user  = masegret@cern.ch
+
++JobBatchName = "risoluzione_muoni"
++JobFlavour = "workday"
+getenv = True
+
+queue name matching files (jobs/do_*.sh)

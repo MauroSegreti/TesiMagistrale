@@ -1,16 +1,5 @@
-"""
-Stile grafico condiviso per tutti i plot dell'analisi.
-Ispirato allo stile "ATLAS style" usato comunemente nei paper/tesi HEP:
-font Helvetica, tick su tutti e 4 i lati, niente stat box, margini curati.
-
-Uso: chiama apply_style() una volta all'inizio di main.py, prima di
-creare qualunque TCanvas.
-"""
-
 import ROOT
 
-# Palette di colori distinti e leggibili anche in scala di grigi (utile
-# se qualcuno stampa la tesi in bianco e nero)
 PALETTE = [
     ROOT.kAzure + 2,
     ROOT.kRed + 1,
@@ -25,23 +14,18 @@ PALETTE = [
 def apply_style():
     style = ROOT.TStyle("AtlasLike", "ATLAS-like style")
 
-    # Canvas
     style.SetCanvasBorderMode(0)
     style.SetCanvasColor(ROOT.kWhite)
     style.SetPadTickX(1)
     style.SetPadTickY(1)
     style.SetPadBorderMode(0)
 
-    # Margini: spazio sufficiente per le label degli assi
     style.SetPadTopMargin(0.06)
     style.SetPadBottomMargin(0.14)
     style.SetPadLeftMargin(0.14)
     style.SetPadRightMargin(0.06)
 
-    # Font: 42 = Helvetica normale, dimensioni in "pad units"
     font = 42
-    for attr in ("SetTextFont", "SetLabelFont", "SetTitleFont"):
-        pass
     style.SetTextFont(font)
     style.SetLabelFont(font, "XYZ")
     style.SetTitleFont(font, "XYZ")
@@ -50,22 +34,20 @@ def apply_style():
     style.SetTitleOffset(1.4, "Y")
     style.SetTitleOffset(1.2, "X")
 
-    # Niente box con statistiche/titolo automatico
     style.SetOptStat(0)
     style.SetOptTitle(0)
     style.SetOptFit(0)
 
-    # Linee/marker di default un po' più spessi (si leggono meglio proiettati)
     style.SetLineWidth(2)
     style.SetHistLineWidth(2)
     style.SetMarkerSize(1.2)
 
-    # Griglia leggera, non invasiva
     style.SetPadGridX(False)
     style.SetPadGridY(False)
 
     ROOT.gROOT.SetStyle("AtlasLike")
     ROOT.gROOT.ForceStyle()
+    ROOT.gROOT.SetBatch(True)
 
 
 def style_histo(h, color, fill=False):

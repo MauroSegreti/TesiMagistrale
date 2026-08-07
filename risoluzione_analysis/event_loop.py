@@ -1,11 +1,11 @@
-"""
-Loop principale sugli eventi della TChain.
-Qui avviene il match reco-truth e il riempimento degli istogrammi,
-sia per la versione inclusiva sia per la selezione "prompt" (IFFType==4)
-richiesta da Luca.
-"""
-
 from config import PT_BINS, MAX_EVENTS, PROMPT_IFF_TYPE
+
+
+def _find_bin(pt_truth):
+    for b in PT_BINS:
+        if b["min"] <= pt_truth < b["max"]:
+            return b["name"]
+    return None
 
 
 def process_events(chain, h_all, histos_pt, h_all_prompt, histos_pt_prompt):
@@ -17,7 +17,7 @@ def process_events(chain, h_all, histos_pt, h_all_prompt, histos_pt_prompt):
             break
 
         if i % 100000 == 0:
-            print(f"[INFO] Processati {i} eventi")
+            print(f"[INFO] Processati {i} eventi", flush=True)
 
         muon_pt = entry.muon_pt
         truthmuon_pt = entry.truthmuon_pt
@@ -39,22 +39,17 @@ def process_events(chain, h_all, histos_pt, h_all_prompt, histos_pt_prompt):
                 continue
 
             res_curv = (pt_truth / pt_reco) - 1.0
+            bin_name = _find_bin(pt_truth)
 
-            # --- Versione inclusiva ---
             h_all.Fill(res_curv)
             filled_muons += 1
-            for b in PT_BINS:
-                if b["min"] <= pt_truth < b["max"]:
-                    histos_pt[b["name"]].Fill(res_curv)
-                    break
+            if bin_name is not None:
+                histos_pt[bin_name].Fill(res_curv)
 
-            # --- Versione "prompt" (truthmuon_IFFType == 4), richiesta da Luca ---
             if truthmuon_ifftype[idx_truth] == PROMPT_IFF_TYPE:
                 h_all_prompt.Fill(res_curv)
                 filled_muons_prompt += 1
-                for b in PT_BINS:
-                    if b["min"] <= pt_truth < b["max"]:
-                        histos_pt_prompt[b["name"]].Fill(res_curv)
-                        break
+                if bin_name is not None:
+                    histos_pt_prompt[bin_name].Fill(res_curv)
 
     return filled_muons, filled_muons_prompt

@@ -1,24 +1,11 @@
-"""
-Tutto ciò che riguarda disegno e salvataggio dei plot:
-- il grafico RMS vs pT
-- l'istogramma inclusivo con legenda
-- l'overlay di tutti i bin di pT in un unico canvas (più leggibile
-  di 7 PNG separati per confrontare le forme delle distribuzioni)
-
-Usa lo stile definito in style.py: chiama style.apply_style() una
-volta sola in main.py prima di creare qualsiasi canvas.
-"""
-
 import os
+import array
 import ROOT
-from config import PT_BINS
+from config import PT_BINS, IMAGES_DIR
 from style import PALETTE, style_histo, make_legend
-
-IMAGES_DIR = "images"
 
 
 def make_rms_graph(histos_pt, name, title):
-    import array
     x = array.array('d')
     y = array.array('d')
     ex = array.array('d')
@@ -43,8 +30,6 @@ def make_rms_graph(histos_pt, name, title):
 
 
 def _save(canvas, basename):
-    """Salva sia in PNG (per condividere/incollare) sia in PDF (vettoriale, per tesi/paper),
-    dentro la sottocartella images/ (creata automaticamente se non esiste)."""
     os.makedirs(IMAGES_DIR, exist_ok=True)
     path = os.path.join(IMAGES_DIR, basename)
     canvas.SaveAs(f"{path}.png")
@@ -69,36 +54,7 @@ def draw_inclusive(h_all, suffix=""):
     return c
 
 
-def draw_bins_overlay(histos_pt, suffix=""):
-    """Sovrappone tutti i bin di pT in un unico canvas, colori distinti."""
-    c = ROOT.TCanvas(f"c_bins_overlay{suffix}", "Bins overlay", 950, 700)
-
-    # Normalizza ad area unitaria per confrontare le FORME, non i conteggi assoluti
-    leg = make_legend(0.66, 0.55, 0.92, 0.90)
-    y_max = 0
-    for i, b in enumerate(PT_BINS):
-        h = histos_pt[b["name"]]
-        color = PALETTE[i % len(PALETTE)]
-        style_histo(h, color)
-        if h.Integral() > 0:
-            h.Scale(1.0 / h.Integral())
-        y_max = max(y_max, h.GetMaximum())
-
-    for i, b in enumerate(PT_BINS):
-        h = histos_pt[b["name"]]
-        h.SetMaximum(y_max * 1.35)
-        h.GetXaxis().SetTitle("(1/p_{T}^{reco} - 1/p_{T}^{truth}) / (1/p_{T}^{truth})")
-        h.GetYaxis().SetTitle("Frazione di eventi / bin")
-        h.Draw("HIST" if i == 0 else "HIST SAME")
-        leg.AddEntry(h, f"{b['min']}-{b['max']} GeV", "l")
-
-    leg.Draw()
-    _save(c, f"plot_bins_overlay{suffix}")
-    return c
-
-
 def draw_single_bins(histos_pt, suffix=""):
-    """Un PNG/PDF per bin, se ti servono ancora i plot singoli separati."""
     c = ROOT.TCanvas(f"c_bin{suffix}", "Bins", 900, 700)
     for i, b in enumerate(PT_BINS):
         h = histos_pt[b["name"]]
@@ -117,6 +73,34 @@ def draw_single_bins(histos_pt, suffix=""):
         _save(c, f"plot_range_{b['name']}{suffix}")
 
 
+def draw_bins_overlay(histos_pt, suffix=""):
+    c = ROOT.TCanvas(f"c_bins_overlay{suffix}", "Bins overlay", 950, 700)
+    leg = make_legend(0.66, 0.55, 0.92, 0.90)
+
+    clones = []
+    y_max = 0.0
+    for i, b in enumerate(PT_BINS):
+        h = histos_pt[b["name"]].Clone(f"{histos_pt[b['name']].GetName()}_norm")
+        h.SetDirectory(0)
+        style_histo(h, PALETTE[i % len(PALETTE)])
+        h.SetFillStyle(0)
+        if h.Integral() > 0:
+            h.Scale(1.0 / h.Integral())
+        y_max = max(y_max, h.GetMaximum())
+        clones.append(h)
+
+    for i, (b, h) in enumerate(zip(PT_BINS, clones)):
+        h.SetMaximum(y_max * 1.35)
+        h.GetXaxis().SetTitle("(1/p_{T}^{reco} - 1/p_{T}^{truth}) / (1/p_{T}^{truth})")
+        h.GetYaxis().SetTitle("Frazione di eventi / bin")
+        h.Draw("HIST" if i == 0 else "HIST SAME")
+        leg.AddEntry(h, f"{b['min']}-{b['max']} GeV", "l")
+
+    leg.Draw()
+    _save(c, f"plot_bins_overlay{suffix}")
+    return c, clones
+
+
 def draw_rms_graph(graph, suffix=""):
     c = ROOT.TCanvas(f"c_rms{suffix}", "RMS vs pT", 900, 700)
     c.SetGrid(1, 1)
@@ -129,6 +113,6 @@ def draw_rms_graph(graph, suffix=""):
 
 def save_all_plots(h_all, histos_pt, graph, suffix=""):
     draw_inclusive(h_all, suffix)
-    draw_bins_overlay(histos_pt, suffix)
     draw_single_bins(histos_pt, suffix)
+    draw_bins_overlay(histos_pt, suffix)
     draw_rms_graph(graph, suffix)

@@ -1,9 +1,3 @@
-"""
-Fabbrica degli istogrammi usati dall'analisi.
-Tenuto separato dal loop eventi: qui ci sono solo "definizioni",
-il riempimento avviene in event_loop.py.
-"""
-
 import ROOT
 from config import PT_BINS
 
@@ -17,17 +11,11 @@ def make_resolution_histo(name, title_prefix):
     )
     h.SetLineColor(ROOT.kBlue)
     h.SetLineWidth(2)
+    h.SetDirectory(0)
     return h
 
 
 def build_histogram_set(suffix=""):
-    """
-    Crea il set completo di istogrammi: uno inclusivo + uno per ciascun
-    bin di pT definito in config.PT_BINS.
-
-    'suffix' distingue le versioni parallele, es. "" per l'inclusivo
-    e "_prompt" per la selezione truthmuon_IFFType == 4 richiesta da Luca.
-    """
     label = f" ({suffix.strip('_')})" if suffix else ""
     h_all = make_resolution_histo(f"h_res_all{suffix}", f"Inclusive{label}")
 
