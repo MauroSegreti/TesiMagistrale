@@ -1,40 +1,37 @@
-"""
-Loop sugli eventi. Dato che chain_builder.py aggiunge alla stessa
-TChain tutti i path passati, "combinare tutti i sample" (richiesta di
-Luca) e' gia' garantito a monte: qui il loop semplicemente scorre
-tutti gli eventi della chain combinata, senza distinguere da quale
-sample provengano.
-
-Se viene passato anche 'counts' (griglia fine per bin_stats.py), lo
-riempie NELLO STESSO loop degli istogrammi per il fit -- cosi' un solo
-python3 main.py basta per avere sia i risultati del fit sia la
-diagnostica di statistica, senza rileggere la chain due volte (utile
-soprattutto quando i dati sono remoti via XRootD, dove la lettura e'
-il collo di bottiglia).
-"""
-
-from config import PT_BINS, ETA_BINS, MAX_EVENTS, PROMPT_IFF_TYPE, PT_TRUTH_MAX, FINE_PT_EDGES
+from config import (PT_BINS, ETA_BINS, MAX_EVENTS, PROMPT_IFF_TYPE,
+                    PT_TRUTH_MAX)
 
 
-def process_events(chain, histos, counts=None):
+def process_events(chain, histos, h_pt_sum, h_pt_count):
     counter_total_muons = 0
     counter_idx_valid = 0
     counter_prompt = 0
     filled_muons = 0
 
-    n_fine = len(FINE_PT_EDGES) - 1
+    n_total = chain.GetEntries()
 
-    for i, entry in enumerate(chain):
-        if MAX_EVENTS > 0 and i >= MAX_EVENTS:
-            break
-        if i % 100000 == 0 and i > 0:
-            print(f"[INFO] Processati {i} eventi")
+    if MAX_EVENTS > 0 and MAX_EVENTS < n_total:
+        stride = max(1, n_total // MAX_EVENTS)
+        indices = range(0, n_total, stride)
+        print(f"[INFO] Sottocampionamento uniforme: 1 evento ogni {stride} "
+              f"-> ~{len(indices)} eventi su {n_total}")
+    else:
+        indices = range(n_total)
+        print(f"[INFO] Lettura completa: {n_total} eventi")
 
-        muon_pt = entry.muon_pt
-        truth_pt = entry.truthmuon_pt
-        truth_eta = entry.truthmuon_eta
-        truth_index = entry.muon_truthmuon_index
-        truth_type = entry.truthmuon_IFFType
+    n_read = 0
+    for i in indices:
+        chain.GetEntry(i)
+        n_read += 1
+        if n_read % 100000 == 0:
+            print(f"[INFO] Processati {n_read} eventi (entry {i}/{n_total})",
+                  flush=True)
+
+        muon_pt = chain.muon_pt
+        truth_pt = chain.truthmuon_pt
+        truth_eta = chain.truthmuon_eta
+        truth_index = chain.muon_truthmuon_index
+        truth_type = chain.truthmuon_IFFType
 
         for j in range(len(muon_pt)):
             counter_total_muons += 1
@@ -61,21 +58,17 @@ def process_events(chain, histos, counts=None):
                     for p_i, p in enumerate(PT_BINS):
                         if p["min"] <= pt_true < p["max"]:
                             histos[e_i][p_i].Fill(res)
+                            h_pt_sum.Fill(e_i + 0.5, p_i + 0.5, pt_true)
+                            h_pt_count.Fill(e_i + 0.5, p_i + 0.5)
                             filled_muons += 1
                             break
-
-                    if counts is not None:
-                        for fp_i in range(n_fine):
-                            if FINE_PT_EDGES[fp_i] <= pt_true < FINE_PT_EDGES[fp_i + 1]:
-                                counts[e_i][fp_i] += 1
-                                break
-
                     break
 
     print("\n=== Statistiche ===")
+    print(f"Eventi letti: {n_read} (su {n_total} nella chain)")
     print(f"Muoni totali (candidati reco): {counter_total_muons}")
     print(f"Truth match validi: {counter_idx_valid}")
-    print(f"Prompt (IFFType == 4): {counter_prompt}")
+    print(f"Prompt (IFFType == {PROMPT_IFF_TYPE}): {counter_prompt}")
     print(f"Muoni riempiti nei bin: {filled_muons}\n")
 
     return filled_muons

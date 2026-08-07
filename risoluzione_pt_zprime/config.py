@@ -1,24 +1,3 @@
-"""
-Configurazione per l'analisi combinata di risoluzione in pT su tutti
-i sample (Zp a varie masse + Z standard), come richiesto da Luca:
-"metti insieme tutti gli eventi dei vari samples (inclusa la Z) e
-rifai i plot di risoluzione vs pT".
-
-L'input_path va passato come cartella contenente TUTTI i file .txt
-(liste Rucio) dei sample da combinare -- Z inclusa. chain_builder.py
-li aggiunge tutti alla stessa TChain, quindi la "combinazione" avviene
-semplicemente includendo il file .txt della Z nella stessa cartella
-degli altri.
-"""
-
-# Bin di pT estesi fino a 3 TeV (i sample Zp ad alta massa producono
-# muoni con pT molto più alto dei sample Z standard)
-# Binning "di partenza": molto piu' fine ad alto pT rispetto a prima
-# (che aveva solo 3 bin enormi sopra i 120 GeV: 120-500, 500-1500,
-# 1500-3000). Da rifinire con bin_stats.py una volta viste le entries
-# reali per bin sui sample combinati -- unisci i bin dove la statistica
-# e' troppo bassa per un RMS stabile, tienili separati dove c'e' abbastanza
-# statistica.
 PT_BINS = [
     {"name": "20_30", "min": 20, "max": 30, "mean": 25.0},
     {"name": "30_40", "min": 30, "max": 40, "mean": 35.0},
@@ -36,10 +15,6 @@ PT_BINS = [
     {"name": "2500_3000", "min": 2500, "max": 3000, "mean": 2750.0},
 ]
 
-# NOTA: qui uso 1.05 come nel tuo script -- nel progetto risoluzione_eta_pt
-# avevamo invece usato 1.01 (dal commento dettagliato di Luca sui bin).
-# Verifica con Luca quale dei due e' quello giusto e allinea entrambi i
-# progetti di conseguenza.
 ETA_BINS = [
     {"min": 0.0, "max": 0.1, "label": "0.0 #leq |#eta| < 0.1"},
     {"min": 0.1, "max": 1.05, "label": "0.1 #leq |#eta| < 1.05"},
@@ -50,21 +25,26 @@ ETA_BINS = [
 ]
 
 TREE_NAME = "AnalysisTree"
-MAX_EVENTS = -1  # nessun limite: processa tutti gli eventi di tutti i sample
+MAX_EVENTS = -1
 
 PROMPT_IFF_TYPE = 4
-PT_TRUTH_MAX = 3000.0  # taglio superiore su pT truth, in GeV
+PT_TRUTH_MAX = 3000.0
 
-# Un bin con troppo poche entries non viene incluso nel fit (fit instabile)
-MIN_ENTRIES_FOR_FIT = 5
+EXPECTED_R1 = 0.025
+EXPECTED_R2 = 3.0e-4
+N_WINDOW_SIGMA = 6.0
+MIN_WINDOW = 0.12
+HIST_N_BINS = 240
 
-# Range dell'asse x (log) nel plot finale
+# Fattore di allargamento della finestra per bin di eta. Ad alto |eta| le
+# tracce sono stand-alone (niente inner detector) e le code sono molto piu'
+# larghe: con fattore 1 il 3-7% degli eventi finiva in over/underflow e tutti
+# i bin di 2.5-2.8 venivano scartati.
+ETA_WINDOW_SCALE = [1.0, 1.0, 1.0, 1.5, 1.5, 4.0]
+
+MIN_ENTRIES_FOR_FIT = 200
+
 PLOT_X_MIN = 15
 PLOT_X_MAX = 3500
 
-# Griglia fine di riferimento per bin_stats.py (indipendente dal binning
-# "finale" PT_BINS sopra). Vive qui, non in bin_stats.py, cosi' main.py
-# puo' calcolare la statistica diagnostica nello STESSO loop del fit,
-# senza dover rileggere la chain una seconda volta.
-FINE_PT_EDGES = [15, 20, 25, 30, 40, 50, 65, 80, 100, 120, 150, 200, 250, 300,
-                  400, 500, 650, 800, 1000, 1250, 1500, 1750, 2000, 2500, 3000]
+OUTPUT_ROOT_FILE = "output_res.root"

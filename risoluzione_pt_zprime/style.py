@@ -1,12 +1,3 @@
-"""
-Stile grafico condiviso per tutti i plot dell'analisi.
-Ispirato allo stile "ATLAS style" usato comunemente nei paper/tesi HEP:
-font Helvetica, tick su tutti e 4 i lati, niente stat box, margini curati.
-
-Uso: chiama apply_style() una volta all'inizio di main.py, prima di
-creare qualunque TCanvas.
-"""
-
 import ROOT
 
 # Palette di colori distinti e leggibili anche in scala di grigi (utile

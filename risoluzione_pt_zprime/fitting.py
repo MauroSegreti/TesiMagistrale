@@ -1,44 +1,11 @@
-"""
-Per ogni bin di eta costruisce il TGraphErrors di RMS vs pT (su tutti
-i bin di pT, con statistica combinata da tutti i sample), poi lo fitta
-con la formula completa a 3 termini della risoluzione in pT:
-
-    sigma_pT / pT = sqrt( r0^2/pT^2 + r1^2 + (r2 * pT)^2 )
-
-- r0/pT domina a BASSO pT (fluttuazioni di energia depositata)
-- r1 e' il termine costante (multiple scattering)
-- r2 * pT domina ad ALTO pT (disallineamento/potere di curvatura)
-
-MULTI-START: con un solo tentativo di fit (un solo punto di partenza)
-MINUIT convergeva spesso su una soluzione degenere con r1 schiacciato
-a 0 -- che elimina il tratto piatto centrale della curva e la
-trasforma in una parabola/V che non rispecchia i dati (niente plateau
-da multiple scattering). Non e' un problema della formula: e' il fit
-che si blocca in un minimo locale sbagliato. Qui si prova il fit da
-piu' punti di partenza diversi e si tiene quello con il chi2/ndf
-migliore -- tecnica standard per aggirare i minimi locali di un fit
-non lineare.
-
-Per ogni bin di eta viene fatto anche un SECONDO fit, con r0 fissato
-a 0 (richiesta di Luca: confrontare la qualita' del fit libero contro
-quella del fit senza il termine a basso pT). I due TF1 risultanti
-sono salvati come "fit" (libero) e "fit_fixed0" (r0 = 0) nel dict
-restituito per ogni bin di eta, insieme a "n_points" (quanti bin di
-pT hanno statistica sufficiente ed entrano nel fit) -- questi tre
-campi sono quelli che report.py si aspetta di trovare.
-"""
-
 import array
 import ROOT
-from config import PT_BINS, ETA_BINS, MIN_ENTRIES_FOR_FIT, PLOT_X_MIN, PLOT_X_MAX
+from config import PT_BINS, ETA_BINS, MIN_ENTRIES_FOR_FIT
+from resolution import extract_sigma
 from style import PALETTE
 
 FIT_FORMULA = "sqrt(([0]/x)*([0]/x) + [1]*[1] + ([2]*x)*([2]*x))"
 
-# Punti di partenza diversi (r0, r1, r2) da provare per ogni fit.
-# r1 parte da valori vicini al plateau osservato nei dati (~0.02-0.03)
-# invece che da un valore arbitrario, per aiutare il fit a "vedere"
-# subito il tratto piatto invece di ignorarlo e collassarlo a 0.
 _SEEDS = [
     (0.1, 0.025, 0.0001),
     (1.0, 0.030, 0.0001),
@@ -49,16 +16,12 @@ _SEEDS = [
 ]
 
 
-def _make_fit(name, seed, fix_r0):
-    """Crea un TF1 con la formula standard, inizializzato al seed dato.
-    Se fix_r0=True, il parametro r0 (indice 0) viene fissato a 0 invece
-    di essere lasciato libero -- r1 e r2 restano agli stessi indici in
-    entrambi i casi, cosi' i due fit restano confrontabili parametro
-    per parametro."""
+def _make_fit(name, seed, fix_r0, x_lo, x_hi):
     r0_seed, r1_seed, r2_seed = seed
-    fit_func = ROOT.TF1(name, FIT_FORMULA, PLOT_X_MIN, PLOT_X_MAX)
+    fit_func = ROOT.TF1(name, FIT_FORMULA, x_lo, x_hi)
     fit_func.SetParameters(r0_seed, r1_seed, r2_seed)
-    fit_func.SetParLimits(0, 0, 50)   # r0 >= 0: fisicamente non puo' essere negativo
+    fit_func.SetParNames("r0", "r1", "r2")
+    fit_func.SetParLimits(0, 0, 50)
     fit_func.SetParLimits(1, 0, 1)
     fit_func.SetParLimits(2, 0, 1)
     if fix_r0:
@@ -66,34 +29,54 @@ def _make_fit(name, seed, fix_r0):
     return fit_func
 
 
-def _fit_multistart(graph, name_prefix, color, fix_r0):
-    """Prova il fit da tutti i seed in _SEEDS, tiene quello con chi2/ndf
-    migliore. Ritorna (fit_migliore, lista_chi2ndf_per_tentativo)."""
+def _fit_multistart(graph, name_prefix, color, fix_r0, x_lo, x_hi):
     best_fit = None
     best_chi2ndf = float("inf")
+    best_res = None
     attempts = []
+    last_fit = None
+    last_res = None
 
     for i, seed in enumerate(_SEEDS):
-        fit_func = _make_fit(f"{name_prefix}_try{i}", seed, fix_r0)
-        # "N": non allega la funzione al grafico (evita che tutti i
-        # tentativi, anche quelli falliti, vengano disegnati insieme)
-        graph.Fit(fit_func, "QRN")
+        fit_func = _make_fit(f"{name_prefix}_try{i}", seed, fix_r0, x_lo, x_hi)
+        res = graph.Fit(fit_func, "QRNS EX0")
+        last_fit, last_res = fit_func, res
 
+        valid = bool(res.Get()) and res.IsValid()
         ndf = fit_func.GetNDF()
         chi2 = fit_func.GetChisquare()
         chi2ndf = chi2 / ndf if ndf > 0 else float("inf")
-        attempts.append(chi2ndf)
+        attempts.append((chi2ndf, valid))
 
-        if chi2ndf < best_chi2ndf:
+        if valid and chi2ndf < best_chi2ndf:
             best_chi2ndf = chi2ndf
             best_fit = fit_func
+            best_res = res
+
+    if best_fit is None:
+        print(f"       [WARNING] Nessun seed convergiuto per {name_prefix}, "
+              f"uso l'ultimo tentativo")
+        best_fit = last_fit
+        best_res = last_res
 
     best_fit.SetLineColor(color)
     best_fit.SetLineWidth(2)
-    return best_fit, attempts
+    return best_fit, attempts, best_res
 
 
-def build_graphs_and_fits(histos):
+def _print_correlation(res, fix_r0):
+    if fix_r0 or res is None or not res.Get():
+        return
+    try:
+        corr = res.Correlation(0, 1)
+        flag = "  <-- DEGENERE" if abs(corr) > 0.9 else ""
+        print(f"       corr(r0, r1) = {corr:+.3f}{flag}")
+    except Exception:
+        pass
+
+
+def build_graphs_and_fits(histos, pt_sums=None, pt_counts=None, pt_max=None):
+    """pt_max: se dato, scarta i punti il cui pT medio effettivo lo supera."""
     graphs = []
 
     for e_i, e in enumerate(ETA_BINS):
@@ -102,21 +85,48 @@ def build_graphs_and_fits(histos):
         ex = array.array('d')
         ey = array.array('d')
 
+        skipped = []
+
         for p_i, p in enumerate(PT_BINS):
             h = histos[e_i][p_i]
+
             if h.GetEntries() < MIN_ENTRIES_FOR_FIT:
+                skipped.append((p["name"], f"{h.GetEntries():.0f} entries"))
                 continue
 
-            x.append(p["mean"])
-            ex.append((p["max"] - p["min"]) / 2.0)
-            y.append(h.GetRMS())
-            ey.append(h.GetRMSError())
+            info = extract_sigma(h)
+            if not info["ok"]:
+                skipped.append((p["name"], info["reason"]))
+                continue
 
-        if len(x) == 0:
-            print(f"[WARNING] Nessun bin con statistica sufficiente per eta bin {e_i}, salto")
+            if pt_sums is not None and pt_counts[e_i][p_i] > 0:
+                x_val = pt_sums[e_i][p_i] / pt_counts[e_i][p_i]
+            else:
+                x_val = p["mean"]
+
+            if pt_max is not None and x_val > pt_max:
+                skipped.append((p["name"], f"pT medio {x_val:.0f} > {pt_max:.0f} GeV"))
+                continue
+
+            x.append(x_val)
+            ex.append(0.0)
+            y.append(info["sigma"])
+            ey.append(info["sigma_err"])
+
+        if skipped:
+            print(f"\n[INFO] eta bin {e_i} ({e['label']}) -- bin di pT scartati:")
+            for name, reason in skipped:
+                print(f"         {name}: {reason}")
+
+        if len(x) < 3:
+            print(f"[WARNING] Solo {len(x)} punti validi per eta bin {e_i} "
+                  f"({e['label']}), salto")
             continue
 
         n_points = len(x)
+        x_lo = min(x) * 0.9
+        x_hi = max(x) * 1.1
+
         color = PALETTE[e_i % len(PALETTE)]
         g = ROOT.TGraphErrors(n_points, x, y, ex, ey)
         g.SetName(f"g_eta_{e_i}")
@@ -125,15 +135,21 @@ def build_graphs_and_fits(histos):
         g.SetMarkerStyle(20)
         g.SetLineWidth(2)
 
-        print(f"\n[INFO] Fit multi-start eta bin {e_i} ({e['label']}) -- r0 libero:")
-        fit_free, attempts_free = _fit_multistart(g, f"fit_eta_{e_i}_free", color, fix_r0=False)
-        print(f"       chi2/ndf per tentativo: {[f'{v:.2f}' for v in attempts_free]}"
-              f"  -> migliore: seed #{attempts_free.index(min(attempts_free))}")
+        print(f"\n[INFO] Fit eta bin {e_i} ({e['label']}) -- {n_points} punti, "
+              f"pT in [{min(x):.0f}, {max(x):.0f}] GeV")
 
-        print(f"[INFO] Fit multi-start eta bin {e_i} ({e['label']}) -- r0 fissato a 0:")
-        fit_fixed0, attempts_fixed0 = _fit_multistart(g, f"fit_eta_{e_i}_fix0", color, fix_r0=True)
-        print(f"       chi2/ndf per tentativo: {[f'{v:.2f}' for v in attempts_fixed0]}"
-              f"  -> migliore: seed #{attempts_fixed0.index(min(attempts_fixed0))}")
+        print("       r0 libero:")
+        fit_free, att_free, res_free = _fit_multistart(
+            g, f"fit_eta_{e_i}_free", color, False, x_lo, x_hi)
+        print(f"       chi2/ndf per seed: "
+              f"{[('%.2f' % v if ok else 'FAIL') for v, ok in att_free]}")
+        _print_correlation(res_free, False)
+
+        print("       r0 fissato a 0:")
+        fit_fixed0, att_fix0, res_fix0 = _fit_multistart(
+            g, f"fit_eta_{e_i}_fix0", color, True, x_lo, x_hi)
+        print(f"       chi2/ndf per seed: "
+              f"{[('%.2f' % v if ok else 'FAIL') for v, ok in att_fix0]}")
 
         graphs.append({
             "graph": g,
@@ -141,6 +157,8 @@ def build_graphs_and_fits(histos):
             "fit_fixed0": fit_fixed0,
             "eta": e,
             "n_points": n_points,
+            "x_lo": x_lo,
+            "x_hi": x_hi,
         })
 
     return graphs

@@ -1,0 +1,21 @@
+executable = $(name)
+
+output = logs/$Fnx(name).out
+error  = logs/$Fnx(name).err
+log    = logs/$Fnx(name).log
+
+notification = error
+notify_user  = masegret@cern.ch
+
++JobBatchName = "risoluzione_combinata"
++JobFlavour = "workday"
+getenv = True
+
+# Proxy VOMS trasferito ai nodi: senza questo i job non possono leggere
+# i file remoti dei Z' via XRootD.
+# Prima del submit:
+#   voms-proxy-init -voms atlas --valid 24:00
+#   export X509_USER_PROXY=/tmp/x509up_u$(id -u)
+x509userproxy = $ENV(X509_USER_PROXY)
+
+queue name matching files (retry/do_*.sh)
