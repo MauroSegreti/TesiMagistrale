@@ -133,7 +133,7 @@ def build_table_pdf(results, filename="table_RMS_vs_eta.pdf"):
                 f"[{r['eta_min']:.2f}, {r['eta_max']:.2f})",
                 f"{r['entries']}",
                 f"{r['rms']:.4f}",
-                f"#pm {r['rms_err']:.4f}",
+                f"{r['rms_err']:.6f}",
             ]
             for xe, v in zip(_COL_EDGES[:-1], values):
                 body_lat.DrawLatex(xe + 0.015, y_mid, v)

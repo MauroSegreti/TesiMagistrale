@@ -5,13 +5,15 @@ Entry point: RMS della risoluzione in p_T vs |eta_truth|, per bin di p_T
 Uso: python3 main.py <input_path>
 
 Genera in output:
+- output_eta.root          griglia completa di istogrammi (serve per hadd)
 - images/plot_RMS_vs_eta.png / .pdf
 - images/table_RMS_vs_eta.pdf  (stessa tabella stampata a console)
 """
 
 import sys
+import ROOT
 
-from config import TREE_NAME
+from config import TREE_NAME, PT_BINS, ETA_BINS
 from chain_builder import build_chain
 from histograms import build_histogram_grid
 from event_loop import process_events
@@ -20,6 +22,24 @@ from report import build_table_pdf
 import style
 
 style.apply_style()
+
+OUTPUT_ROOT_FILE = "output_eta.root"
+
+
+def save_histograms(histos, path=OUTPUT_ROOT_FILE):
+    """
+    Salva tutta la griglia pT x eta su file. Serve per poter unire con hadd
+    gli output dei job condor: senza questo ogni job produrrebbe solo i suoi
+    plot parziali, non combinabili.
+    """
+    out = ROOT.TFile(path, "RECREATE")
+    n = 0
+    for p in PT_BINS:
+        for h in histos[p["name"]]:
+            h.Write()
+            n += 1
+    out.Close()
+    print(f"[INFO] {n} istogrammi salvati in {path}")
 
 
 def main(input_path):
@@ -31,6 +51,8 @@ def main(input_path):
 
     print(f"\n[INFO] Muoni prompt processati = {total_prompt}")
     print(f"[INFO] Muoni riempiti negli istogrammi = {filled_muons}")
+
+    save_histograms(histos)
 
     graphs, results = build_rms_graphs(histos)
     draw_rms_vs_eta(graphs)

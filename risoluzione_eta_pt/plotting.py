@@ -84,11 +84,11 @@ def draw_rms_vs_eta(graphs):
         g.GetXaxis().SetTitle("|#eta^{truth}|")
         g.GetYaxis().SetTitle("RMS della risoluzione in p_{T}")
         if i == 0:
-            g.Draw("APL")
+            g.Draw("AP")
             g.GetYaxis().SetRangeUser(ymin, ymax)
         else:
-            g.Draw("PL SAME")
-        leg.AddEntry(g, f"p_{{T}} = {p['min']}-{p['max']} GeV", "lp")
+            g.Draw("P SAME")
+        leg.AddEntry(g, f"p_{{T}} = {p['min']}-{p['max']} GeV", "p")
 
     leg.Draw()
 

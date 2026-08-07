@@ -1,0 +1,162 @@
+Running on host b9p18p7291.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000002.ANALYSIS.root
+[7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
+[7m lsetup asetup      [0m  (or asetup) to setup an Athena release
+[7m lsetup astyle      [0m  ATLAS style macros
+[7m lsetup atlantis    [0m  Atlantis: event display
+[7m lsetup centralpage [0m  Find samples
+[7m lsetup eiclient    [0m  Event Index 
+[7m lsetup emi         [0m  EMI: grid middleware user interface 
+[7m lsetup lcgenv      [0m  lcgenv: setup tools from cvmfs SFT repository
+[7m lsetup panda       [0m  Panda: Production ANd Distributed Analysis
+[7m lsetup pyami       [0m  pyAMI: ATLAS Metadata Interface python client
+[7m lsetup root        [0m  ROOT data processing framework
+[7m lsetup rucio       [0m  distributed data management system client
+[7m lsetup scikit      [0m  python data analysis ecosystem
+[7m lsetup views       [0m  Set up a full LCG release
+[7m lsetup xcache      [0m  XRootD local proxy cache
+[7m lsetup xrootd      [0m  XRootD data access
+[7madvancedTools       [0m advanced tools menu
+[7mdiagnostics         [0m diagnostic tools menu
+[7mhelpMe              [0m more help
+[7minstallPip          [0m install relocatable pip modules locally
+[7minstallRpm          [0m install relocatable rpms locally
+[7mprintMenu           [0m show this menu
+[7mqueryC              [0m find / whatis container query
+[7mshowVersions        [0m show versions of installed software
+
+[1m[4m30 Nov 2023[0m 
+
+A serious security issue in ROOT's web-based GUI has been identified:
+
+  You should not use the web-based browser until further notice and instead 
+  set the old-style TBrowser as the default. Please see the Twiki page linked 
+  below for instructions on how to do this.
+
+  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
+
+  More details of this issue:
+  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
+
+  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
+
+
+[1m[4m17 Mar 2026[0m
+
+SSL_CERT_DIR is no longer defined by asetup, python or emi.
+If you see SSL issues, read https://cern.ch/fudpr
+or run in a container depending on which OS needed:
+   setupATLAS -c el9 or setupATLAS -c centos7
+
+
+"amsg seen" to mark as seen to suppress above messages
+
+
+************************************************************************
+Requested:  root ... 
+ Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
+  ROOT is from lcgenv -p LCG_110_ATLAS_1 x86_64-el9-gcc15-opt ROOT
+>>>>>>>>>>>>>>>>>>>>>>>>> Information for user <<<<<<<<<<<<<<<<<<<<<<<<<
+ root:
+   Tip for _this_ standalone ROOT and grid (ie prun) submission:
+    avoid --athenaTag if you do not need athena
+    use --rootVer=6.40.02 --cmtConfig=x86_64-el9-gcc15-opt
+ root:
+   Note this ROOT from lcgenv sets up a long list of library paths.
+   This may slow down executables; they look at each library path item.
+   A faster alternative - setup the entire LCG stack with views:
+    lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
+************************************************************************
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000002.ANALYSIS.root
+[INFO] Entries totali = 1529808
+
+[INFO] Inizio loop eventi...
+
+[INFO] Processati 0 eventi
+[INFO] Processati 50000 eventi
+[INFO] Processati 100000 eventi
+[INFO] Processati 150000 eventi
+[INFO] Processati 200000 eventi
+[INFO] Processati 250000 eventi
+[INFO] Processati 300000 eventi
+[INFO] Processati 350000 eventi
+[INFO] Processati 400000 eventi
+[INFO] Processati 450000 eventi
+[INFO] Processati 500000 eventi
+[INFO] Processati 550000 eventi
+[INFO] Processati 600000 eventi
+[INFO] Processati 650000 eventi
+[INFO] Processati 700000 eventi
+[INFO] Processati 750000 eventi
+[INFO] Processati 800000 eventi
+[INFO] Processati 850000 eventi
+[INFO] Processati 900000 eventi
+[INFO] Processati 950000 eventi
+[INFO] Processati 1000000 eventi
+[INFO] Processati 1050000 eventi
+[INFO] Processati 1100000 eventi
+[INFO] Processati 1150000 eventi
+[INFO] Processati 1200000 eventi
+[INFO] Processati 1250000 eventi
+[INFO] Processati 1300000 eventi
+[INFO] Processati 1350000 eventi
+[INFO] Processati 1400000 eventi
+[INFO] Processati 1450000 eventi
+[INFO] Processati 1500000 eventi
+
+[INFO] Muoni prompt processati = 2487999
+[INFO] Muoni riempiti negli istogrammi = 2158205
+[INFO] 36 istogrammi salvati in output_eta.root
+
+=== pT bin 20_30 ===
+  eta 0.0-0.1: entries=17881, RMS=0.0213
+  eta 0.1-1.01: entries=178592, RMS=0.0217
+  eta 1.01-1.3: entries=55022, RMS=0.0253
+  eta 1.3-1.7: entries=73874, RMS=0.0305
+  eta 1.7-2.5: entries=133253, RMS=0.0304
+  eta 2.5-2.8: entries=19318, RMS=0.0414
+
+=== pT bin 30_40 ===
+  eta 0.0-0.1: entries=27617, RMS=0.0239
+  eta 0.1-1.01: entries=255304, RMS=0.0227
+  eta 1.01-1.3: entries=78820, RMS=0.0259
+  eta 1.3-1.7: entries=106562, RMS=0.0320
+  eta 1.7-2.5: entries=197515, RMS=0.0310
+  eta 2.5-2.8: entries=28011, RMS=0.0396
+
+=== pT bin 40_50 ===
+  eta 0.0-0.1: entries=26372, RMS=0.0260
+  eta 0.1-1.01: entries=244411, RMS=0.0239
+  eta 1.01-1.3: entries=75689, RMS=0.0265
+  eta 1.3-1.7: entries=102682, RMS=0.0332
+  eta 1.7-2.5: entries=193195, RMS=0.0320
+  eta 2.5-2.8: entries=25824, RMS=0.0385
+
+=== pT bin 50_80 ===
+  eta 0.0-0.1: entries=11148, RMS=0.0300
+  eta 0.1-1.01: entries=103010, RMS=0.0260
+  eta 1.01-1.3: entries=31185, RMS=0.0281
+  eta 1.3-1.7: entries=41708, RMS=0.0354
+  eta 1.7-2.5: entries=73854, RMS=0.0333
+  eta 2.5-2.8: entries=9426, RMS=0.0382
+
+=== pT bin 80_120 ===
+  eta 0.0-0.1: entries=1583, RMS=0.0365
+  eta 0.1-1.01: entries=14651, RMS=0.0305
+  eta 1.01-1.3: entries=4382, RMS=0.0306
+  eta 1.3-1.7: entries=5653, RMS=0.0408
+  eta 1.7-2.5: entries=9781, RMS=0.0360
+  eta 2.5-2.8: entries=1214, RMS=0.0391
+
+=== pT bin 120_500 ===
+  eta 0.0-0.1: entries=478, RMS=0.0510
+  eta 0.1-1.01: entries=4415, RMS=0.0391
+  eta 1.01-1.3: entries=1316, RMS=0.0395
+  eta 1.3-1.7: entries=1675, RMS=0.0520
+  eta 1.7-2.5: entries=2527, RMS=0.0405
+  eta 2.5-2.8: entries=257, RMS=0.0415
+[INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
+
+[INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)
+[INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
+Exit code: 0
