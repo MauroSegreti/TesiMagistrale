@@ -103,7 +103,7 @@ molto più alta (73 file contro 31). Qui probabilmente è più largo del
 necessario — da ricalibrare (stesso procedimento del nominale) se serve un
 $\chi^2$/ndf realistico invece che solo "il fit converge bene".
 
-### Confronto diretto con il nominale — il risultato della tesi
+### Confronto diretto con il nominale
 
 Stesso identico metodo e binning, quindi $r_2$ è confrontabile punto per
 punto: la sola differenza è la geometria.
