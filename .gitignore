@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 *.root
 run.log
+
+# cache di ticket Kerberos/AFS (credenziali, non file sorgente C++
+# nonostante l'estensione) -- non va mai versionata
+masegret.cc
