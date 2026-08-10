@@ -1,6 +1,6 @@
 import array
 import ROOT
-from config import PT_BINS, ETA_BINS, MIN_ENTRIES_FOR_FIT
+from config import PT_BINS, ETA_BINS, MIN_ENTRIES_FOR_FIT, MIN_REL_ERR
 from resolution import extract_width
 from style import PALETTE
 
@@ -70,10 +70,18 @@ def _print_correlation(res):
 
 
 def build_graphs_and_fits(histos, pt_sums=None, pt_counts=None,
-                          method="q68", pt_max=None, verbose=True):
+                          method="q68", pt_max=None, fit_pt_max=None,
+                          verbose=True):
     """
     method : 'q68' (default, indicazione di Luca) oppure 'gaus'
     pt_max : se dato, scarta i punti con pT medio effettivo superiore
+             (li toglie anche dal grafico: usato per la sistematica sul
+             range, dove il confronto e' "se non fossimo andati cosi'
+             in alto")
+    fit_pt_max : se dato, i punti restano nel grafico (misure valide)
+             ma il fit usa solo quelli con pT <= fit_pt_max. La curva
+             viene comunque disegnata estrapolata su tutto il range, per
+             mostrare dove la formula smette di descrivere i dati.
     """
     graphs = []
 
@@ -108,10 +116,14 @@ def build_graphs_and_fits(histos, pt_sums=None, pt_counts=None,
                                 f"pT medio {x_val:.0f} > {pt_max:.0f} GeV"))
                 continue
 
+            # floor sistematico: non pretendiamo dalla formula una
+            # precisione migliore di MIN_REL_ERR, vedi config.py
+            err = max(info["sigma_err"], MIN_REL_ERR * info["sigma"])
+
             x.append(x_val)
             ex.append(0.0)
             y.append(info["sigma"])
-            ey.append(info["sigma_err"])
+            ey.append(err)
             points.append({"pt": x_val, "name": p["name"], **info})
 
         if verbose and skipped:
@@ -126,6 +138,7 @@ def build_graphs_and_fits(histos, pt_sums=None, pt_counts=None,
 
         n_points = len(x)
         x_lo, x_hi = min(x) * 0.9, max(x) * 1.1
+        fit_hi = x_hi if fit_pt_max is None else min(x_hi, fit_pt_max)
 
         color = PALETTE[e_i % len(PALETTE)]
         g = ROOT.TGraphErrors(n_points, x, y, ex, ey)
@@ -141,9 +154,9 @@ def build_graphs_and_fits(histos, pt_sums=None, pt_counts=None,
                   f"stimatore '{method}'")
 
         fit_free, att_free, res_free = _fit_multistart(
-            g, f"fit_eta_{e_i}_{method}_free", color, False, x_lo, x_hi)
+            g, f"fit_eta_{e_i}_{method}_free", color, False, x_lo, fit_hi)
         fit_fix0, att_fix0, res_fix0 = _fit_multistart(
-            g, f"fit_eta_{e_i}_{method}_fix0", color, True, x_lo, x_hi)
+            g, f"fit_eta_{e_i}_{method}_fix0", color, True, x_lo, fit_hi)
 
         if verbose:
             print(f"       r0 libero  chi2/ndf: "

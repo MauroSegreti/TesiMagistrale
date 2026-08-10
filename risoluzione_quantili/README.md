@@ -155,43 +155,105 @@ combinati nel barrel: 2.0% a 45 GeV, 2.9% a 100 GeV, 9.7% a 1 TeV sempre se non 
 L'unica regione con distribuzioni davvero non gaussiane è $|\eta| < 0.1$: $q_{68}/\text{gaus}$ arriva a 1.71 e l'asimmetria a $+0.21$ ad
 alto $p_T$. Lì la larghezza non è ben definita da un numero solo.
 
-### Il fit invece non funziona santa pace
+### Il fit funziona, ma solo fino a ~800 GeV
+
+Sul range completo il fit non convergeva a niente di sensato: chi2/ndf da 81 a
+83849 e residui fino al ±50%, con una forma sistematica (gobba positiva fra
+100 e 800 GeV, poi sotto il fit sopra il TeV) — non rumore, un vero
+disaccordo di forma. Due cause, non una:
+
+1. Con decine di milioni di entries per bin l'errore statistico su
+   $\sigma_{68}$ (sigma/sqrt(2N)) è così piccolo che anche uno scarto dello
+   0.1% fa esplodere il chi2/ndf. Non è la formula che è sbagliata, sono gli
+   errori che pretendono una precisione che nessuna parametrizzazione a 3
+   parametri può avere.
+2. Oltre qualche centinaio di GeV le code non gaussiane (vedi asimmetria e
+   $q_{68}/\text{gaus}$ sopra) iniziano a mangiare nella finestra 16-84%:
+   $\sigma_{68}$ smette di essere un parametro di scala pulito, quindi
+   nessuna formula a 3 termini può descriverlo lì, giusta o sbagliata che sia.
+
+Rimedio (in `config.py`/`fitting.py`): un floor sistematico sull'errore di
+$\sigma_{68}$ prima del fit, e il **fit ristretto a $p_T < 800$ GeV**
+(`PT_FIT_MAX`), tarato empiricamente come il punto oltre cui il chi2/ndf
+peggiora in modo netto e monotono. I punti oltre 800 GeV restano nel grafico
+(sono misure valide, vedi tabella sopra) ma non entrano nel fit; la curva è
+comunque disegnata estrapolata su tutto il range per mostrare dove diverge.
+
+Il floor non è arbitrario: con un floor relativo uniforme (`MIN_REL_ERR`) il
+chi2/ndf scala esattamente come $1/\text{floor}^2$ — i parametri migliori del
+fit non cambiano affatto, cambia solo quanto "gridiamo" il disaccordo residuo.
+Quindi il floor giusto è quello che porta chi2/ndf $\approx 1$: non un numero
+scelto per far tornare il fit, ma la **sistematica intrinseca misurata**
+della parametrizzazione a 3 parametri. Viene **10%**.
 
 | $\|\eta\|$ | $r_0$ [GeV] | $r_1$ | $r_2$ [$10^{-3}$ GeV$^{-1}$] | $\chi^2$/ndf |
 |---|---|---|---|---|
-| 0.0 - 0.1 | 0.000 ± 0.003 | 0.0178 | 0.214 | 7591 |
-| 0.1 - 1.05 | 0.000 ± 0.001 | 0.0193 | 0.090 | 83849 |
-| 1.05 - 1.3 | 0.000 ± 0.006 | 0.0214 | 0.090 | 6213 |
-| 1.3 - 1.7 | 0.000 ± 0.003 | 0.0287 | 0.142 | 22828 |
-| 1.7 - 2.5 | 0.000 ± 0.003 | 0.0258 | 0.103 | 12683 |
-| 2.5 - 2.8 | **0.322 ± 0.002** | 0.0283 | 0.112 | **81** |
+| 0.0 - 0.1 | 0.000 ± 36.3 | 0.0181 ± 0.0011 | 0.224 ± 0.012 | 0.58 |
+| 0.1 - 1.05 | 0.000 ± 8.98 | 0.0201 ± 0.0010 | 0.126 ± 0.008 | 1.54 |
+| 1.05 - 1.3 | 0.000 ± 37.2 | 0.0219 ± 0.0010 | 0.124 ± 0.009 | 0.51 |
+| 1.3 - 1.7 | 0.000 ± 32.3 | 0.0305 ± 0.0014 | 0.161 ± 0.011 | 1.68 |
+| 1.7 - 2.5 | 0.000 ± 32.5 | 0.0272 ± 0.0011 | 0.089 ± 0.008 | 0.64 |
+| 2.5 - 2.8 | 0.223 ± 0.334 | 0.0293 ± 0.0019 | 0.104 ± 0.010 | 0.08 |
 
-I residui arrivano a $+40\%$ intorno ai 200 GeV e $-45\%$ sopra il TeV...
+L'errore su $r_0$ è enorme rispetto a prima (era ±0.001-0.006, poi ±3-6 col
+floor al 2%): non è un peggioramento, è che quella precisione era un
+artefatto degli errori troppo piccoli. Con la sistematica vera $r_0$ è
+semplicemente non vincolato ovunque — **anche nel bin 2.5-2.8**, dove con un
+floor più stretto sembrava significativo (vedi sotto).
+
+Sotto ~500-800 GeV il fit segue i dati in senso stretto (residui ~0, banda ±10%).
+Sopra il TeV la curva estrapolata diverge dai punti (fino al -50%): è
+atteso, è la regione dove le code non gaussiane dominano — vedi
+`images/plot_res_q68.png`, pannello dei residui.
+
 ### Sistematiche
 
-Nominale ($\sigma_{68}$, range completo) confrontato con due varianti: $\sigma$
-dal fit gaussiano, e range limitato a 2 TeV.
+Nominale ($\sigma_{68}$, fit fino a 800 GeV) confrontato con due varianti:
+$\sigma$ dal fit gaussiano (stesso range), e fit esteso fino a 2 TeV.
 
 | $\|\eta\|$ | $r_2$ | stat | syst | syst % |
 |---|---|---|---|---|
-| 0.0 - 0.1 | 0.2140 | 0.0003 | 0.0873 | 41% |
-| 0.1 - 1.05 | 0.0899 | 0.0001 | 0.0530 | 59% |
-| 1.05 - 1.3 | 0.0895 | 0.0002 | 0.0355 | 40% |
-| 1.3 - 1.7 | 0.1422 | 0.0002 | 0.0388 | 27% |
-| 1.7 - 2.5 | 0.1031 | 0.0002 | 0.0140 | 14% |
-| 2.5 - 2.8 | 0.1118 | 0.0007 | 0.0162 | 15% |
+| 0.0 - 0.1 | 0.2236 | 0.0116 | 0.0639 | 29% |
+| 0.1 - 1.05 | 0.1257 | 0.0082 | 0.0271 | 22% |
+| 1.05 - 1.3 | 0.1239 | 0.0085 | 0.0284 | 23% |
+| 1.3 - 1.7 | 0.1606 | 0.0113 | 0.0515 | 32% |
+| 1.7 - 2.5 | 0.0893 | 0.0083 | 0.0244 | 27% |
+| 2.5 - 2.8 | 0.1041 | 0.0100 | 0.0180 | 17% |
 
-Syst viene del 40-60% quindi penso che il parametro non è ben definito con questa
-parametrizzazione...penso è
+Sistematica scesa dal 40-60% di prima al 17-32%: ancora non piccola (la
+formula resta un'approssimazione), ma non più "il parametro non è definito".
+La colonna "stat" ora include il floor del 10%, quindi non è più statistica
+pura ma l'incertezza totale del fit — la vecchia "stat" (sigma/sqrt(2N)) era
+sub-permille e non diceva niente di utile.
 
 ### $r_0$
 
-Torna esattamente zero nei bin 0-4, al limite inferiore, e i fit con $r_0$ libero
-e fissato danno $r_1$ e $r_2$ identici: il termine conta solo a $p_T$ basso e il
-punto più basso è a 25 GeV.
+Compatibile con zero **in tutti i bin, incluso 2.5-2.8** dove prima (con il
+floor troppo stretto al 2%) sembrava significativo: $r_0 = 0.322 \pm 0.002$
+sul range completo, poi $0.223 \pm 0.067$ col floor al 2%, ora $0.223 \pm
+0.334$ col floor onesto al 10% — la stessa stima centrale, ma la
+significatività era un artefatto di errori troppo piccoli, non un segnale
+vero. Resta comunque coerente con l'assunzione $r_0 = 0$ altrove: il termine
+di perdita di energia nel materiale conta solo a $p_T$ basso, e il punto più
+basso è a 25 GeV.
 
-Nel bin 2.5-2.8 invece $r_0 = 0.322 \pm 0.002$ GeV è significativo e il fit libero
-è nettamente migliore (81 contro 1330), con correlazione $r_0$-$r_1$ di $-0.884$.
-Coerente con l'assunzione $r_0 = 0$ che vale solo dove c'è
-l'inner detector, e che finisce a 2.5.
+### Regione oltre 800 GeV
+
+Non è coperta dal fit: $\sigma_{68}$ misurato lì resta una misura valida
+(vedi tabella "le misure sono solide" sopra), ma non gli si chiede di seguire
+la formula a 3 termini: le code crescenti (asimmetria fino a +0.21,
+$q_{68}/\text{gaus}$ fino a 1.71 in $|\eta|<0.1$) la rendono una regione a
+parte, non descrivibile da un singolo parametro di scala.
+
+Una spiegazione fisica plausibile: a bassa energia i muoni perdono energia
+quasi solo per ionizzazione, che è ~costante (minimum ionizing particle) —
+è il regime in cui vive il termine $r_0/p_T$. Oltre una certa energia
+("energia critica" del muone nel materiale, che per materiali tipici
+di un rivelatore è dell'ordine del centinaio di GeV fino al TeV) le perdite
+radiative (bremsstrahlung, produzione di coppie, ecc...) iniziano ad aumentarre crescondo ~linearmente con l'energia, quindi con $p_T$. Sono
+processi rari ma con perdite singole grandi: producono proprio la coda destra
+asimmetrica (pT reco sottostimato) che cresce con $p_T$ e che si vede
+nell'asimmetria e nel $q_{68}/\text{gaus}$. La soglia empirica di ~800 GeV
+dove il fit smette di funzionare è nell'ordine di grandezza giusto per
+questo effetto anche se non è una prova, ma è coerente.
 

@@ -55,7 +55,33 @@ MIN_ENTRIES_FOR_FIT = 200
 PLOT_X_MIN = 15
 PLOT_X_MAX = 6000
 
-# Range alternativo usato per la sistematica sul range del fit
+# --------------------------------------------------------------------
+# Fit della formula a 3 termini su sigma_68(pT)
+# --------------------------------------------------------------------
+# Sul range completo il fit non converge bene (chi2/ndf fino a 10^4-10^5,
+# residui fino al 50%): con decine di milioni di entries per bin l'errore
+# statistico su sigma_68 e' cosi' piccolo che il chi2 e' dominato da
+# deviazioni sub-percento, e la formula smette comunque di descrivere i
+# dati oltre qualche centinaio di GeV, dove le code non gaussiane (vedi
+# asimmetria e q68/gaus in inspect_bins.py) rendono sigma_68 non piu' un
+# singolo parametro di scala pulito.
+#
+# PT_FIT_MAX: range nominale del fit, tarato empiricamente (vedi
+# scratchpad/explore_fit.py) come il punto oltre cui il chi2/ndf peggiora
+# in modo monotono e netto.
+# MIN_REL_ERR: floor sistematico sull'errore di sigma_68 prima del fit,
+# sigma_err = max(sigma_err_stat, MIN_REL_ERR * sigma). Con un floor
+# relativo uniforme il chi2/ndf scala come 1/MIN_REL_ERR^2 (i parametri
+# migliori non cambiano, cambia solo il peso assoluto del disaccordo), quindi
+# il valore non e' arbitrario: 0.10 e' calibrato in modo che chi2/ndf ~ 1
+# entro PT_FIT_MAX per la maggior parte dei bin di eta -- cioe' e' la
+# sistematica intrinseca misurata della parametrizzazione a 3 parametri, non
+# un numero scelto per far tornare il fit.
+PT_FIT_MAX = 800.0
+MIN_REL_ERR = 0.10
+
+# Range esteso, usato come sistematica sul range del fit (variante 2 in
+# analyze.py): quanto cambia r2 se si spinge il fit oltre PT_FIT_MAX.
 PT_MAX_VARIANT = 2000.0
 
 OUTPUT_ROOT_FILE = "output_res.root"

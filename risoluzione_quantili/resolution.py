@@ -90,9 +90,13 @@ def sigma_gaus(h, n_sigma=N_SIGMA_FIT):
             break
         converged = abs(sg_new - sg) / sg < CONV_TOL
         mu, sg = mu_new, sg_new
+        ndf = f.GetNDF()
         best = {
             "sigma": f.GetParameter(2), "sigma_err": f.GetParError(2),
             "mu": f.GetParameter(1), "mu_err": f.GetParError(1),
+            "chi2": f.GetChisquare(), "ndf": ndf,
+            "chi2ndf": f.GetChisquare() / ndf if ndf > 0 else float("nan"),
+            "range": (mu - n_sigma * sg, mu + n_sigma * sg),
         }
         if converged:
             break

@@ -19,7 +19,7 @@ import subprocess
 
 import ROOT
 
-from config import (PT_BINS, ETA_BINS, PT_MAX_VARIANT, PLOT_X_MAX)
+from config import (PT_BINS, ETA_BINS, PT_FIT_MAX, PT_MAX_VARIANT, PLOT_X_MAX)
 from histograms import read_pt_means
 from resolution import extract_width
 from fitting import build_graphs_and_fits
@@ -170,9 +170,11 @@ def main(outdir, merged="merged_res.root"):
     print_gaussianity(histos)
 
     print("\n" + "#" * 70)
-    print("# NOMINALE: sigma_68, range completo, r0 libero")
+    print(f"# NOMINALE: sigma_68, fit fino a {PT_FIT_MAX:.0f} GeV "
+          f"(punti oltre restano nel grafico), r0 libero")
     print("#" * 70)
-    nominal = build_graphs_and_fits(histos, pt_sums, pt_counts, method="q68")
+    nominal = build_graphs_and_fits(histos, pt_sums, pt_counts, method="q68",
+                                    fit_pt_max=PT_FIT_MAX)
     if not nominal:
         print("[ERROR] nessun bin di eta valido")
         return 1
@@ -186,7 +188,8 @@ def main(outdir, merged="merged_res.root"):
     print("# VARIANTE 1: sigma dal fit gaussiano (sistematica sul metodo)")
     print("#" * 70)
     var_gaus = build_graphs_and_fits(histos, pt_sums, pt_counts,
-                                     method="gaus", verbose=False)
+                                     method="gaus", fit_pt_max=PT_FIT_MAX,
+                                     verbose=False)
     print_fit_parameters(var_gaus)
     draw_resolution_vs_pt(var_gaus, "plot_res_gaus", x_max=PLOT_X_MAX,
                           subtitle="#sigma dal fit gaussiano sul core")
