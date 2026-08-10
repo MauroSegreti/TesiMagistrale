@@ -1,1 +1,0 @@
-root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/mmarr/56/e5/user.mmarr.49805100._000001.ANALYSIS.root
