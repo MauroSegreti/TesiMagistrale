@@ -1,0 +1,124 @@
+Running on host b9p07p4372.cern.ch
+Lista: /afs/cern.ch/user/m/masegret/TesiMagistrale/risoluzione_misaligned/jobs/list_0015.txt
+root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/2a/56/user.lucam.50435891._000016.ANALYSIS.root
+[7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
+[7m lsetup asetup      [0m  (or asetup) to setup an Athena release
+[7m lsetup astyle      [0m  ATLAS style macros
+[7m lsetup atlantis    [0m  Atlantis: event display
+[7m lsetup centralpage [0m  Find samples
+[7m lsetup eiclient    [0m  Event Index 
+[7m lsetup emi         [0m  EMI: grid middleware user interface 
+[7m lsetup lcgenv      [0m  lcgenv: setup tools from cvmfs SFT repository
+[7m lsetup panda       [0m  Panda: Production ANd Distributed Analysis
+[7m lsetup pyami       [0m  pyAMI: ATLAS Metadata Interface python client
+[7m lsetup root        [0m  ROOT data processing framework
+[7m lsetup rucio       [0m  distributed data management system client
+[7m lsetup scikit      [0m  python data analysis ecosystem
+[7m lsetup views       [0m  Set up a full LCG release
+[7m lsetup xcache      [0m  XRootD local proxy cache
+[7m lsetup xrootd      [0m  XRootD data access
+[7madvancedTools       [0m advanced tools menu
+[7mdiagnostics         [0m diagnostic tools menu
+[7mhelpMe              [0m more help
+[7minstallPip          [0m install relocatable pip modules locally
+[7minstallRpm          [0m install relocatable rpms locally
+[7mprintMenu           [0m show this menu
+[7mqueryC              [0m find / whatis container query
+[7mshowVersions        [0m show versions of installed software
+
+[1m[4m30 Nov 2023[0m 
+
+A serious security issue in ROOT's web-based GUI has been identified:
+
+  You should not use the web-based browser until further notice and instead 
+  set the old-style TBrowser as the default. Please see the Twiki page linked 
+  below for instructions on how to do this.
+
+  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
+
+  More details of this issue:
+  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
+
+  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
+
+
+[1m[4m17 Mar 2026[0m
+
+SSL_CERT_DIR is no longer defined by asetup, python or emi.
+If you see SSL issues, read https://cern.ch/fudpr
+or run in a container depending on which OS needed:
+   setupATLAS -c el9 or setupATLAS -c centos7
+
+
+"amsg seen" to mark as seen to suppress above messages
+
+
+************************************************************************
+Requested:  root ... 
+ Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
+  ROOT is from lcgenv -p LCG_110_ATLAS_1 x86_64-el9-gcc15-opt ROOT
+>>>>>>>>>>>>>>>>>>>>>>>>> Information for user <<<<<<<<<<<<<<<<<<<<<<<<<
+ root:
+   Tip for _this_ standalone ROOT and grid (ie prun) submission:
+    avoid --athenaTag if you do not need athena
+    use --rootVer=6.40.02 --cmtConfig=x86_64-el9-gcc15-opt
+ root:
+   Note this ROOT from lcgenv sets up a long list of library paths.
+   This may slow down executables; they look at each library path item.
+   A faster alternative - setup the entire LCG stack with views:
+    lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
+************************************************************************
+X509_USER_PROXY = /pool/condor/dir_1131318/x509up
+
+=== Semi-larghezza della finestra per bin di pT x eta ===
+      bin pT  sigma att.     0.0-0.1     0.1-1.1     1.1-1.3     1.3-1.7     1.7-2.5     2.5-2.8
+                scale ->         1.0         1.0         1.0         1.5         1.5         4.0
+       20_30      0.0224       0.134       0.134       0.134       0.201       0.201       0.537
+       30_40      0.0244       0.146       0.146       0.146       0.220       0.220       0.586
+       40_50      0.0269       0.161       0.161       0.161       0.242       0.242       0.646
+       50_70      0.0312       0.187       0.187       0.187       0.281       0.281       0.750
+      70_100      0.0394       0.237       0.237       0.237       0.355       0.355       0.947
+     100_150      0.0539       0.323       0.323       0.323       0.485       0.485       1.292
+     150_200      0.0728       0.437       0.437       0.437       0.655       0.655       1.747
+     200_300      0.1020       0.612       0.612       0.612       0.918       0.918       2.448
+     300_500      0.1612       0.967       0.967       0.967       1.451       1.451       3.870
+     500_800      0.2608       1.565       1.565       1.565       2.347       2.347       6.258
+    800_1200      0.4005       2.403       2.403       2.403       3.604       3.604       9.612
+   1200_1750      0.5903       3.542       3.542       3.542       5.313       5.313      14.168
+   1750_2500      0.8502       5.101       5.101       5.101       7.652       7.652      20.406
+   2500_3000      1.1002       6.601       6.601       6.601       9.902       9.902      26.404
+   3000_4000      1.4001       8.401       8.401       8.401      12.601      12.601      33.603
+   4000_6000      2.0001      12.001      12.001      12.001      18.001      18.001      48.002
+
+[INFO] Aggiunti 1 file da lista: /afs/cern.ch/user/m/masegret/TesiMagistrale/risoluzione_misaligned/jobs/list_0015.txt
+[INFO] Nessun file con DSID 601190 (Z standard) in questo job: normale se il job legge solo file di Z'.
+[INFO] Entries totali = 1476292
+
+[INFO] Inizio loop eventi...
+
+[INFO] Lettura completa: 1476292 eventi
+[INFO] Processati 100000 eventi (entry 99999/1476292)
+[INFO] Processati 200000 eventi (entry 199999/1476292)
+[INFO] Processati 300000 eventi (entry 299999/1476292)
+[INFO] Processati 400000 eventi (entry 399999/1476292)
+[INFO] Processati 500000 eventi (entry 499999/1476292)
+[INFO] Processati 600000 eventi (entry 599999/1476292)
+[INFO] Processati 700000 eventi (entry 699999/1476292)
+[INFO] Processati 800000 eventi (entry 799999/1476292)
+[INFO] Processati 900000 eventi (entry 899999/1476292)
+[INFO] Processati 1000000 eventi (entry 999999/1476292)
+[INFO] Processati 1100000 eventi (entry 1099999/1476292)
+[INFO] Processati 1200000 eventi (entry 1199999/1476292)
+[INFO] Processati 1300000 eventi (entry 1299999/1476292)
+[INFO] Processati 1400000 eventi (entry 1399999/1476292)
+
+=== Statistiche ===
+Eventi letti: 1476292 (su 1476292 nella chain)
+Muoni totali (candidati reco): 3239305
+Truth match validi: 2285912
+Prompt (IFFType == 4): 2265620
+Sopra l'ultimo bin (6000 GeV): 0
+Muoni riempiti nei bin: 1963243
+
+[INFO] 96 istogrammi + accumulatori salvati in output_res.root
+Exit code: 0
