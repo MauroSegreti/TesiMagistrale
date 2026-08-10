@@ -3,7 +3,7 @@ Confronto diretto nominale (PerfectAlignment) vs MS-misaligned: stesso
 identico binning/metodo/fit (vedi README), quindi la sola differenza fra le
 due curve e' l'effetto del disallineamento.
 
-Uso (da risoluzione_misaligned/, dopo aver girato analyze.py in entrambe le
+Uso (da Disallineamento/, dopo aver girato analyze.py in entrambe le
 cartelle cosi' esistono i due merged_res.root):
     python3 compare_alignment.py
 """
@@ -16,7 +16,7 @@ import array
 import ROOT
 
 ANADIR = os.path.dirname(os.path.abspath(__file__))
-QUANTILI_DIR = os.path.join(os.path.dirname(ANADIR), "risoluzione_quantili")
+QUANTILI_DIR = os.path.join(os.path.dirname(ANADIR), "Allineamento")
 sys.path.insert(0, QUANTILI_DIR)
 
 from config import PT_BINS, ETA_BINS, PLOT_X_MIN, PLOT_X_MAX, PT_FIT_MAX

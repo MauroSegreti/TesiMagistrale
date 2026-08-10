@@ -7,7 +7,7 @@ log    = logs/$Fnx(name).log
 notification = error
 notify_user  = masegret@cern.ch
 
-+JobBatchName = "risoluzione_quantili"
++JobBatchName = "Allineamento"
 +JobFlavour = "tomorrow"
 getenv = True
 
@@ -18,4 +18,4 @@ getenv = True
 #   export X509_USER_PROXY=/tmp/x509up_u$(id -u)
 x509userproxy = $ENV(X509_USER_PROXY)
 
-queue name matching files (jobs/do_68.sh)
+queue name matching files (jobs/do_*.sh)

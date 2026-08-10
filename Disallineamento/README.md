@@ -1,10 +1,10 @@
 # Risoluzione in $p_T$ dei muoni — campioni MS-misaligned
 
-Stessa identica misura di [`risoluzione_quantili`](../risoluzione_quantili/) —
+Stessa identica misura di [`Allineamento`](../Allineamento/) —
 stesso binning, stesso stimatore ($\sigma_{68}$), stesso fit a 3 termini,
 stesso codice — ma sui campioni con **geometria disallineata** (tag
 `mc23e_MSmisalign`) invece di `PerfectAlignment`. Per i dettagli su metodo,
-formula, e come si legge il fit, vedi il README di `risoluzione_quantili`:
+formula, e come si legge il fit, vedi il README di `Allineamento`:
 qui non li ripeto.
 
 ## Campioni (tag `mc23e_MSmisalign`, prodotti da `user.lucam`)
@@ -18,7 +18,7 @@ qui non li ripeto.
 | 801865 | Z′ ZeroWidth 5000 GeV |
 | 801866 | Z′ ZeroWidth 8000 GeV |
 
-Stessi sei DSID di `risoluzione_quantili`, tag diverso.
+Stessi sei DSID di `Allineamento`, tag diverso.
 
 ## Preparare le liste
 
@@ -75,7 +75,7 @@ risultato.
 
 `PT_FIT_MAX` e `MIN_REL_ERR` sono ereditati dal nominale come punto di
 partenza, ma sono stati calibrati là sui dati di `PerfectAlignment`: vanno
-ricontrollati qui allo stesso modo (vedi il README di `risoluzione_quantili`
+ricontrollati qui allo stesso modo (vedi il README di `Allineamento`
 per il procedimento — in breve, il floor giusto è quello che porta
 chi2/ndf ≈ 1, non un numero scelto a caso).
 
@@ -124,7 +124,7 @@ punto: la sola differenza è la geometria.
 **La degradazione da disallineamento cresce con $|\eta|$**: da ~1.4× nel
 barrel centrale a ~4× nel forward (2.5-2.8). È fisicamente sensato: oltre
 $|\eta| = 2.5$ le tracce sono standalone nel muon spectrometer (niente inner
-detector, vedi i tre termini nel README di `risoluzione_quantili`), quindi
+detector, vedi i tre termini nel README di `Allineamento`), quindi
 meno misure ridondanti per compensare l'errore di posizione delle camere
 disallineate. Il barrel centrale, dove $r_2$ è già il più piccolo dei due
 casi, è anche il più protetto dal disallineamento in termini relativi.

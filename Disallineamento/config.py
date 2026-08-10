@@ -26,12 +26,12 @@ ETA_BINS = [
     {"min": 2.5, "max": 2.8, "label": "2.5 #leq |#eta| < 2.8"},
 ]
 
-# PT_BINS ed ETA_BINS sono IDENTICI a risoluzione_quantili di proposito: e'
+# PT_BINS ed ETA_BINS sono IDENTICI ad Allineamento di proposito: e'
 # lo stesso identico binning, stessa griglia, stesso metodo (q68) e stesso
 # fit -- solo campione diverso (MS-misaligned invece di PerfectAlignment).
 # Cosi' i due r2 sono confrontabili direttamente, senza dover scorporare
 # quanto della differenza viene dal metodo e quanto dall'allineamento (vedi
-# la sistematica "d_metodo" in risoluzione_quantili/README.md: non e'
+# la sistematica "d_metodo" in Allineamento/README.md: non e'
 # trascurabile, fra il 15% e il 30% relativo).
 
 TREE_NAME = "AnalysisTree"
@@ -68,7 +68,7 @@ PLOT_X_MAX = 6000
 # Fit della formula a 3 termini su sigma_68(pT)
 # --------------------------------------------------------------------
 # PT_FIT_MAX e MIN_REL_ERR sono ereditati cosi' come sono venuti fuori dal
-# fit nominale (vedi risoluzione_quantili/README.md, sezione "Il fit
+# fit nominale (vedi Allineamento/README.md, sezione "Il fit
 # funziona, ma solo fino a ~800 GeV"): partono da qui perche' e' un punto
 # di partenza ragionevole, NON perche' debbano per forza valere anche qui.
 # MIN_REL_ERR in particolare e' calibrato in modo che chi2/ndf ~ 1 (con un

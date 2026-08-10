@@ -2,7 +2,7 @@
 # Genera un job per ogni file di input, letto via XRootD dalle liste Rucio.
 #
 # Nessun file viene scaricato: le liste .root.txt contengono URL root:// e i
-# job leggono da remoto. Vedi risoluzione_quantili/gen_jobs.sh per il
+# job leggono da remoto. Vedi Allineamento/gen_jobs.sh per il
 # perche' (stesso identico script, solo campione diverso).
 #
 # Uso:  ./gen_jobs.sh

@@ -7,7 +7,7 @@ log    = logs/$Fnx(name).log
 notification = error
 notify_user  = masegret@cern.ch
 
-+JobBatchName = "risoluzione_quantili"
++JobBatchName = "Disallineamento"
 +JobFlavour = "tomorrow"
 getenv = True
 
