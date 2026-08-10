@@ -7,13 +7,6 @@ stesso codice — ma sui campioni con **geometria disallineata** (tag
 formula, e come si legge il fit, vedi il README di `risoluzione_quantili`:
 qui non li ripeto.
 
-Questa cartella conteneva una versione precedente (fit gaussiano puro,
-binning tarato a mano sui picchi jacobiani): sostituita perché va confrontata
-punto per punto con `risoluzione_quantili`, non con una metodologia diversa —
-altrimenti la differenza fra i due $r_2$ mescola l'effetto
-dell'allineamento con quello del metodo (vedi la sistematica "d_metodo" nel
-README di `risoluzione_quantili`, non trascurabile: 15-30% relativo).
-
 ## Campioni (tag `mc23e_MSmisalign`, prodotti da `user.lucam`)
 
 | DSID | campione |
