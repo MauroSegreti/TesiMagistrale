@@ -1,0 +1,1 @@
+root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/f0/76/user.lucam.51077380._000005.ANALYSIS.root
