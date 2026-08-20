@@ -124,8 +124,8 @@ def main():
     lat.SetTextSize(0.036)
     lat.SetTextAlign(11)
     lat.DrawLatex(0.11, 0.935,
-                  "pieno / linea continua = nominale   "
-                  "vuoto / tratteggiata = misaligned")
+                  "filled / solid line = nominal   "
+                  "open / dashed = misaligned")
     keep.append(lat)
 
     leg = ROOT.TLegend(0.735, 0.06, 0.985, 0.54)
@@ -180,7 +180,7 @@ def main():
     r_max = max(r_all) * 1.15 if r_all else 5.0
 
     frame2 = ROOT.TH2F("fr2_align",
-                       ";p_{T}^{truth} [GeV];misaligned / nominale",
+                       ";p_{T}^{truth} [GeV];misaligned / nominal",
                        100, PLOT_X_MIN, PLOT_X_MAX, 100, 0.8, r_max)
     frame2.GetXaxis().SetTitleSize(0.105)
     frame2.GetXaxis().SetTitleOffset(1.25)

@@ -13,8 +13,8 @@ _bad_fit_color = ROOT.TColor.GetColor(_BAD_FIT_HEX)
 _r2_color = ROOT.TColor.GetColor(_R2_HEX)
 
 _COL_EDGES = [0.03, 0.24, 0.37, 0.50, 0.66, 0.80, 0.97]
-_COL_LABELS = ["|#eta| bin", "n punti", "r_{0} libero [GeV]",
-               "#chi^{2}/ndf (r_{0} libero)", "#chi^{2}/ndf (r_{0} = 0)",
+_COL_LABELS = ["|#eta| bin", "N points", "r_{0} free [GeV]",
+               "#chi^{2}/ndf (r_{0} free)", "#chi^{2}/ndf (r_{0} = 0)",
                "r_{2} [GeV^{-1}]"]
 
 _CHI2_NDF_WARN = 3.0
@@ -24,7 +24,7 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
     os.makedirs(IMAGES_DIR, exist_ok=True)
     output_path = os.path.join(IMAGES_DIR, filename)
 
-    c = ROOT.TCanvas("c_table_fit", "Tabella parametri fit", 1000, 500)
+    c = ROOT.TCanvas("c_table_fit", "Fit parameters table", 1000, 500)
     for setter in (c.SetLeftMargin, c.SetRightMargin,
                    c.SetTopMargin, c.SetBottomMargin):
         setter(0.0)
@@ -37,7 +37,7 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
     title.SetTextSize(0.042)
     title.SetTextAlign(22)
     title.DrawLatex(0.5, 0.94,
-                    "Fit risoluzione in p_{T} vs |#eta^{truth}|: r_{0} libero vs r_{0} = 0")
+                    "p_{T} resolution fit vs |#eta^{truth}|: r_{0} free vs r_{0} = 0")
 
     subtitle = ROOT.TLatex()
     subtitle.SetTextFont(42)
@@ -45,7 +45,7 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
     subtitle.SetTextColor(ROOT.kGray + 2)
     subtitle.SetTextAlign(22)
     subtitle.DrawLatex(0.5, 0.885,
-                       "#sigma_{p_{T}}/p_{T} = #sqrt{r_{0}^{2}/p_{T}^{2} + r_{1}^{2} + (r_{2} #times p_{T})^{2}}  --  #sigma_{68} = (q_{84} - q_{16})/2  --  Z + Z. combinati")
+                       "#sigma_{p_{T}}/p_{T} = #sqrt{r_{0}^{2}/p_{T}^{2} + r_{1}^{2} + (r_{2} #times p_{T})^{2}}  --  #sigma_{68} = (q_{84} - q_{16})/2  --  Z + Z' combined")
 
     n_rows = len(graphs)
     top = 0.79
@@ -134,7 +134,7 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
     footer1.SetTextColor(_bad_fit_color)
     footer1.SetTextAlign(22)
     footer1.DrawLatex(0.5, table_bottom - 0.045,
-                      "In rosso: #chi^{2}/ndf > 3, fit poco affidabile")
+                      "In red: #chi^{2}/ndf > 3, unreliable fit")
 
     footer2 = ROOT.TLatex()
     footer2.SetTextFont(42)
@@ -142,7 +142,7 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
     footer2.SetTextColor(_r2_color)
     footer2.SetTextAlign(22)
     footer2.DrawLatex(0.5, table_bottom - 0.075,
-                      "In blu: r_{2}, la risoluzione nominale ATLAS ad alto p_{T}")
+                      "In blue: r_{2}, the nominal ATLAS resolution at high p_{T}")
 
     c.SaveAs(output_path)
     print(f"[INFO] Tabella salvata in {output_path}")

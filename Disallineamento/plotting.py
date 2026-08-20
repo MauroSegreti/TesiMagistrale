@@ -113,7 +113,7 @@ def draw_resolution_vs_pt(graphs, filename="plot_res_vs_pt",
     r_lim = max(0.05, min(1.0, max(abs(v) for v in r_all) * 1.2)) if r_all else 0.5
 
     frame2 = ROOT.TH2F(f"fr2_{filename}",
-                       ";p_{T}^{truth} [GeV];#frac{dato - fit}{fit}",
+                       ";p_{T}^{truth} [GeV];#frac{data - fit}{fit}",
                        100, x_min, x_max, 100, -r_lim, r_lim)
     frame2.GetXaxis().SetTitleSize(0.105)
     frame2.GetXaxis().SetTitleOffset(1.25)

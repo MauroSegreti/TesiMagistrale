@@ -82,7 +82,7 @@ def draw_rms_vs_eta(graphs):
     for i, (p, g) in enumerate(zip(PT_BINS, graphs)):
         g.SetTitle("")
         g.GetXaxis().SetTitle("|#eta^{truth}|")
-        g.GetYaxis().SetTitle("RMS della risoluzione in p_{T}")
+        g.GetYaxis().SetTitle("p_{T} resolution RMS")
         if i == 0:
             g.Draw("AP")
             g.GetYaxis().SetRangeUser(ymin, ymax)

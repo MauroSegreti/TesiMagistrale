@@ -63,6 +63,8 @@ Analisi:
 ```bash
 python3 analyze.py /eos/user/m/masegret/risoluzione_misaligned_out
 python3 inspect_bins.py merged_res.root
+python3 compare_alignment.py   # confronto diretto col nominale
+python3 closure_test.py        # closure test su r0/r1/r2, vedi sotto
 ```
 
 ## Prima del primo giro vero
@@ -128,3 +130,52 @@ detector, vedi i tre termini nel README di `Allineamento`), quindi
 meno misure ridondanti per compensare l'errore di posizione delle camere
 disallineate. Il barrel centrale, dove $r_2$ è già il più piccolo dei due
 casi, è anche il più protetto dal disallineamento in termini relativi.
+
+### Closure test dei fit
+
+Il confronto sopra si basa solo su $r_2$, ma da solo non basta a escludere che
+stia confrontando due fit fatti in modo diverso invece di due geometrie
+diverse. Test più stringente: controllare anche $r_0$ ed $r_1$, che *non*
+dovrebbero dipendere dalla geometria del muon spectrometer — $r_0$ è perdita
+di energia nel materiale, $r_1$ è multiple scattering, entrambi indifferenti
+a dove il software crede che siano le camere. Se il fit li vede spostarsi in
+modo significativo fra nominale e misaligned, vuol dire che c'è qualcosa che
+non va nel confronto (binning diverso, fit degenere, bug), non un vero
+effetto fisico.
+
+`closure_test.py` fa esattamente questo: per ogni bin di $|\eta|$ prende i
+tre parametri del fit libero (stesso `fit` usato ovunque, non
+`fit_fixed0`) da entrambi i campioni e calcola la differenza in unità di
+sigma combinata:
+
+$$\sigma_{\text{comb}} = \sqrt{\sigma_{\text{nom}}^2 + \sigma_{\text{mis}}^2}
+\qquad
+N\sigma = \frac{|r_{\text{mis}} - r_{\text{nom}}|}{\sigma_{\text{comb}}}$$
+
+È la propagazione standard sotto l'ipotesi che i due fit siano scorrelati —
+ragionevole: sono due fit fatti su due sample statisticamente indipendenti
+(campioni diversi, nessun evento in comune), quindi i loro errori si sommano
+in quadratura. $N\sigma$ è un pull/z-score classico: quante sigma separano i
+due valori, tenendo conto di entrambi gli errori insieme. Le celle con
+$N\sigma > 2$ su $r_0$ o $r_1$ vengono segnalate in rosso nella tabella
+(`images/table_closure_test.pdf`) — vorrebbe dire closure test fallito in
+quella regione.
+
+| $\|\eta\|$ | $r_0$ $N\sigma$ | $r_1$ $N\sigma$ | $r_2$ $N\sigma$ |
+|---|---|---|---|
+| 0.0 - 0.1 | 0.00 | 0.06 | 4.63 |
+| 0.1 - 1.05 | 0.00 | 0.50 | 4.84 |
+| 1.05 - 1.3 | 0.00 | 0.60 | 8.84 |
+| 1.3 - 1.7 | 0.00 | 0.67 | 6.32 |
+| 1.7 - 2.5 | 0.00 | 0.15 | 10.84 |
+| 2.5 - 2.8 | 0.38 | 0.35 | 12.64 |
+
+Il closure test passa ovunque: $r_0$ ed $r_1$ restano sotto 1 sigma in tutti
+i bin (su $r_0$ la compatibilità è in parte banale — è comunque non
+vincolato dal fit, vedi sopra — ma $r_1$ è ben misurato e torna comunque
+entro 0.67 sigma ovunque). $r_2$ invece si sposta fra 4.6 e 12.6 sigma in
+ogni bin: esattamente il comportamento atteso, essendo l'unico termine
+sensibile alla geometria delle camere. Il fatto che sia l'unico a muoversi,
+sempre nella stessa direzione (peggiora, mai migliora) e in modo crescente
+con $|\eta|$ come il rapporto qui sopra, è la controprova che l'effetto è
+reale e non un artefatto del fit.

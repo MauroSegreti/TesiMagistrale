@@ -40,7 +40,7 @@ def draw_inclusive(h_all, suffix=""):
     c = ROOT.TCanvas(f"c_all{suffix}", "Inclusive", 900, 700)
     style_histo(h_all, ROOT.kAzure + 2, fill=True)
     h_all.GetXaxis().SetTitle("(1/p_{T}^{reco} - 1/p_{T}^{truth}) / (1/p_{T}^{truth})")
-    h_all.GetYaxis().SetTitle("Muoni / bin")
+    h_all.GetYaxis().SetTitle("Muons / bin")
     h_all.Draw("HIST")
 
     leg = make_legend(0.60, 0.66, 0.90, 0.90)
@@ -61,7 +61,7 @@ def draw_single_bins(histos_pt, suffix=""):
         color = PALETTE[i % len(PALETTE)]
         style_histo(h, color, fill=True)
         h.GetXaxis().SetTitle("(1/p_{T}^{reco} - 1/p_{T}^{truth}) / (1/p_{T}^{truth})")
-        h.GetYaxis().SetTitle("Muoni / bin")
+        h.GetYaxis().SetTitle("Muons / bin")
         h.Draw("HIST")
 
         leg = make_legend()
@@ -92,7 +92,7 @@ def draw_bins_overlay(histos_pt, suffix=""):
     for i, (b, h) in enumerate(zip(PT_BINS, clones)):
         h.SetMaximum(y_max * 1.35)
         h.GetXaxis().SetTitle("(1/p_{T}^{reco} - 1/p_{T}^{truth}) / (1/p_{T}^{truth})")
-        h.GetYaxis().SetTitle("Frazione di eventi / bin")
+        h.GetYaxis().SetTitle("Fraction of events / bin")
         h.Draw("HIST" if i == 0 else "HIST SAME")
         leg.AddEntry(h, f"{b['min']}-{b['max']} GeV", "l")
 
