@@ -146,6 +146,17 @@ punto a 310 GeV è fuorviante. Gira in interattivo su un file solo, perché per
 una media basta pochissima statistica, e aggiorna `config.py` (con backup in
 `config.py.bak`). Dopo basta rilanciare `merge.py`, non serve rifare i job.
 
+## Sottocartella `WP`
+
+`WP/` riusa questo stesso campione Z→μμ per rispondere a una domanda diversa:
+la risoluzione in curvatura dipende dal working point di qualità del muone
+(Loose/Medium/Tight)? Stessa pipeline (config/chain_builder/histograms/
+event_loop/plotting/main/gen_jobs/condor), ma solo due tipi di plot invece
+di quattro: la risoluzione inclusiva sovrapposta per i tre WP, e
+l'efficienza del WP (in p_T, eta, phi) rispetto ai muoni ricostruiti e
+matchati al truth. Dettagli, risultati e un bug non ovvio incontrato
+(`vector<char>` in PyROOT che rende `bool('\x00')` vero) in `WP/README.md`.
+
 ## Note
 
 Nel grafico RMS vs $p_T$ le barre orizzontali sono la **larghezza dei bin**, non
