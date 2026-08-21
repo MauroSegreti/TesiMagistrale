@@ -1,0 +1,99 @@
+Running on host b9p26p4851.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000012.ANALYSIS.root
+[7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
+[7m lsetup asetup      [0m  (or asetup) to setup an Athena release
+[7m lsetup astyle      [0m  ATLAS style macros
+[7m lsetup atlantis    [0m  Atlantis: event display
+[7m lsetup centralpage [0m  Find samples
+[7m lsetup eiclient    [0m  Event Index 
+[7m lsetup emi         [0m  EMI: grid middleware user interface 
+[7m lsetup lcgenv      [0m  lcgenv: setup tools from cvmfs SFT repository
+[7m lsetup panda       [0m  Panda: Production ANd Distributed Analysis
+[7m lsetup pyami       [0m  pyAMI: ATLAS Metadata Interface python client
+[7m lsetup root        [0m  ROOT data processing framework
+[7m lsetup rucio       [0m  distributed data management system client
+[7m lsetup scikit      [0m  python data analysis ecosystem
+[7m lsetup views       [0m  Set up a full LCG release
+[7m lsetup xcache      [0m  XRootD local proxy cache
+[7m lsetup xrootd      [0m  XRootD data access
+[7madvancedTools       [0m advanced tools menu
+[7mdiagnostics         [0m diagnostic tools menu
+[7mhelpMe              [0m more help
+[7minstallPip          [0m install relocatable pip modules locally
+[7minstallRpm          [0m install relocatable rpms locally
+[7mprintMenu           [0m show this menu
+[7mqueryC              [0m find / whatis container query
+[7mshowVersions        [0m show versions of installed software
+
+[1m[4m30 Nov 2023[0m 
+
+A serious security issue in ROOT's web-based GUI has been identified:
+
+  You should not use the web-based browser until further notice and instead 
+  set the old-style TBrowser as the default. Please see the Twiki page linked 
+  below for instructions on how to do this.
+
+  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
+
+  More details of this issue:
+  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
+
+  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
+
+
+[1m[4m17 Mar 2026[0m
+
+SSL_CERT_DIR is no longer defined by asetup, python or emi.
+If you see SSL issues, read https://cern.ch/fudpr
+or run in a container depending on which OS needed:
+   setupATLAS -c el9 or setupATLAS -c centos7
+
+
+"amsg seen" to mark as seen to suppress above messages
+
+
+************************************************************************
+Requested:  root ... 
+ Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
+  ROOT is from lcgenv -p LCG_110_ATLAS_1 x86_64-el9-gcc15-opt ROOT
+>>>>>>>>>>>>>>>>>>>>>>>>> Information for user <<<<<<<<<<<<<<<<<<<<<<<<<
+ root:
+   Tip for _this_ standalone ROOT and grid (ie prun) submission:
+    avoid --athenaTag if you do not need athena
+    use --rootVer=6.40.02 --cmtConfig=x86_64-el9-gcc15-opt
+ root:
+   Note this ROOT from lcgenv sets up a long list of library paths.
+   This may slow down executables; they look at each library path item.
+   A faster alternative - setup the entire LCG stack with views:
+    lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
+************************************************************************
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000012.ANALYSIS.root
+[INFO] Entries totali = 1606260
+[INFO] Branch attivi: muon_pt, truthmuon_pt, truthmuon_eta, truthmuon_phi, muon_truthmuon_index, muon_Loose, muon_Medium, muon_Tight
+
+[INFO] Inizio loop eventi...
+
+[INFO] Processati 0 eventi
+[INFO] Processati 100000 eventi
+[INFO] Processati 200000 eventi
+[INFO] Processati 300000 eventi
+[INFO] Processati 400000 eventi
+[INFO] Processati 500000 eventi
+[INFO] Processati 600000 eventi
+[INFO] Processati 700000 eventi
+[INFO] Processati 800000 eventi
+[INFO] Processati 900000 eventi
+[INFO] Processati 1000000 eventi
+[INFO] Processati 1100000 eventi
+[INFO] Processati 1200000 eventi
+[INFO] Processati 1300000 eventi
+[INFO] Processati 1400000 eventi
+[INFO] Processati 1500000 eventi
+[INFO] Processati 1600000 eventi
+
+[INFO] Muoni ricostruiti e matchati = 2633274
+[INFO] Muoni passanti Loose = 2600080
+[INFO] Muoni passanti Medium = 2573688
+[INFO] Muoni passanti Tight = 2381831
+[INFO] File ROOT salvato: output_wp.root
+Exit code: 0

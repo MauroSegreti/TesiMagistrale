@@ -62,3 +62,41 @@
 	3  -  MemoryUsage of job (MB)
 	2388  -  ResidentSetSize of job (KB)
 ...
+006 (16742629.020.000) 08/21 15:02:55 Image size of job updated: 221280
+	217  -  MemoryUsage of job (MB)
+	221280  -  ResidentSetSize of job (KB)
+...
+006 (16742629.020.000) 08/21 15:07:55 Image size of job updated: 221304
+	217  -  MemoryUsage of job (MB)
+	221304  -  ResidentSetSize of job (KB)
+...
+006 (16742629.020.000) 08/21 15:12:56 Image size of job updated: 221308
+	217  -  MemoryUsage of job (MB)
+	221308  -  ResidentSetSize of job (KB)
+...
+006 (16742629.020.000) 08/21 15:14:21 Image size of job updated: 221964
+	217  -  MemoryUsage of job (MB)
+	221308  -  ResidentSetSize of job (KB)
+...
+040 (16742629.020.000) 08/21 15:14:21 Started transferring output files
+...
+040 (16742629.020.000) 08/21 15:14:21 Finished transferring output files
+...
+005 (16742629.020.000) 08/21 15:14:22 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:13:27, Sys 0 00:00:07  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:13:27, Sys 0 00:00:07  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	10637  -  Run Bytes Sent By Job
+	850  -  Run Bytes Received By Job
+	10637  -  Total Bytes Sent By Job
+	850  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.81        1         1 
+	   Disk (KB)            :    49           1      3886 
+	   GPUs                 :                           0 
+	   Memory (MB)          :   217        3000      3000 
+	   TimeExecute (s)      :   996                       
+	   TimeSlotBusy (s)     :   998                       
+...

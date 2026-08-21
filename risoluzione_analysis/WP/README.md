@@ -49,24 +49,31 @@ non veniva mai interpretato come `False`. Fix in `event_loop.py`: si usa
 
 ## Risultato
 
-RMS della risoluzione inclusiva, su un run di prova (200k eventi, 1 file):
-Loose 0.0282, Medium 0.0282, Tight 0.0260 — compatibili tra loro. Il plot
-overlay mostra le tre distribuzioni praticamente sovrapposte: **la
-risoluzione in p_T non dipende dalla scelta del working point**, che invece
-sposta in modo netto l'efficienza (Loose ~98-99%, Tight ~85-93%, crescente
-con p_T). Ha senso fisicamente: il WP seleziona sulla qualita'/tipo del
+Statistica piena (tutti e 30 i file, 160'051'113 muoni ricostruiti e
+matchati al truth):
+
+| WP     | Muoni passanti | Efficienza | RMS risoluzione |
+|--------|----------------|------------|------------------|
+| Loose  | 158'020'822    | 98.7%      | 0.0282           |
+| Medium | 156'404'252    | 97.7%      | 0.0282           |
+| Tight  | 144'737'249    | 90.4%      | 0.0259           |
+
+Il plot overlay mostra le tre distribuzioni di risoluzione praticamente
+sovrapposte, con errori ormai trascurabili: **la risoluzione in p_T non
+dipende dalla scelta del working point**, che invece sposta in modo netto
+l'efficienza. Ha senso fisicamente: il WP seleziona sulla qualita'/tipo del
 match (hit nelle camere, chi2, ecc.), non modifica la misura del momento del
 muone una volta che questo e' gia' classificato come combined muon.
 
-`efficiency_vs_eta` (stesso run di prova) mostra un calo netto a eta~0 per
-Medium (~0.71) e Tight (~0.60), molto meno marcato per Loose: e' il buco di
-accettanza dovuto ai servizi nella regione centrale del barrel, atteso in
-ATLAS. Loose lo sente meno perche' include anche muoni segment-tagged e
-calo-tagged, che non richiedono piena copertura dello spettrometro. `phi` e'
-piatto come atteso, nessun buco settoriale evidente.
+`efficiency_vs_eta` mostra un calo netto a eta~0 per Medium (~0.71) e Tight
+(~0.60), molto meno marcato per Loose: e' il buco di accettanza dovuto ai
+servizi nella regione centrale del barrel, atteso in ATLAS. Loose lo sente
+meno perche' include anche muoni segment-tagged e calo-tagged, che non
+richiedono piena copertura dello spettrometro. `phi` e' piatto come atteso,
+nessun buco settoriale evidente. `efficiency_vs_pt` cresce leggermente con
+p_T per Tight, plateau gia' raggiunto per Loose/Medium.
 
-Da rifare con la statistica piena (tutti e 30 i file) per numeri definitivi
-da mettere in tesi.
+Numeri e plot definitivi, statistica piena — pronti per la tesi.
 
 ## Come lanciare
 
