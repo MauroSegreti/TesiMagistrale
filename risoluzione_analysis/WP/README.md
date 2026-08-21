@@ -20,9 +20,8 @@ solo i plot richiesti, la risoluzione inclusiva e le efficienze:
    richiesti esplicitamente ma aggiunti perche' interessanti: eta mostra la
    transizione barrel-endcap e il buco di accettanza a eta~0 (regione dei
    servizi del barrel), phi verifica che non ci siano buchi settoriali.
-   p_T usa i bin larghi di `PT_BINS` (condivisi con la risoluzione), eta/phi
-   usano un binning uniforme fine (27 bin in [-2.7, 2.7], 32 bin in
-   [-pi, pi]).
+   Binning uniforme e fine per tutte e tre: 50 bin in [0, 500] GeV per p_T,
+   27 bin in [-2.7, 2.7] per eta, 32 bin in [-pi, pi] per phi.
 
 ## Definizione di "efficienza" usata qui
 
@@ -46,6 +45,18 @@ e' una stringa non vuota, non il carattere nullo. Un primo giro di test
 dava il 100% dei muoni passanti tutti e tre i WP — falso, perche' il flag
 non veniva mai interpretato come `False`. Fix in `event_loop.py`: si usa
 `ord(flags[j])` invece del valore booleano diretto.
+
+## Binning di `efficiency_vs_pt`: barra orizzontale enorme sull'ultimo punto
+
+Prima versione: il binning in p_T per l'efficienza riusava i `PT_BINS` di
+`risoluzione_analysis`, pensati per avere abbastanza statistica per l'RMS
+della risoluzione — bin larghi e disomogenei, l'ultimo dei quali va da 120 a
+500 GeV. `TEfficiency` disegna come barra orizzontale meta' larghezza del
+bin (non un errore statistico), quindi l'ultimo punto aveva una barra da
+190 GeV, enorme e fuorviante. Con 160M muoni la statistica non e' un
+problema: sostituito con un binning uniforme e fine (50 bin, 10 GeV
+ciascuno, [0, 500] GeV) — vedi `PT_RANGE`/`PT_NBINS` in `config.py`, stesso
+approccio gia' usato per eta/phi.
 
 ## Risultato
 

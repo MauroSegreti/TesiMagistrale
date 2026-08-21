@@ -1,6 +1,7 @@
-import array
 import ROOT
-from config import PT_BINS, ETA_RANGE, ETA_NBINS, PHI_RANGE, PHI_NBINS, WP_LIST
+from config import (
+    PT_RANGE, PT_NBINS, ETA_RANGE, ETA_NBINS, PHI_RANGE, PHI_NBINS, WP_LIST
+)
 
 
 def make_resolution_histo(name, title):
@@ -15,19 +16,6 @@ def make_resolution_histo(name, title):
     return h
 
 
-def _pt_bin_edges():
-    edges = [PT_BINS[0]["min"]] + [b["max"] for b in PT_BINS]
-    return array.array('d', edges)
-
-
-def make_eff_histo_pt(name, title):
-    edges = _pt_bin_edges()
-    h = ROOT.TH1F(name, f"{title};p_{{T}}^{{truth}} [GeV];Muons",
-                  len(edges) - 1, edges)
-    h.SetDirectory(0)
-    return h
-
-
 def make_eff_histo_uniform(name, title, nbins, xrange, xaxis_title):
     h = ROOT.TH1F(name, f"{title};{xaxis_title};Muons",
                   nbins, xrange[0], xrange[1])
@@ -38,7 +26,8 @@ def make_eff_histo_uniform(name, title, nbins, xrange, xaxis_title):
 # per ogni variabile: come costruire il suo istogramma pass/total e con
 # quale titolo per l'asse x
 _EFF_VARS = {
-    "pt": lambda name, title: make_eff_histo_pt(name, title),
+    "pt": lambda name, title: make_eff_histo_uniform(
+        name, title, PT_NBINS, PT_RANGE, "p_{T}^{truth} [GeV]"),
     "eta": lambda name, title: make_eff_histo_uniform(
         name, title, ETA_NBINS, ETA_RANGE, "#eta^{truth}"),
     "phi": lambda name, title: make_eff_histo_uniform(
