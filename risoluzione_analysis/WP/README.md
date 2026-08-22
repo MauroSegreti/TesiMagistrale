@@ -1,7 +1,8 @@
 # Risoluzione in p_T e working point loose/medium/tight
 
-Stesso campione di `risoluzione_analysis` (Z→μμ, mc23e, PerfectAlignment,
-30 file), ma qui la domanda e' un'altra: **la risoluzione in curvatura dipende
+Stesso campione di `risoluzione_analysis` (Z→μμ, mc23e, PerfectAlignment),
+esteso pero' a 68 file (contro i 30 di `risoluzione_analysis`). La domanda
+qui e' un'altra: **la risoluzione in curvatura dipende
 dal working point di qualita' del muone**? Vengono confrontati i tre WP
 standard ATLAS **Loose**, **Medium**, **Tight** (booleani cumulativi:
 `muon_Tight` implica `muon_Medium` implica `muon_Loose`, verificato
@@ -60,14 +61,14 @@ approccio gia' usato per eta/phi.
 
 ## Risultato
 
-Statistica piena (tutti e 30 i file, 160'051'113 muoni ricostruiti e
+Statistica piena (tutti e 68 i file, 347'410'870 muoni ricostruiti e
 matchati al truth):
 
 | WP     | Muoni passanti | Efficienza | RMS risoluzione |
 |--------|----------------|------------|------------------|
-| Loose  | 158'020'822    | 98.7%      | 0.0282           |
-| Medium | 156'404'252    | 97.7%      | 0.0282           |
-| Tight  | 144'737'249    | 90.4%      | 0.0259           |
+| Loose  | 343'009'434    | 98.7%      | 0.0282           |
+| Medium | 339'503'110    | 97.7%      | 0.0282           |
+| Tight  | 314'169'451    | 90.4%      | 0.0259           |
 
 Il plot overlay mostra le tre distribuzioni di risoluzione praticamente
 sovrapposte, con errori ormai trascurabili: **la risoluzione in p_T non

@@ -1,5 +1,5 @@
-Running on host b9p29p0003.cern.ch
-Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000043.ANALYSIS.root
+Running on host b9p28p6761.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000016.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
 [7m lsetup astyle      [0m  ATLAS style macros
@@ -25,33 +25,6 @@ Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190
 [7mqueryC              [0m find / whatis container query
 [7mshowVersions        [0m show versions of installed software
 
-[1m[4m30 Nov 2023[0m 
-
-A serious security issue in ROOT's web-based GUI has been identified:
-
-  You should not use the web-based browser until further notice and instead 
-  set the old-style TBrowser as the default. Please see the Twiki page linked 
-  below for instructions on how to do this.
-
-  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
-
-  More details of this issue:
-  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
-
-  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
-
-
-[1m[4m17 Mar 2026[0m
-
-SSL_CERT_DIR is no longer defined by asetup, python or emi.
-If you see SSL issues, read https://cern.ch/fudpr
-or run in a container depending on which OS needed:
-   setupATLAS -c el9 or setupATLAS -c centos7
-
-
-"amsg seen" to mark as seen to suppress above messages
-
-
 ************************************************************************
 Requested:  root ... 
  Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
@@ -67,8 +40,8 @@ Requested:  root ...
    A faster alternative - setup the entire LCG stack with views:
     lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
 ************************************************************************
-[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000043.ANALYSIS.root
-[INFO] Entries totali = 4870955
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000016.ANALYSIS.root
+[INFO] Entries totali = 1530398
 [INFO] Branch attivi: muon_pt, truthmuon_pt, truthmuon_eta, truthmuon_phi, muon_truthmuon_index, muon_Loose, muon_Medium, muon_Tight
 
 [INFO] Inizio loop eventi...
@@ -89,43 +62,10 @@ Requested:  root ...
 [INFO] Processati 1300000 eventi
 [INFO] Processati 1400000 eventi
 [INFO] Processati 1500000 eventi
-[INFO] Processati 1600000 eventi
-[INFO] Processati 1700000 eventi
-[INFO] Processati 1800000 eventi
-[INFO] Processati 1900000 eventi
-[INFO] Processati 2000000 eventi
-[INFO] Processati 2100000 eventi
-[INFO] Processati 2200000 eventi
-[INFO] Processati 2300000 eventi
-[INFO] Processati 2400000 eventi
-[INFO] Processati 2500000 eventi
-[INFO] Processati 2600000 eventi
-[INFO] Processati 2700000 eventi
-[INFO] Processati 2800000 eventi
-[INFO] Processati 2900000 eventi
-[INFO] Processati 3000000 eventi
-[INFO] Processati 3100000 eventi
-[INFO] Processati 3200000 eventi
-[INFO] Processati 3300000 eventi
-[INFO] Processati 3400000 eventi
-[INFO] Processati 3500000 eventi
-[INFO] Processati 3600000 eventi
-[INFO] Processati 3700000 eventi
-[INFO] Processati 3800000 eventi
-[INFO] Processati 3900000 eventi
-[INFO] Processati 4000000 eventi
-[INFO] Processati 4100000 eventi
-[INFO] Processati 4200000 eventi
-[INFO] Processati 4300000 eventi
-[INFO] Processati 4400000 eventi
-[INFO] Processati 4500000 eventi
-[INFO] Processati 4600000 eventi
-[INFO] Processati 4700000 eventi
-[INFO] Processati 4800000 eventi
 
-[INFO] Muoni ricostruiti e matchati = 7984718
-[INFO] Muoni passanti Loose = 7883682
-[INFO] Muoni passanti Medium = 7803241
-[INFO] Muoni passanti Tight = 7221173
+[INFO] Muoni ricostruiti e matchati = 2508812
+[INFO] Muoni passanti Loose = 2476620
+[INFO] Muoni passanti Medium = 2451387
+[INFO] Muoni passanti Tight = 2268786
 [INFO] File ROOT salvato: output_wp.root
 Exit code: 0

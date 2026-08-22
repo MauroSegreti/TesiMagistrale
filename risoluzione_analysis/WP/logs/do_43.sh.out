@@ -1,0 +1,94 @@
+Running on host b9p25p6987.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000044.ANALYSIS.root
+[7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
+[7m lsetup asetup      [0m  (or asetup) to setup an Athena release
+[7m lsetup astyle      [0m  ATLAS style macros
+[7m lsetup atlantis    [0m  Atlantis: event display
+[7m lsetup centralpage [0m  Find samples
+[7m lsetup eiclient    [0m  Event Index 
+[7m lsetup emi         [0m  EMI: grid middleware user interface 
+[7m lsetup lcgenv      [0m  lcgenv: setup tools from cvmfs SFT repository
+[7m lsetup panda       [0m  Panda: Production ANd Distributed Analysis
+[7m lsetup pyami       [0m  pyAMI: ATLAS Metadata Interface python client
+[7m lsetup root        [0m  ROOT data processing framework
+[7m lsetup rucio       [0m  distributed data management system client
+[7m lsetup scikit      [0m  python data analysis ecosystem
+[7m lsetup views       [0m  Set up a full LCG release
+[7m lsetup xcache      [0m  XRootD local proxy cache
+[7m lsetup xrootd      [0m  XRootD data access
+[7madvancedTools       [0m advanced tools menu
+[7mdiagnostics         [0m diagnostic tools menu
+[7mhelpMe              [0m more help
+[7minstallPip          [0m install relocatable pip modules locally
+[7minstallRpm          [0m install relocatable rpms locally
+[7mprintMenu           [0m show this menu
+[7mqueryC              [0m find / whatis container query
+[7mshowVersions        [0m show versions of installed software
+
+************************************************************************
+Requested:  root ... 
+ Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
+  ROOT is from lcgenv -p LCG_110_ATLAS_1 x86_64-el9-gcc15-opt ROOT
+>>>>>>>>>>>>>>>>>>>>>>>>> Information for user <<<<<<<<<<<<<<<<<<<<<<<<<
+ root:
+   Tip for _this_ standalone ROOT and grid (ie prun) submission:
+    avoid --athenaTag if you do not need athena
+    use --rootVer=6.40.02 --cmtConfig=x86_64-el9-gcc15-opt
+ root:
+   Note this ROOT from lcgenv sets up a long list of library paths.
+   This may slow down executables; they look at each library path item.
+   A faster alternative - setup the entire LCG stack with views:
+    lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
+************************************************************************
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000044.ANALYSIS.root
+[INFO] Entries totali = 3842422
+[INFO] Branch attivi: muon_pt, truthmuon_pt, truthmuon_eta, truthmuon_phi, muon_truthmuon_index, muon_Loose, muon_Medium, muon_Tight
+
+[INFO] Inizio loop eventi...
+
+[INFO] Processati 0 eventi
+[INFO] Processati 100000 eventi
+[INFO] Processati 200000 eventi
+[INFO] Processati 300000 eventi
+[INFO] Processati 400000 eventi
+[INFO] Processati 500000 eventi
+[INFO] Processati 600000 eventi
+[INFO] Processati 700000 eventi
+[INFO] Processati 800000 eventi
+[INFO] Processati 900000 eventi
+[INFO] Processati 1000000 eventi
+[INFO] Processati 1100000 eventi
+[INFO] Processati 1200000 eventi
+[INFO] Processati 1300000 eventi
+[INFO] Processati 1400000 eventi
+[INFO] Processati 1500000 eventi
+[INFO] Processati 1600000 eventi
+[INFO] Processati 1700000 eventi
+[INFO] Processati 1800000 eventi
+[INFO] Processati 1900000 eventi
+[INFO] Processati 2000000 eventi
+[INFO] Processati 2100000 eventi
+[INFO] Processati 2200000 eventi
+[INFO] Processati 2300000 eventi
+[INFO] Processati 2400000 eventi
+[INFO] Processati 2500000 eventi
+[INFO] Processati 2600000 eventi
+[INFO] Processati 2700000 eventi
+[INFO] Processati 2800000 eventi
+[INFO] Processati 2900000 eventi
+[INFO] Processati 3000000 eventi
+[INFO] Processati 3100000 eventi
+[INFO] Processati 3200000 eventi
+[INFO] Processati 3300000 eventi
+[INFO] Processati 3400000 eventi
+[INFO] Processati 3500000 eventi
+[INFO] Processati 3600000 eventi
+[INFO] Processati 3700000 eventi
+[INFO] Processati 3800000 eventi
+
+[INFO] Muoni ricostruiti e matchati = 6299374
+[INFO] Muoni passanti Loose = 6219934
+[INFO] Muoni passanti Medium = 6156585
+[INFO] Muoni passanti Tight = 5697894
+[INFO] File ROOT salvato: output_wp.root
+Exit code: 0
