@@ -5,7 +5,7 @@ import subprocess
 
 import ROOT
 from config import PT_BINS, OUTPUT_ROOT_FILE
-from plotting import make_rms_graph, save_all_plots
+from plotting import make_rms_graph, save_all_plots, draw_prompt_vs_inclusive
 import style
 
 style.apply_style()
@@ -53,6 +53,7 @@ def main(outdir, merged="merged.root"):
 
     save_all_plots(h_all, histos_pt, graph)
     save_all_plots(h_all_prompt, histos_pt_prompt, graph_prompt, suffix="_prompt")
+    draw_prompt_vs_inclusive(h_all, h_all_prompt)
 
     print(f"\n[INFO] Muoni totali (inclusivo) = {int(h_all.GetEntries())}")
     print(f"[INFO] Muoni totali (prompt)    = {int(h_all_prompt.GetEntries())}")

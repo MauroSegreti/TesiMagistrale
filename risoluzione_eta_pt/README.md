@@ -129,6 +129,40 @@ scrittura ad AFS poco affidabile.
 `TGraph` si limiterebbe a impilarli. Rigenera plot e tabella con la statistica
 completa e segnala i bin con meno di 100 muoni.
 
+## I plot in `images/`
+
+- **`plot_RMS_vs_eta`** — il plot principale dell'analisi: una curva per
+  ciascuno dei 6 bin di $p_T$ (`TGraphErrors`, un colore per bin dalla
+  palette di `style.py`), con l'RMS della risoluzione (asse y) in funzione
+  di $|\eta^{truth}|$ (asse x). Le barre orizzontali sono la larghezza del
+  bin di $\eta$ (non uniforme, segue la geometria dello spettrometro — vedi
+  tabella sopra), quelle verticali l'errore statistico sull'RMS
+  (trascurabile con la statistica piena, vedi nota sotto). La legenda è
+  disegnata **fuori** dall'area dati, nel margine destro allargato
+  (`SetRightMargin(0.30)`), apposta per non sovrapporsi mai alle curve
+  quando si affollano. È qui che si vede la struttura attesa: risoluzione
+  migliore nel barrel (0.1-1.01), una gobba nella regione di transizione
+  (1.3-1.7, per via delle inversioni di campo) e una risalita netta oltre
+  $|\eta| = 2.5$ (endcap senza inner detector, solo tracce stand-alone).
+
+- **`plot_eta_overlay`** — l'equivalente, per questa analisi, di
+  `plot_bins_overlay` in `risoluzione_analysis`, ma con l'$\eta$ al posto
+  del $p_T$: per ciascun bin di $|\eta|$ somma gli istogrammi di risoluzione
+  sui 6 bin di $p_T$ (quindi diventa inclusivo in $p_T$, sempre sui soli
+  muoni prompt), normalizza ognuno ad area 1 e sovrappone le 6 forme
+  risultanti in un unico canvas. Utile per confrontare la **forma** delle
+  distribuzioni (code, larghezza) al variare della regione di $\eta$,
+  indipendentemente dalla statistica per bin.
+
+- **`table_RMS_vs_eta`** — tabella PDF con tutti i valori numerici (bin di
+  $\eta$, entries, RMS, errore sull'RMS) per ciascuna delle 36 combinazioni
+  $p_T \times \eta$, raggruppate per bin di $p_T$ con intestazioni colorate
+  e righe alternate (zebra) per leggibilità. Disegnata interamente con
+  primitive ROOT (`TBox`/`TLine`/`TLatex`) in `report.py`, quindi non serve
+  nessuna libreria PDF esterna. È il numero dietro ogni punto dei due plot
+  sopra, utile per citare valori precisi in tesi senza dover leggere i
+  grafici a occhio.
+
 ## Note
 
 Nella tabella l'errore sull'RMS appariva come `0.0000`: non è un problema del

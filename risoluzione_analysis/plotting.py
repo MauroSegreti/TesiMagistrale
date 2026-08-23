@@ -111,6 +111,42 @@ def draw_rms_graph(graph, suffix=""):
     return c
 
 
+def draw_prompt_vs_inclusive(h_all, h_all_prompt):
+    c = ROOT.TCanvas("c_prompt_vs_incl", "Inclusive vs prompt", 900, 700)
+
+    h1 = h_all.Clone("h_res_all_overlay_incl")
+    h1.SetDirectory(0)
+    h2 = h_all_prompt.Clone("h_res_all_overlay_prompt")
+    h2.SetDirectory(0)
+
+    entries1, rms1 = h1.GetEntries(), h1.GetRMS()
+    entries2, rms2 = h2.GetEntries(), h2.GetRMS()
+
+    style_histo(h1, ROOT.kAzure + 2)
+    style_histo(h2, ROOT.kRed + 1)
+    h1.SetFillStyle(0)
+    h2.SetFillStyle(0)
+    if h1.Integral() > 0:
+        h1.Scale(1.0 / h1.Integral())
+    if h2.Integral() > 0:
+        h2.Scale(1.0 / h2.Integral())
+
+    h1.GetXaxis().SetTitle("(1/p_{T}^{reco} - 1/p_{T}^{truth}) / (1/p_{T}^{truth})")
+    h1.GetYaxis().SetTitle("Fraction of muons / bin")
+    h1.SetMaximum(max(h1.GetMaximum(), h2.GetMaximum()) * 1.35)
+    h1.Draw("HIST")
+    h2.Draw("HIST SAME")
+
+    leg = make_legend(0.58, 0.62, 0.90, 0.90)
+    leg.AddEntry(h1, f"Inclusive (RMS = {rms1:.4f})", "l")
+    leg.AddEntry(h2, f"Prompt (RMS = {rms2:.4f})", "l")
+    leg.AddEntry(0, f"Non-prompt = {100 * (entries1 - entries2) / entries1:.2f}%", "")
+    leg.Draw()
+
+    _save(c, "h_res_prompt_vs_incl")
+    return c, (h1, h2)
+
+
 def save_all_plots(h_all, histos_pt, graph, suffix=""):
     draw_inclusive(h_all, suffix)
     draw_single_bins(histos_pt, suffix)

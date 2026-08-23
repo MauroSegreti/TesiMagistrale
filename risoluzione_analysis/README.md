@@ -114,6 +114,10 @@ di appartenenza e, se `IFFType == 4`, i corrispondenti prompt.
 **`plotting.py`** — costruisce il `TGraphErrors` di RMS vs $p_T$ e salva tutti i
 plot in PNG e PDF: distribuzione inclusiva, un plot per bin, l'overlay
 normalizzato di tutti i bin e il grafico finale della risoluzione.
+`draw_prompt_vs_inclusive` produce inoltre l'overlay diretto tra `h_res_all`
+e `h_res_all_prompt` (normalizzati a densità, con RMS ed entries in legenda),
+usato per giustificare lo split inclusivo/prompt — vedi "Inclusivo vs prompt"
+più sotto.
 
 **`style.py`** — stile ATLAS-like (font, margini, tick su tutti i lati, niente
 box delle statistiche) e la palette di colori usata nell'overlay.
@@ -146,6 +150,129 @@ punto a 310 GeV è fuorviante. Gira in interattivo su un file solo, perché per
 una media basta pochissima statistica, e aggiorna `config.py` (con backup in
 `config.py.bak`). Dopo basta rilanciare `merge.py`, non serve rifare i job.
 
+## I plot in `images/`
+
+Ogni tipo di plot esiste in due versioni: quella inclusiva (tutti i muoni) e
+quella con suffisso **`_prompt`**, identica ma riempita solo con i muoni
+truth `IFFType == 4`. Di seguito il dettaglio delle tre versioni prompt
+citate spesso in tesi (le equivalenti senza suffisso sono le stesse cose
+sulla popolazione inclusiva):
+
+- **`h_res_all_prompt`** — istogramma della risoluzione in curvatura
+  (100 bin tra -0.2 e 0.2) riempito con **tutti** i muoni prompt insieme,
+  senza distinzione di bin di $p_T$. In legenda: numero di entries, media e
+  RMS della distribuzione. È il plot "d'insieme", da confrontare con
+  `h_res_all` per vedere quanto la componente non-prompt (muoni da
+  decadimenti di adroni pesanti, in volo, ecc.) allarga la coda della
+  risoluzione totale.
+
+- **`plot_bins_overlay_prompt`** — i 7 istogrammi di risoluzione per bin di
+  $p_T^{truth}$ (0-20, 20-30, ..., 120-500 GeV), sui soli muoni prompt,
+  sovrapposti sullo stesso canvas dopo aver normalizzato ciascuno a area 1
+  (`h.Scale(1/h.Integral())`). La normalizzazione è quello che permette di
+  confrontare la **forma** delle distribuzioni indipendentemente dal numero
+  di muoni in ciascun bin (che cala rapidamente ad alto $p_T$): si vede a
+  colpo d'occhio come la risoluzione peggiori (distribuzione più larga)
+  andando verso $p_T$ più alti. Colori dalla palette ATLAS-like di
+  `style.py`, un colore per bin, legenda con il range di ciascuno.
+
+- **`rms_vs_pt_prompt`** — il plot finale della risoluzione: un
+  `TGraphErrors` con l'RMS di ciascun istogramma di bin (asse y) in funzione
+  del $p_T^{truth}$ (asse x), solo muoni prompt. Le barre **orizzontali**
+  non sono un errore ma la larghezza del bin in $p_T$ (dopo `fix_xcenter.py`
+  il punto è posizionato al $\langle p_T\rangle$ reale dei muoni nel bin, non
+  al centro geometrico — per questo l'ultimo bin, 120-500 GeV, ha il punto
+  spostato verso i 120-150 GeV); le barre **verticali** sono l'errore
+  statistico sull'RMS (`GetRMSError()`), piccolissime con la statistica
+  piena. È il grafico che riassume "come peggiora la risoluzione in $p_T$
+  al crescere del $p_T$" ed è quello che va confrontato con l'equivalente
+  inclusivo (`rms_vs_pt`) per isolare l'effetto della sola componente
+  prompt.
+
+Oltre a questi, `images/` contiene anche `plot_range_<min>_<max>[_prompt]` —
+un istogramma per singolo bin di $p_T$ (non normalizzato, con Entries e RMS
+in legenda), cioè i singoli pezzi che compongono l'overlay sopra.
+
+**`h_res_prompt_vs_incl`** — overlay diretto tra `h_res_all` (inclusivo) e
+`h_res_all_prompt`, entrambi normalizzati a densità, con RMS e frazione di
+muoni non-prompt in legenda. Da `draw_prompt_vs_inclusive` in `plotting.py`,
+regenerato automaticamente da `merge.py`. È il plot pensato per la tesi: le
+due distribuzioni sono visivamente quasi indistinguibili — la
+giustificazione quantitativa del perché è nella sezione seguente.
+
+## Inclusivo vs prompt: giustificazione
+
+Confronto tra `h_res_all` e `h_res_all_prompt` sulla statistica piena (da
+`output_risoluzione.root`, 30 file, PerfectAlignment):
+
+| | Entries | Mean | RMS |
+|---|---:|---:|---:|
+| inclusivo | 160'051'113 | 0.00278 | 0.02879 |
+| prompt | 158'848'216 | 0.00293 | 0.02846 |
+
+Solo lo **0.75%** dei muoni ricostruiti e matchati al truth non è prompt
+(`IFFType != 4`), e infatti sull'istogramma "tutto insieme" la differenza di
+RMS è piccola (~1% relativo, appena visibile nell'overlay
+`h_res_prompt_vs_incl`). Guardando però come si distribuisce quello 0.75%
+per bin di $p_T^{truth}$, la storia è diversa:
+
+| bin $p_T$ | non-prompt | RMS inclusivo | RMS prompt |
+|---|---:|---:|---:|
+| 0-20 GeV | **5.30%** | 0.02975 | 0.02728 |
+| 20-30 GeV | 0.06% | 0.02706 | 0.02706 |
+| 30-40 GeV | 0.01% | 0.02800 | 0.02800 |
+| 40-50 GeV | 0.00% | 0.02894 | 0.02894 |
+| 50-80 GeV | 0.01% | 0.03055 | 0.03054 |
+| 80-120 GeV | 0.01% | 0.03478 | 0.03478 |
+| 120-500 GeV | 0.00% | 0.04204 | 0.04204 |
+
+La contaminazione non-prompt è concentrata quasi interamente nel primo bin
+(0-20 GeV, 5.3%); sopra i 20 GeV è sotto lo 0.1% e le due RMS coincidono alla
+quarta cifra decimale. È coerente con la cinematica: i muoni prompt da
+Z→μμ hanno uno spettro piccato attorno a $m_Z/2 \approx 45$ GeV, mentre i
+muoni non-prompt (decadimento in volo di $\pi/K$, decadimento di adroni
+pesanti, punch-through calorimetrico) hanno uno spettro molto più soffice
+che cade ripidamente sotto i 20-30 GeV — è lì che la loro frazione relativa
+esplode.
+
+Il punto forte per la tesi è nel bin 0-20 GeV isolato: la RMS **prompt**
+lì (0.02728) è praticamente identica a quella del bin 20-30 GeV (0.02706) —
+cioè la risoluzione vera (solo muoni di segnale) è piatta anche a basso
+$p_T$. È la RMS **inclusiva** dello stesso bin (0.02975, +9% relativo) a
+essere anomala. Questo dimostra che il peggioramento apparente a basso
+$p_T$ nel plot puramente inclusivo **non è un effetto di risoluzione del
+rivelatore**, ma un artefatto della contaminazione di muoni non-prompt che
+si concentra lì (e che spesso hanno un match truth-reco meno pulito, es. un
+muone da decadimento in volo la cui traccia ricostruita segue il
+pione/kaone genitore solo fino al punto di decadimento). **È la
+giustificazione per cui serve lo split prompt/inclusivo**: isola la
+risoluzione genuina del rivelatore dalla composizione dell'evento.
+
+### E la crescita della RMS con $p_T$ (in entrambe le curve)?
+
+A differenza della contaminazione non-prompt, la crescita da ~0.027
+(20-30 GeV) a ~0.042 (120-500 GeV) è **identica** su inclusivo e prompt —
+quindi è un effetto fisico genuino del rivelatore, non di composizione del
+campione. Segue la parametrizzazione standard della risoluzione in $p_T$
+dello spettrometro a muoni:
+
+$$\frac{\sigma(p_T)}{p_T} = a \oplus b \cdot p_T$$
+
+- termine $a$ (**multiple scattering**): domina a basso/medio $p_T$, circa
+  costante — per questo i bin 20-30/30-40/40-50/50-80 GeV sono quasi piatti
+  (0.027-0.031);
+- termine $b \cdot p_T$ (**risoluzione spaziale intrinseca delle camere**,
+  cioè misura della sagitta): a $p_T$ alto la traccia è quasi rettilinea, la
+  sagitta da misurare è piccola rispetto alla risoluzione di posizione delle
+  camere, e questo termine cresce linearmente con $p_T$ — per questo 80-120
+  e 120-500 GeV salgono nettamente (0.035, 0.042).
+
+Motiva anche perché si studia la risoluzione in **curvatura** ($1/p_T$)
+invece che in $p_T$ diretto: è la quantità effettivamente fittata nello
+spettrometro (proporzionale a $q/p_T$), e il suo residuo resta gaussiano su
+tutto il range, mentre $\Delta p_T / p_T$ svilupperebbe code asimmetriche ad
+alto $p_T$ per via della non linearità di $1/x$.
+
 ## Sottocartella `WP`
 
 `WP/` riusa questo stesso campione Z→μμ per rispondere a una domanda diversa:
@@ -156,6 +283,34 @@ di quattro: la risoluzione inclusiva sovrapposta per i tre WP, e
 l'efficienza del WP (in p_T, eta, phi) rispetto ai muoni ricostruiti e
 matchati al truth. Dettagli, risultati e un bug non ovvio incontrato
 (`vector<char>` in PyROOT che rende `bool('\x00')` vero) in `WP/README.md`.
+
+Le immagini prodotte, in `WP/images/`:
+
+- **`h_res_wp_overlay`** — le tre distribuzioni di risoluzione in curvatura
+  (Loose/Medium/Tight), ciascuna normalizzata a densità (stessa area, come
+  in `plot_bins_overlay`) e sovrapposte sullo stesso canvas, con l'RMS di
+  ciascun WP in legenda. Risultato: le tre curve sono praticamente
+  indistinguibili (RMS 0.0282/0.0282/0.0259) — la scelta del WP non incide
+  sulla risoluzione in $p_T$, solo sull'efficienza.
+
+- **`efficiency_vs_pt`** — efficienza dei tre WP (Loose/Medium/Tight) in
+  funzione di $p_T^{truth}$, calcolata con `TEfficiency` (errori
+  Clopper-Pearson), binning uniforme 50 bin × 10 GeV in [0, 500] GeV. Il
+  denominatore è il muone già ricostruito e matchato al truth (stesso
+  identico denominatore della risoluzione), **non** tutti i muoni truth
+  generati — vedi `WP/README.md` per la distinzione. Cresce leggermente con
+  $p_T$ per Tight, plateau già raggiunto per Loose/Medium.
+
+- **`efficiency_vs_eta`** — idem in funzione di $\eta^{truth}$, 27 bin in
+  [-2.7, 2.7]. Mostra un calo netto dell'efficienza a $\eta \approx 0$ per
+  Medium (~0.71) e soprattutto Tight (~0.60): è il buco di accettanza dovuto
+  ai servizi nella regione centrale del barrel, atteso in ATLAS. Loose lo
+  sente molto meno perché include anche muoni segment-tagged e
+  calo-tagged, che non richiedono piena copertura dello spettrometro.
+
+- **`efficiency_vs_phi`** — idem in funzione di $\phi^{truth}$, 32 bin in
+  [-π, π]. Piatto come atteso: nessun buco settoriale evidente per nessuno
+  dei tre WP.
 
 ## Note
 
