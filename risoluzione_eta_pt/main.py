@@ -7,6 +7,8 @@ Uso: python3 main.py <input_path>
 Genera in output:
 - output_eta.root          griglia completa di istogrammi (serve per hadd)
 - images/plot_RMS_vs_eta.png / .pdf
+- images/plot_eta_overlay.png / .pdf  (overlay dei 6 bin di eta,
+  normalizzati e inclusivi su pT -- solo muoni prompt)
 - images/table_RMS_vs_eta.pdf  (stessa tabella stampata a console)
 """
 
@@ -17,7 +19,7 @@ from config import TREE_NAME, PT_BINS, ETA_BINS
 from chain_builder import build_chain
 from histograms import build_histogram_grid
 from event_loop import process_events
-from plotting import build_rms_graphs, draw_rms_vs_eta
+from plotting import build_rms_graphs, draw_rms_vs_eta, draw_eta_overlay
 from report import build_table_pdf
 import style
 
@@ -56,9 +58,11 @@ def main(input_path):
 
     graphs, results = build_rms_graphs(histos)
     draw_rms_vs_eta(graphs)
+    draw_eta_overlay(histos)
     build_table_pdf(results)
 
     print("\n[INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)")
+    print("[INFO] Plot overlay eta salvato in images/plot_eta_overlay.png (.pdf)")
     print("[INFO] Tabella salvata in images/table_RMS_vs_eta.pdf")
 
 

@@ -13,7 +13,7 @@ import os
 import array
 import ROOT
 from config import PT_BINS, ETA_BINS
-from style import PALETTE
+from style import PALETTE, style_histo, make_legend
 
 IMAGES_DIR = "images"
 
@@ -58,6 +58,48 @@ def build_rms_graphs(histos):
         graphs.append(g)
 
     return graphs, results
+
+
+def draw_eta_overlay(histos):
+    """
+    Un solo canvas, inclusivo su tutti i bin di pT: per ogni bin di |eta|
+    somma gli istogrammi di risoluzione sui 6 bin di pT, normalizza e
+    sovrappone il risultato -- stesso schema di draw_bins_overlay in
+    risoluzione_analysis, ma con l'eta al posto del pT. Solo muoni truth
+    prompt (histos li contiene gia' solo prompt, vedi event_loop.py).
+    """
+    os.makedirs(IMAGES_DIR, exist_ok=True)
+
+    c = ROOT.TCanvas("c_eta_overlay", "Eta overlay (inclusive in pT)", 950, 700)
+    leg = make_legend(0.66, 0.55, 0.92, 0.90)
+
+    clones = []
+    y_max = 0.0
+    for e_i, e in enumerate(ETA_BINS):
+        h = histos[PT_BINS[0]["name"]][e_i].Clone(f"h_res_eta_{e['min']}_{e['max']}_incl")
+        h.SetDirectory(0)
+        for p in PT_BINS[1:]:
+            h.Add(histos[p["name"]][e_i])
+        style_histo(h, PALETTE[e_i % len(PALETTE)])
+        h.SetFillStyle(0)
+        if h.Integral() > 0:
+            h.Scale(1.0 / h.Integral())
+        y_max = max(y_max, h.GetMaximum())
+        clones.append(h)
+
+    for e_i, (e, h) in enumerate(zip(ETA_BINS, clones)):
+        h.SetMaximum(y_max * 1.35)
+        h.GetXaxis().SetTitle("(p_{T}^{truth}/p_{T}^{reco}) - 1")
+        h.GetYaxis().SetTitle("Fraction of muons / bin")
+        h.Draw("HIST" if e_i == 0 else "HIST SAME")
+        leg.AddEntry(h, f"|#eta| #in [{e['min']:.2f}, {e['max']:.2f})", "l")
+
+    leg.Draw()
+
+    path = os.path.join(IMAGES_DIR, "plot_eta_overlay")
+    c.SaveAs(f"{path}.png")
+    c.SaveAs(f"{path}.pdf")
+    return c, clones
 
 
 def draw_rms_vs_eta(graphs):

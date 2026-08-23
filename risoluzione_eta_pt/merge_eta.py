@@ -17,7 +17,7 @@ import subprocess
 import ROOT
 
 from config import PT_BINS, ETA_BINS
-from plotting import build_rms_graphs, draw_rms_vs_eta
+from plotting import build_rms_graphs, draw_rms_vs_eta, draw_eta_overlay
 from report import build_table_pdf
 import style
 
@@ -57,6 +57,7 @@ def main(outdir, merged="merged_eta.root"):
 
     graphs, results = build_rms_graphs(histos)
     draw_rms_vs_eta(graphs)
+    draw_eta_overlay(histos)
     build_table_pdf(results)
 
     totale = sum(r["entries"] for r in results)
@@ -73,6 +74,7 @@ def main(outdir, merged="merged_eta.root"):
 
     print(f"\n[INFO] File unito: {merged}")
     print("[INFO] Plot: images/plot_RMS_vs_eta.png")
+    print("[INFO] Plot overlay eta: images/plot_eta_overlay.png")
     print("[INFO] Tabella: images/table_RMS_vs_eta.pdf")
 
 

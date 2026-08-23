@@ -95,7 +95,13 @@ nell'istogramma corrispondente alla coppia (bin $p_T$, bin $|\eta|$).
 
 **`plotting.py`** — per ogni bin di $p_T$ costruisce il `TGraphErrors` di RMS vs
 $|\eta|$ e li disegna tutti sovrapposti. La legenda sta nel margine destro,
-fuori dall'area dati, così non copre mai le curve.
+fuori dall'area dati, così non copre mai le curve. Contiene anche
+`draw_eta_overlay`, l'equivalente di `draw_bins_overlay` di
+`risoluzione_analysis` ma con l'$\eta$ al posto del $p_T$: somma gli
+istogrammi di risoluzione sui 6 bin di $p_T$ per ottenere, per ciascun bin di
+$|\eta|$, la distribuzione inclusiva in $p_T$, normalizza e sovrappone le 6
+curve in un unico canvas (`images/plot_eta_overlay.png/.pdf`). Solo muoni
+truth prompt, come il resto di questa analisi.
 
 **`report.py`** — genera la tabella PDF con entries, RMS ed errore per tutte le
 36 combinazioni. È disegnata interamente con ROOT (TBox/TLine/TLatex), quindi
