@@ -235,8 +235,7 @@ pesanti, punch-through calorimetrico) hanno uno spettro molto più soffice
 che cade ripidamente sotto i 20-30 GeV — è lì che la loro frazione relativa
 esplode.
 
-Il punto forte per la tesi è nel bin 0-20 GeV isolato: la RMS **prompt**
-lì (0.02728) è praticamente identica a quella del bin 20-30 GeV (0.02706) —
+Nel bin 0-20 GeV isolato: la RMS **prompt** (0.02728) è praticamente identica a quella del bin 20-30 GeV (0.02706) —
 cioè la risoluzione vera (solo muoni di segnale) è piatta anche a basso
 $p_T$. È la RMS **inclusiva** dello stesso bin (0.02975, +9% relativo) a
 essere anomala. Questo dimostra che il peggioramento apparente a basso
