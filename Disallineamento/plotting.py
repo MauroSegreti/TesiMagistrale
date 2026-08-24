@@ -31,7 +31,7 @@ def _residual_graph(g):
 
 def draw_resolution_vs_pt(graphs, filename="plot_res_vs_pt",
                           x_min=PLOT_X_MIN, x_max=PLOT_X_MAX,
-                          subtitle=""):
+                          subtitle="", y_symbol="#sigma_{68}"):
     os.makedirs(IMAGES_DIR, exist_ok=True)
     keep = []
 
@@ -59,7 +59,7 @@ def draw_resolution_vs_pt(graphs, filename="plot_res_vs_pt",
     y_min = max(min(all_y) * 0.5, 1e-4)
     y_max = max(all_y) * 2.0
 
-    frame = ROOT.TH2F(f"fr_{filename}", ";;#sigma_{68}(p_{T})/p_{T}",
+    frame = ROOT.TH2F(f"fr_{filename}", f";;{y_symbol}(p_{{T}})/p_{{T}}",
                       100, x_min, x_max, 100, y_min, y_max)
     frame.GetYaxis().SetTitleSize(0.045)
     frame.GetYaxis().SetTitleOffset(1.1)

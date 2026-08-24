@@ -192,7 +192,8 @@ def main(outdir, merged="merged_res.root"):
                                      verbose=False)
     print_fit_parameters(var_gaus)
     draw_resolution_vs_pt(var_gaus, "plot_res_gaus", x_max=PLOT_X_MAX,
-                          subtitle="Gaussian fit in #pm#sigma")
+                          subtitle="Gaussian fit in #pm#sigma",
+                          y_symbol="#sigma_{gauss}")
 
     print("\n" + "#" * 70)
     print(f"# VARIANTE 2: sigma_68, range fino a {PT_MAX_VARIANT:.0f} GeV")
