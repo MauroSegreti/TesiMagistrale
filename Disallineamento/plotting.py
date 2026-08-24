@@ -158,7 +158,7 @@ def draw_estimator_comparison(graphs_q68, graphs_gaus,
              for g in graphs_q68 + graphs_gaus
              for i in range(g["graph"].GetN())]
     frame = ROOT.TH2F(f"fr_{filename}",
-                      ";p_{T}^{truth} [GeV];#sigma(p_{T})/p_{T}",
+                      ";p_{T}^{truth} [GeV];Gauss vs #sigma_{68}",
                       100, PLOT_X_MIN, PLOT_X_MAX,
                       100, max(min(all_y) * 0.5, 1e-4), max(all_y) * 2.0)
     frame.Draw()
