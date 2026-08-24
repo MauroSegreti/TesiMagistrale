@@ -128,7 +128,12 @@ Il pannello inferiore **non è un residuo** ma il rapporto continuo fra le
 due curve di fit, misaligned/nominale, valutato su tutta l'intersezione
 dei due range validi:
 
-$$\frac{\sigma_{68}^{mis}(p_T)}{\sigma_{68}^{nom}(p_T)} = \frac{f_{mis}(p_T)}{f_{nom}(p_T)}$$
+$$\frac{\sigma_{68}^{mis}(p_T)}{\sigma_{68}^{nom}(p_T)} = \frac{f^{mis}(p_T)}{f^{nom}(p_T)}$$
+
+dove $f^{nom}$ e $f^{mis}$ sono le due curve di fit, cioè la formula a 3
+termini qui sopra valutata con i parametri $r_0, r_1, r_2$ trovati dal fit
+nominale e da quello misaligned rispettivamente — non i punti dati, la
+curva continua.
 
 A basso $p_T$ il rapporto è vicino a 1 (lì dominano $r_0$ e $r_1$, che il
 disallineamento non tocca — vedi closure test sotto); sale con $p_T$
@@ -239,15 +244,18 @@ quadratura, non linearmente. Se il disallineamento aggiunge uno smearing
 extra e scorrelato rispetto a quello già presente nel campione nominale,
 allora
 
-$$r_2^{\text{misaligned}\,2} = r_2^{\text{nominale}\,2} + r_2^{\text{residual}\,2}
+$$\left(r_2^{\text{misaligned}}\right)^2 = \left(r_2^{\text{nominale}}\right)^2 + \left(r_2^{\text{residual}}\right)^2
 \quad\Longrightarrow\quad
 r_2^{\text{residual}} = \sqrt{\left(r_2^{\text{misaligned}}\right)^2 - \left(r_2^{\text{nominale}}\right)^2}$$
 
 con l'errore propagato dalla stessa forma:
 
-$$\sigma_{\text{residual}} = \sqrt{\left(\frac{r_2^{\text{mis}}}{r_2^{\text{res}}}\,\sigma_{\text{mis}}\right)^2 + \left(\frac{r_2^{\text{nom}}}{r_2^{\text{res}}}\,\sigma_{\text{nom}}\right)^2}$$
+$$\sigma_{\text{residual}} = \sqrt{\left(\frac{r_2^{\text{mis}}}{r_2^{\text{res}}} \times \sigma_{\text{mis}}\right)^2 + \left(\frac{r_2^{\text{nom}}}{r_2^{\text{res}}} \times \sigma_{\text{nom}}\right)^2}$$
 
-dove $\sigma_{\text{nom}}$, $\sigma_{\text{mis}}$ sono gli stessi errori
+è la solita propagazione degli errori (regola della catena su
+$f = \sqrt{a^2-b^2}$: $\partial f/\partial a = a/f$, $\partial f/\partial b
+= -b/f$, poi si sommano in quadratura i due termini pesati per gli errori
+su $a$ e $b$), dove $\sigma_{\text{nom}}$, $\sigma_{\text{mis}}$ sono gli stessi errori
 stat+syst in quadratura della tabella "Confronto diretto" sopra (statistica
 del fit più sistematica su metodo e range, vedi
 `Allineamento/README.md`, "Sistematiche"). È la stessa logica di
