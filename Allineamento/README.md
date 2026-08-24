@@ -155,6 +155,27 @@ TeV la curva estrapolata diverge dai punti (fino al -50%), atteso: è la
 regione dove le code non gaussiane dominano (vedi
 `images/plot_res_q68.png`, pannello dei residui).
 
+### Fit con $r_0$ fissato a 0
+
+Lo stesso fit (`fit_fixed0` in `fitting.py`, calcolato per ogni bin insieme
+a quello libero ma non usato altrove) rifatto imponendo $r_0 = 0$ invece di
+lasciarlo libero:
+
+| $\|\eta\|$ | $r_1$ | $r_2$ [$10^{-3}$ GeV$^{-1}$] | $\chi^2$/ndf |
+|---|---|---|---|
+| 0.0 - 0.1 | 0.0181 ± 0.0011 | 0.2236 ± 0.0116 | 0.51 |
+| 0.1 - 1.05 | 0.0201 ± 0.0010 | 0.1257 ± 0.0082 | 1.35 |
+| 1.05 - 1.3 | 0.0219 ± 0.0010 | 0.1239 ± 0.0085 | 0.45 |
+| 1.3 - 1.7 | 0.0305 ± 0.0014 | 0.1606 ± 0.0113 | 1.47 |
+| 1.7 - 2.5 | 0.0272 ± 0.0011 | 0.0892 ± 0.0083 | 0.56 |
+| 2.5 - 2.8 | 0.0297 ± 0.0012 | 0.1030 ± 0.0095 | 0.09 |
+
+$r_1$ e $r_2$ sono praticamente identici al fit con $r_0$ libero (tabella
+sopra), e anche $\chi^2$/ndf resta vicino. Coerente con quanto già detto:
+siccome nel fit libero $r_0$ risulta comunque compatibile con zero in ogni
+bin, forzarlo a zero non cambia quasi nulla il risultato — è la controprova
+che il vincolo $r_0=0$ è ragionevole, non un artefatto imposto a forza.
+
 ### Sistematiche
 
 Nominale ($\sigma_{68}$, fit fino a 800 GeV) confrontato con due varianti:

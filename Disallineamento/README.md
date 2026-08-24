@@ -83,6 +83,25 @@ molto più alta (73 file contro 31). Qui probabilmente è più largo del
 necessario — da ricalibrare (stesso procedimento del nominale) se serve un
 $\chi^2$/ndf realistico invece che solo "il fit converge bene".
 
+### Fit con $r_0$ fissato a 0
+
+Stesso fit (`fit_fixed0`) rifatto imponendo $r_0 = 0$ invece di lasciarlo
+libero, come per il nominale (vedi `Allineamento/README.md`):
+
+| $\|\eta\|$ | $r_1$ | $r_2$ [$10^{-3}$ GeV$^{-1}$] | $\chi^2$/ndf |
+|---|---|---|---|
+| 0.0 - 0.1 | 0.0182 ± 0.0014 | 0.3114 ± 0.0150 | 0.14 |
+| 0.1 - 1.05 | 0.0209 ± 0.0011 | 0.1916 ± 0.0108 | 0.59 |
+| 1.05 - 1.3 | 0.0229 ± 0.0014 | 0.2704 ± 0.0142 | 0.25 |
+| 1.3 - 1.7 | 0.0290 ± 0.0016 | 0.2834 ± 0.0158 | 0.17 |
+| 1.7 - 2.5 | 0.0269 ± 0.0015 | 0.2777 ± 0.0153 | 0.04 |
+| 2.5 - 2.8 | 0.0331 ± 0.0021 | 0.4251 ± 0.0222 | 0.10 |
+
+Anche qui $r_1$ e $r_2$ restano praticamente identici al fit con $r_0$
+libero: coerente col fatto che $r_0$ è compatibile con zero in ogni bin
+anche in questo campione (vedi il closure test sotto, dove $r_0$ resta
+sotto 1 sigma di differenza rispetto al nominale).
+
 ### Confronto diretto con il nominale
 
 Stesso identico metodo e binning, quindi $r_2$ è confrontabile punto per
