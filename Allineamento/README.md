@@ -27,6 +27,23 @@ $$\frac{\sigma_{p_T}}{p_T} = \sqrt{\frac{r_0^2}{p_T^2} + r_1^2 + (r_2 \, p_T)^2}
 
 Solo muoni truth prompt (`IFFType == 4`).
 
+### Perché $\sigma_{68}$ e non RMS o fit gaussiano
+
+Uso l'intervallo interquantile e non RMS o un fit gaussiano perché non
+assume nessuna forma per la distribuzione: usa solo il 16° e l'84°
+percentile, quindi non è sensibile a quello che succede nelle code, a
+differenza della RMS (dominata dagli outlier) o di un fit gaussiano (che
+assume che *tutto* l'istogramma sia gaussiano, core e code). Per una
+distribuzione perfettamente gaussiana coincide esattamente con la
+deviazione standard — $q_{84} - q_{16} = 2\sigma$, quindi
+$(q_{84}-q_{16})/2 = \sigma$ — quindi dove i due metodi si applicano bene
+danno la stessa risposta (vedi `images/plot_confronto_stimatori.png`); dove
+la distribuzione si allontana dalla gaussiana (code asimmetriche ad alto
+$p_T$, vedi sotto), $\sigma_{68}$ resta un numero ben definito mentre un
+fit gaussiano no. L'errore $\sigma_{68}/\sqrt{2N}$ è l'errore standard di
+uno stimatore di quantile: cala con la statistica come qualsiasi altra
+larghezza, ma non richiede la gaussianità come ipotesi.
+
 
 ### I tre termini
 
@@ -124,6 +141,65 @@ la griglia degli istogrammi con la gaussiana e le linee a $q_{16}$, mediana,
 $q_{84}$.
 
 **`gen_jobs.sh` / `condorSub.sub`** — job e submit.
+
+## I plot in `images/`
+
+**`plot_res_q68.png` / `.pdf`** — il plot principale, prodotto da
+`plotting.py`. Pannello superiore: $\sigma_{68}(p_T)/p_T$ in funzione di
+$p_T^{truth}$, log-log, un colore per bin di $|\eta|$ (le 6 curve della
+legenda). I marker sono i dati (barra d'errore = il maggiore fra l'errore
+statistico $\sigma_{68}/\sqrt{2N}$ e il floor sistematico 10%, vedi sopra), le
+linee sono il fit a 3 termini
+
+$$\frac{\sigma_{p_T}}{p_T} = \sqrt{\frac{r_0^2}{p_T^2} + r_1^2 + (r_2\, p_T)^2}$$
+
+disegnate su **tutto** il range visibile, anche oltre gli 800 GeV di
+`PT_FIT_MAX` dove il fit non è più vincolato dai dati (le curve lì sono
+un'estrapolazione, non una misura). Il pannello inferiore mostra il residuo
+relativo $(\text{data} - \text{fit})/\text{fit}$ punto per punto: piatto
+intorno a zero fino a ~500-800 GeV, poi la curva estrapolata si stacca in
+modo sistematico dai punti (fino a -50%) perché lì le code non gaussiane
+fanno uscire $\sigma_{68}$ dalla forma a un solo parametro di scala che la
+formula assume — vedi "Il fit funziona, ma solo fino a ~800 GeV" sopra per
+la spiegazione completa.
+
+**`plot_res_gaus.png` / `.pdf`** — identico a `plot_res_q68`, ma con lo
+stimatore gaussiano (fit iterativo entro $\pm 2\sigma$ dal core, vedi
+`resolution.py`) al posto di $\sigma_{68}$. Serve solo come confronto: la
+differenza fra i parametri di questo fit e di quello nominale è la
+sistematica sul metodo riportata nella tabella "Sistematiche".
+
+**`plot_confronto_stimatori.png`** — sovrappone direttamente i due
+stimatori punto per punto, **senza fit**: marker pieni = $\sigma_{68}$,
+marker vuoti = $\sigma$ gaussiana, stesso colore per bin di $|\eta|$. A
+basso $p_T$ i due stimatori coincidono (le distribuzioni sono quasi
+gaussiane); salendo in $p_T$ i marker vuoti iniziano a scostarsi verso il
+basso rispetto ai pieni — è la stessa sistematica di metodo vista sopra,
+qui visibile a occhio senza passare dal fit.
+
+**`table_res_q68.pdf`** — tabella riassuntiva generata da `report.py`: per
+ogni bin di $|\eta|$, numero di punti entrati nel fit, $r_0$ del fit
+libero, $\chi^2$/ndf sia per il fit con $r_0$ libero sia per quello con
+$r_0$ fissato a 0, e $r_2$ (il termine dominante ad alto $p_T$, evidenziato
+in blu perché è il numero da confrontare con le prestazioni note di
+ATLAS). Righe con $\chi^2$/ndf > 3 sono evidenziate in rosso — qui nessuna,
+grazie al floor del 10%.
+
+**`inspect/histos_eta{N}_{lin,log}.png`** — griglia di istogrammi di
+risoluzione (uno per bin di $p_T$) per il bin di $|\eta|$ numero N,
+prodotta da `inspect_bins.py`: ogni pannello mostra l'istogramma con la
+gaussiana del fit sovrapposta e tre linee verticali a $q_{16}$, mediana,
+$q_{84}$. Utile per vedere a occhio *dove* la distribuzione smette di
+essere gaussiana: quando il picco della curva gaussiana e le linee dei
+quantili iniziano a divergere visibilmente. Versione in scala lineare e
+log-y dello stesso bin. `inspect/log_inspect_eta{N}.txt` è il log numerico
+corrispondente (entries, outflow, RMS, $\sigma$ gaussiana, $\sigma_{68}$,
+rapporto $q_{68}/\text{gaus}$, asimmetria — un bin di $p_T$ per riga).
+
+**`log_analisi.txt`** — log testuale completo di `analyze.py`: per ogni
+bin di $|\eta|$, i sei tentativi di fit multistart (quale seed converge,
+quale $\chi^2$/ndf, quale vince), i bin scartati e il motivo, la
+correlazione $r_0$-$r_1$, e le sistematiche.
 
 ## Risultati
 

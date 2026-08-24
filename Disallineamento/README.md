@@ -105,6 +105,53 @@ molto più alta (73 file contro 31). Qui probabilmente è più largo del
 necessario — da ricalibrare (stesso procedimento del nominale) se serve un
 $\chi^2$/ndf realistico invece che solo "il fit converge bene".
 
+## I plot in `images/`
+
+`plot_res_q68.png`/`.pdf`, `plot_res_gaus.png`/`.pdf`,
+`plot_confronto_stimatori.png`, `table_res_q68.pdf` e `log_analisi.txt`
+sono **gli stessi plot di [`Allineamento`](../Allineamento/)**, prodotti
+dallo stesso codice (`plotting.py`, `report.py`), ma sui dati misaligned —
+vedi la sezione "I plot in `images/`" del README di `Allineamento` per la
+spiegazione di ciascuno, non la ripeto qui. Sotto solo i due plot nuovi di
+questa cartella, quelli che confrontano i due campioni.
+
+**`plot_confronto_allineamento.png` / `.pdf`** — generato da
+`compare_alignment.py`. Pannello superiore: le curve nominale (marker
+pieni, linea continua) e misaligned (marker vuoti, linea tratteggiata)
+sovrapposte nello stesso grafico $\sigma_{68}(p_T)/p_T$ vs $p_T^{truth}$,
+stesso colore per bin di $|\eta|$, entrambe fittate con la stessa formula
+a 3 termini
+
+$$\frac{\sigma_{p_T}}{p_T} = \sqrt{\frac{r_0^2}{p_T^2} + r_1^2 + (r_2\, p_T)^2}$$
+
+Il pannello inferiore **non è un residuo** ma il rapporto continuo fra le
+due curve di fit, misaligned/nominale, valutato su tutta l'intersezione
+dei due range validi:
+
+$$\frac{\sigma_{68}^{mis}(p_T)}{\sigma_{68}^{nom}(p_T)} = \frac{f_{mis}(p_T)}{f_{nom}(p_T)}$$
+
+A basso $p_T$ il rapporto è vicino a 1 (lì dominano $r_0$ e $r_1$, che il
+disallineamento non tocca — vedi closure test sotto); sale con $p_T$
+perché il termine che risente della geometria è $r_2\, p_T$, che cresce
+linearmente; e si stabilizza al plateau asintotico $r_2^{mis}/r_2^{nom}$
+per ogni bin di $|\eta|$ quando $r_2\, p_T$ arriva a dominare sugli altri
+due termini — sono gli stessi numeri della tabella "Confronto diretto con
+il nominale" qui sopra. Il plateau più alto (~4×) è per $2.5 \le |\eta| <
+2.8$, il più basso (~1.4×) per $0.1 \le |\eta| < 1.05$: la curva teal (in
+alto a destra nel pannello superiore) si stacca visibilmente prima e più
+in alto delle altre.
+
+**`table_closure_test.pdf`** — generata da `closure_test.py`: per ogni bin
+di $|\eta|$, i tre parametri del fit libero — nominale, misaligned,
+differenza in $N\sigma$ — affiancati per $r_0$, $r_1$, $r_2$. Le celle di
+$r_0$/$r_1$ con $N\sigma > 2$ sarebbero evidenziate in rosso (qui nessuna
+lo è): il test si aspetta che $r_0$ (perdita di energia nel materiale) e
+$r_1$ (multiple scattering) restino compatibili fra i due campioni, perché
+nessuno dei due dipende da dove il software crede che siano le camere del
+muon spectrometer, mentre $r_2$ — l'unico termine sensibile alla geometria
+— si sposta. Vedi "Closure test dei fit" sotto per i numeri completi e
+l'interpretazione fisica.
+
 ### Confronto diretto con il nominale
 
 Stesso identico metodo e binning, quindi $r_2$ è confrontabile punto per
@@ -179,3 +226,62 @@ sensibile alla geometria delle camere. Il fatto che sia l'unico a muoversi,
 sempre nella stessa direzione (peggiora, mai migliora) e in modo crescente
 con $|\eta|$ come il rapporto qui sopra, è la controprova che l'effetto è
 reale e non un artefatto del fit.
+
+### $r_2$ residuo: quanto ci mette il disallineamento da solo
+
+Il confronto e il closure test sopra dicono *che* $r_2$ peggiora e *che* è
+l'unico a farlo, ma non isolano un numero per "quanto smearing aggiunge il
+disallineamento da solo", separato dalla risoluzione intrinseca che c'è
+già con la geometria perfetta. Per farlo serve un'ipotesi in più:
+$r_2$ è un termine di risoluzione (pesa come $r_2 \times p_T$ nella formula
+a 3 termini), e sorgenti di smearing **indipendenti** si sommano in
+quadratura, non linearmente. Se il disallineamento aggiunge uno smearing
+extra e scorrelato rispetto a quello già presente nel campione nominale,
+allora
+
+$$r_2^{\text{misaligned}\,2} = r_2^{\text{nominale}\,2} + r_2^{\text{residual}\,2}
+\quad\Longrightarrow\quad
+r_2^{\text{residual}} = \sqrt{\left(r_2^{\text{misaligned}}\right)^2 - \left(r_2^{\text{nominale}}\right)^2}$$
+
+con l'errore propagato dalla stessa forma:
+
+$$\sigma_{\text{residual}} = \sqrt{\left(\frac{r_2^{\text{mis}}}{r_2^{\text{res}}}\,\sigma_{\text{mis}}\right)^2 + \left(\frac{r_2^{\text{nom}}}{r_2^{\text{res}}}\,\sigma_{\text{nom}}\right)^2}$$
+
+dove $\sigma_{\text{nom}}$, $\sigma_{\text{mis}}$ sono gli stessi errori
+stat+syst in quadratura della tabella "Confronto diretto" sopra (statistica
+del fit più sistematica su metodo e range, vedi
+`Allineamento/README.md`, "Sistematiche"). È la stessa logica di
+`closure_test.py`, calcolata da `residual_r2.py`:
+
+```bash
+python3 residual_r2.py
+```
+
+| $\|\eta\|$ | $r_2$ nominale | $r_2$ misaligned | $r_2$ residuo | % di $r_2$ misaligned |
+|---|---|---|---|---|
+| 0.0 - 0.1 | 0.224 ± 0.065 | 0.311 ± 0.051 | 0.217 ± 0.099 | 70% |
+| 0.1 - 1.05 | 0.126 ± 0.028 | 0.192 ± 0.027 | 0.145 ± 0.043 | 76% |
+| 1.05 - 1.3 | 0.124 ± 0.030 | 0.270 ± 0.030 | 0.240 ± 0.037 | 89% |
+| 1.3 - 1.7 | 0.161 ± 0.053 | 0.283 ± 0.028 | 0.233 ± 0.050 | 82% |
+| 1.7 - 2.5 | 0.089 ± 0.026 | 0.278 ± 0.030 | 0.263 ± 0.033 | 95% |
+| 2.5 - 2.8 | 0.104 ± 0.021 | 0.430 ± 0.063 | 0.418 ± 0.065 | 97% |
+
+($r_2$ in $10^{-3}$ GeV$^{-1}$)
+
+Il contributo puro del disallineamento domina già a partire da
+$1.05 \le |\eta| < 1.3$ (89% del misaligned totale) e sale fino al 97% nel
+forward (2.5-2.8): coerente col fatto che è lì che il rapporto
+misaligned/nominale è più alto (vedi tabella sopra). Nel barrel centrale
+($0.1 \le |\eta| < 1.05$) resta comunque maggioritario (76%) ma con errore
+relativo più grande (~30%), perché lì $r_2^{\text{nom}}$ e
+$r_2^{\text{mis}}$ sono più vicini fra loro e la sottrazione in quadratura
+amplifica l'errore relativo — è la stessa ragione per cui $\sigma_f$ va
+come $r_2^{\text{mis}}/r_2^{\text{res}}$ nella formula sopra: più $r_2^{\text{res}}$
+è piccolo rispetto a $r_2^{\text{mis}}$, più l'errore si gonfia.
+
+L'ipotesi di indipendenza è la stessa che sta dietro il closure test: se
+$r_0$ ed $r_1$ non si fossero spostati nella verifica sopra (e non si
+spostano), è plausibile che anche gli altri contributi allo smearing —
+perdita di energia nel materiale, multiple scattering — restino invariati
+e scorrelati dal termine di allineamento, che è esattamente l'assunzione
+che rende valida la somma in quadratura qui.
