@@ -19,6 +19,10 @@ def apply_style():
     # Canvas
     style.SetCanvasBorderMode(0)
     style.SetCanvasColor(ROOT.kWhite)
+    style.SetPadColor(ROOT.kWhite)
+    style.SetFrameFillColor(ROOT.kWhite)
+    style.SetStatColor(ROOT.kWhite)
+    style.SetTitleFillColor(ROOT.kWhite)
     style.SetPadTickX(1)
     style.SetPadTickY(1)
     style.SetPadBorderMode(0)
