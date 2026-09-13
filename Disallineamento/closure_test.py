@@ -2,10 +2,12 @@
 Closure test dei fit: stessa regione di |eta|, confronto r0/r1/r2 fra
 nominale (PerfectAlignment, Allineamento/) e misaligned (Disallineamento/).
 
-Il test si aspetta r0 (multiple scattering) e r1 (risoluzione intrinseca)
-compatibili fra i due campioni, mentre r2 (alta pT) cambia per via del
-disallineamento. Le celle di r0/r1 dove la differenza supera 2 sigma
-combinate vengono evidenziate in rosso.
+r0 (multiple scattering) e' fissato a 0 in entrambi i fit (errori troppo
+alti a lasciarlo libero, stessa scelta fatta per la parte di allineamento),
+quindi il confronto e' banale (0 = 0) e non viene testato. Il test si
+aspetta r1 (risoluzione intrinseca) compatibile fra i due campioni, mentre
+r2 (alta pT) cambia per via del disallineamento. Le celle di r1 dove la
+differenza supera 2 sigma combinate vengono evidenziate in rosso.
 
 Uso (da Disallineamento/, dopo aver girato analyze.py in entrambe le
 cartelle cosi' esistono i due merged_res.root):
@@ -62,7 +64,7 @@ def build_rows(graphs_n, graphs_m):
         g_m = gm_by_eta.get(g_n["eta_index"])
         if g_m is None:
             continue
-        f_n, f_m = g_n["fit"], g_m["fit"]
+        f_n, f_m = g_n["fit_fixed0"], g_m["fit_fixed0"]
         row = {"eta": g_n["eta"]}
         for i, key in enumerate(("r0", "r1", "r2")):
             v_n, e_n = _param(f_n, i)
@@ -107,8 +109,9 @@ def build_closure_table_pdf(rows, filename="table_closure_test.pdf"):
     subtitle.SetTextColor(ROOT.kGray + 2)
     subtitle.SetTextAlign(22)
     subtitle.DrawLatex(0.5, 0.885,
-                       "r_{0}, r_{1} expected to match within uncertainties; "
-                       "r_{2} is expected to change (misalignment effect)")
+                       "r_{0} fixed to 0 in both fits; r_{1} expected to match "
+                       "within uncertainties; r_{2} is expected to change "
+                       "(misalignment effect)")
     keep.append(subtitle)
 
     n_rows = len(rows)
@@ -201,7 +204,7 @@ def build_closure_table_pdf(rows, filename="table_closure_test.pdf"):
 
             xc_d = (_COL_EDGES[col + 2] + _COL_EDGES[col + 3]) / 2.0
             diff_txt = f"{d['diff'] * scale:+.{prec}f} ({d['n_sigma']:.1f}#sigma)"
-            warn = key in ("r0", "r1") and d["n_sigma"] > _N_SIGMA_WARN
+            warn = key == "r1" and d["n_sigma"] > _N_SIGMA_WARN
             (warn_lat if warn else body_lat).DrawLatex(xc_d, y_mid, diff_txt)
 
             col += 3
@@ -229,7 +232,8 @@ def build_closure_table_pdf(rows, filename="table_closure_test.pdf"):
     footer.SetTextAlign(22)
     footer.DrawLatex(0.5, table_bottom - 0.045,
                      f"In red: |#Delta| > {_N_SIGMA_WARN:.0f}#sigma_{{comb}} "
-                     "on r_{0} or r_{1} -- closure test failed for that region")
+                     "on r_{1} -- closure test failed for that region "
+                     "(r_{0} fixed to 0)")
     keep.append(footer)
 
     c.SaveAs(output_path)
@@ -258,7 +262,7 @@ def main():
         print(f"\n{row['eta']['label']}")
         for key in ("r0", "r1", "r2"):
             d = row[key]
-            flag = " <-- NOT compatible" if (key in ("r0", "r1")
+            flag = " <-- NOT compatible" if (key == "r1"
                     and d["n_sigma"] > _N_SIGMA_WARN) else ""
             print(f"  {key}: nominal={d['n'][0]:.5f}+-{d['n'][1]:.5f}  "
                   f"misaligned={d['m'][0]:.5f}+-{d['m'][1]:.5f}  "

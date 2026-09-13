@@ -79,7 +79,6 @@ def main():
         p.SetRightMargin(0.28)
         p.SetLeftMargin(0.11)
         p.SetLogx()
-        p.SetGrid()
     pad1.SetBottomMargin(0.02)
     pad1.SetTopMargin(0.10)
     pad1.SetLogy()
@@ -107,26 +106,26 @@ def main():
 
     for g in graphs_n:
         g["graph"].SetMarkerStyle(20)   # pieno = nominale
-        g["fit"].SetLineStyle(1)
-        g["fit"].SetRange(g["x_lo"], g["x_hi"])
-        g["fit"].Draw("SAME")
     for g in graphs_m:
         g["graph"].SetMarkerStyle(24)   # vuoto = misaligned
-        g["fit"].SetLineStyle(2)
-        g["fit"].SetRange(g["x_lo"], g["x_hi"])
-        g["fit"].Draw("SAME")
     for g in graphs_n + graphs_m:
         g["graph"].Draw("P SAME")
 
-    lat = ROOT.TLatex()
-    lat.SetNDC()
-    lat.SetTextFont(42)
-    lat.SetTextSize(0.036)
-    lat.SetTextAlign(11)
-    lat.DrawLatex(0.11, 0.935,
-                  "filled / solid line = nominal   "
-                  "open / dashed = misaligned")
-    keep.append(lat)
+    leg_style = ROOT.TLegend(0.735, 0.56, 0.985, 0.70)
+    leg_style.SetBorderSize(1)
+    leg_style.SetFillColor(ROOT.kWhite)
+    leg_style.SetFillStyle(1001)
+    leg_style.SetTextSize(0.030)
+    g_nom_marker = ROOT.TGraph()
+    g_nom_marker.SetMarkerStyle(20)
+    g_nom_marker.SetMarkerColor(ROOT.kBlack)
+    g_mis_marker = ROOT.TGraph()
+    g_mis_marker.SetMarkerStyle(24)
+    g_mis_marker.SetMarkerColor(ROOT.kBlack)
+    leg_style.AddEntry(g_nom_marker, "nominal", "p")
+    leg_style.AddEntry(g_mis_marker, "misaligned", "p")
+    leg_style.Draw()
+    keep += [leg_style, g_nom_marker, g_mis_marker]
 
     leg = ROOT.TLegend(0.735, 0.06, 0.985, 0.54)
     leg.SetHeader("#eta Range")
@@ -138,16 +137,6 @@ def main():
         leg.AddEntry(g["graph"], g["eta"]["label"], "lp")
     leg.Draw()
     keep.append(leg)
-
-    box = ROOT.TPaveText(0.735, 0.58, 0.985, 0.95, "NDC")
-    box.SetBorderSize(1)
-    box.SetFillColor(ROOT.kWhite)
-    box.SetTextSize(0.032)
-    box.SetTextAlign(22)
-    box.AddText("#frac{#sigma_{p_{T}}}{p_{T}} =")
-    box.AddText("#sqrt{#frac{r_{0}^{2}}{p_{T}^{2}} + r_{1}^{2} + (r_{2} #times p_{T})^{2}}")
-    box.Draw()
-    keep.append(box)
 
     # --- pannello inferiore: rapporto fra le due curve di fit ---
     pad2.cd()

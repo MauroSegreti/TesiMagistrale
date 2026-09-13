@@ -21,8 +21,12 @@ con $r_0$ = perdita di energia nel materiale (conta a basso $p_T$), $r_1$ =
 multiple scattering (plateau), $r_2$ = risoluzione intrinseca — il termine
 dominante ad alto $p_T$ e quello sensibile all'allineamento.
 
-Sono runnati 68 job su 73 (mancano 8, 26, 33, 62 per intoppi di rete e 71,
-lo ZeroWidth5000, irraggiungibile).
+Sono runnati 69 job su 73 (mancano 8, 26, 33, 62, tutti file Zmumu, per
+intoppi di rete). Il job 71 (Z' ZeroWidth5000) inizialmente falliva anche lui
+per lo stesso motivo ("redirect limit" XRootD); risolto scaricando il file in
+locale via `rucio download` (RSE `MPPMU_PERF-MUONS`, protocollo `davs`) e
+rilanciando `fill.py` su quel file — i cinque punti di massa Z' sono quindi
+tutti presenti.
 
 ## Plot
 
@@ -102,16 +106,24 @@ Per $0.1 \leq |\eta| < 1.05$, il bin con più statistica:
 | 40-50 | 33.4 M | 0.0203 | 1.05 | +0.028 |
 | 100-150 | 933 k | 0.0291 | 1.06 | +0.016 |
 | 300-500 | 187 k | 0.0547 | 1.10 | +0.014 |
-| 800-1200 | 85 k | 0.0967 | 1.12 | +0.005 |
-| 1200-1750 | 184 k | 0.1239 | 1.11 | +0.000 |
-| 2500-3000 | 52 k | 0.1551 | 1.11 | −0.000 |
-| 3000-4000 | 214 k | 0.2183 | 1.11 | +0.008 |
-| 4000-6000 | 11 k | 0.2470 | 1.09 | −0.011 |
+| 800-1200 | 93 k | 0.0961 | 1.12 | +0.01 |
+| 1200-1750 | 235 k | 0.1221 | 1.11 | +0.00 |
+| 1750-2500 | 248 k | 0.1585 | 1.11 | +0.00 |
+| 2500-3000 | 69 k | 0.1627 | 1.11 | +0.00 |
+| 3000-4000 | 214 k | 0.2183 | 1.11 | +0.01 |
+| 4000-6000 | 11 k | 0.2470 | 1.09 | −0.01 |
 
 Outflow sotto l'1% ovunque, code moderate, asimmetria trascurabile, $\sigma$
 monotona su tre ordini di grandezza. I valori riproducono le prestazioni
 note di ATLAS per i muoni combinati nel barrel: 2.0% a 45 GeV, 2.9% a 100
 GeV, 9.7% a 1 TeV.
+
+Il bin 1750-2500 GeV, prima poco popolato (24 k entries, non in tabella), ora
+ha statistica piena: è esattamente il bin dove picca il $p_T$ dei muoni di
+Z' 5000 GeV (~2 TeV, decadimento a due corpi $p_T \approx M/2$), aggiunto in
+questo giro. Beneficiano un po' anche i bin adiacenti (800-1200, 1200-1750,
+2500-3000, le code della stessa distribuzione); 3000-4000 e 4000-6000 restano
+invariati, dominati com'erano già dalla coda di Z' 8000 GeV.
 
 L'unica regione con distribuzioni davvero non gaussiane è $|\eta| < 0.1$:
 $q_{68}/\text{gaus}$ arriva a 1.71 e l'asimmetria a +0.21 ad alto $p_T$. Lì
@@ -138,11 +150,11 @@ peggiora in modo netto e monotono; i punti oltre 800 GeV restano nel grafico
 | $\|\eta\|$ | $r_0$ [GeV] | $r_1$ | $r_2$ [$10^{-3}$ GeV$^{-1}$] | $\chi^2$/ndf |
 |---|---|---|---|---|
 | 0.0 - 0.1 | 0.000 ± 36.3 | 0.0181 ± 0.0011 | 0.224 ± 0.012 | 0.58 |
-| 0.1 - 1.05 | 0.000 ± 8.98 | 0.0201 ± 0.0010 | 0.126 ± 0.008 | 1.54 |
-| 1.05 - 1.3 | 0.000 ± 37.2 | 0.0219 ± 0.0010 | 0.124 ± 0.009 | 0.51 |
-| 1.3 - 1.7 | 0.000 ± 32.3 | 0.0305 ± 0.0014 | 0.161 ± 0.011 | 1.68 |
-| 1.7 - 2.5 | 0.000 ± 32.5 | 0.0272 ± 0.0011 | 0.089 ± 0.008 | 0.64 |
-| 2.5 - 2.8 | 0.223 ± 0.334 | 0.0293 ± 0.0019 | 0.104 ± 0.010 | 0.08 |
+| 0.1 - 1.05 | 0.000 ± 8.99 | 0.0201 ± 0.0010 | 0.126 ± 0.008 | 1.55 |
+| 1.05 - 1.3 | 0.000 ± 36.9 | 0.0218 ± 0.0010 | 0.124 ± 0.009 | 0.49 |
+| 1.3 - 1.7 | 0.000 ± 42.8 | 0.0305 ± 0.0014 | 0.159 ± 0.011 | 1.75 |
+| 1.7 - 2.5 | 0.000 ± 31.5 | 0.0272 ± 0.0011 | 0.089 ± 0.008 | 0.65 |
+| 2.5 - 2.8 | 0.221 ± 0.337 | 0.0293 ± 0.0019 | 0.104 ± 0.010 | 0.09 |
 
 L'errore su $r_0$ è enorme rispetto a un floor più stretto (era ±0.001-0.006
 al floor 0%, poi ±3-6 al 2%): non è un peggioramento, è che quella
@@ -165,10 +177,10 @@ lasciarlo libero:
 |---|---|---|---|
 | 0.0 - 0.1 | 0.0181 ± 0.0011 | 0.2236 ± 0.0116 | 0.51 |
 | 0.1 - 1.05 | 0.0201 ± 0.0010 | 0.1257 ± 0.0082 | 1.35 |
-| 1.05 - 1.3 | 0.0219 ± 0.0010 | 0.1239 ± 0.0085 | 0.45 |
-| 1.3 - 1.7 | 0.0305 ± 0.0014 | 0.1606 ± 0.0113 | 1.47 |
-| 1.7 - 2.5 | 0.0272 ± 0.0011 | 0.0892 ± 0.0083 | 0.56 |
-| 2.5 - 2.8 | 0.0297 ± 0.0012 | 0.1030 ± 0.0095 | 0.09 |
+| 1.05 - 1.3 | 0.0218 ± 0.0010 | 0.1244 ± 0.0085 | 0.43 |
+| 1.3 - 1.7 | 0.0305 ± 0.0014 | 0.1592 ± 0.0113 | 1.53 |
+| 1.7 - 2.5 | 0.0272 ± 0.0011 | 0.0886 ± 0.0083 | 0.57 |
+| 2.5 - 2.8 | 0.0297 ± 0.0013 | 0.1029 ± 0.0095 | 0.09 |
 
 $r_1$ e $r_2$ sono praticamente identici al fit con $r_0$ libero (tabella
 sopra), e anche $\chi^2$/ndf resta vicino. Coerente con quanto già detto:
@@ -183,12 +195,12 @@ $\sigma$ dal fit gaussiano (stesso range) e fit esteso fino a 2 TeV.
 
 | $\|\eta\|$ | $r_2$ | stat | syst | syst % |
 |---|---|---|---|---|
-| 0.0 - 0.1 | 0.2236 | 0.0116 | 0.0639 | 29% |
-| 0.1 - 1.05 | 0.1257 | 0.0082 | 0.0271 | 22% |
-| 1.05 - 1.3 | 0.1239 | 0.0085 | 0.0284 | 23% |
-| 1.3 - 1.7 | 0.1606 | 0.0113 | 0.0515 | 32% |
-| 1.7 - 2.5 | 0.0893 | 0.0083 | 0.0244 | 27% |
-| 2.5 - 2.8 | 0.1041 | 0.0100 | 0.0180 | 17% |
+| 0.0 - 0.1 | 0.2236 | 0.0116 | 0.0646 | 29% |
+| 0.1 - 1.05 | 0.1257 | 0.0082 | 0.0286 | 23% |
+| 1.05 - 1.3 | 0.1244 | 0.0085 | 0.0291 | 23% |
+| 1.3 - 1.7 | 0.1592 | 0.0113 | 0.0497 | 31% |
+| 1.7 - 2.5 | 0.0886 | 0.0083 | 0.0234 | 26% |
+| 2.5 - 2.8 | 0.1040 | 0.0100 | 0.0160 | 15% |
 
 Sistematica scesa dal 40-60% (floor più stretto) al 17-32%: ancora non
 piccola (la formula resta un'approssimazione), ma non più "il parametro non
@@ -199,7 +211,7 @@ $\sigma_{68}/\sqrt{2N}$, è sub-permille e non è informativa da sola).
 ### $r_0$: compatibile con zero ovunque
 
 Incluso il bin 2.5-2.8, dove con un floor troppo stretto (2%) sembrava
-significativo: $r_0 = 0.223 \pm 0.067$ lì, ora $0.223 \pm 0.334$ col floor
+significativo: $r_0 = 0.223 \pm 0.067$ lì, ora $0.221 \pm 0.337$ col floor
 onesto al 10% — stessa stima centrale, ma la significatività era un
 artefatto di errori troppo piccoli, non un segnale vero. Coerente con
 l'assunzione $r_0 = 0$: il termine di perdita di energia nel materiale conta

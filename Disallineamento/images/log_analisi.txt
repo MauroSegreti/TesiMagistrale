@@ -1,5 +1,5 @@
-# generato il 2026-08-10 20:34:55
-# comando: analyze.py /eos/user/m/masegret/risoluzione_misaligned_out
+# generato il 2026-09-13 13:00:26
+# comando: analyze.py /eos/user/m/masegret/risoluzione_misaligned_out merged_res.root
 
 [INFO] 30 file da unire
 === Entries per bin pT x eta ===

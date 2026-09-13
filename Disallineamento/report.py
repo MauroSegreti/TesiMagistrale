@@ -13,9 +13,9 @@ _bad_fit_color = ROOT.TColor.GetColor(_BAD_FIT_HEX)
 _r2_color = ROOT.TColor.GetColor(_R2_HEX)
 
 _COL_EDGES = [0.03, 0.24, 0.37, 0.50, 0.66, 0.80, 0.97]
-_COL_LABELS = ["|#eta| bin", "N points", "r_{0} free [GeV]",
+_COL_LABELS = ["|#eta| bin", "N points",
                "#chi^{2}/ndf (r_{0} free)", "#chi^{2}/ndf (r_{0} = 0)",
-               "r_{2} [GeV^{-1}]"]
+               "r_{1} (r_{0} = 0)", "r_{2} (r_{0} = 0) [GeV^{-1}]"]
 
 _CHI2_NDF_WARN = 3.0
 
@@ -37,7 +37,7 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
     title.SetTextSize(0.042)
     title.SetTextAlign(22)
     title.DrawLatex(0.5, 0.94,
-                    "p_{T} resolution fit vs |#eta^{truth}|: r_{0} free vs r_{0} = 0")
+                    "p_{T} resolution fit vs |#eta^{truth}|: r_{1}, r_{2} with r_{0} = 0 fixed")
 
     subtitle = ROOT.TLatex()
     subtitle.SetTextFont(42)
@@ -102,17 +102,18 @@ def build_table_pdf(graphs, filename="table_res_vs_pt.pdf"):
 
         body_lat.DrawLatex(_COL_EDGES[0] + 0.008, y_mid, g["eta"]["label"])
         body_lat.DrawLatex(_COL_EDGES[1] + 0.008, y_mid, f"{g['n_points']}")
-        body_lat.DrawLatex(_COL_EDGES[2] + 0.008, y_mid,
-                           f"{f_free.GetParameter(0):.3f} #pm {f_free.GetParError(0):.3f}")
 
         lat_free = warn_lat if chi2ndf_free > _CHI2_NDF_WARN else body_lat
-        lat_free.DrawLatex(_COL_EDGES[3] + 0.008, y_mid, f"{chi2ndf_free:.2f}")
+        lat_free.DrawLatex(_COL_EDGES[2] + 0.008, y_mid, f"{chi2ndf_free:.2f}")
 
         lat_fix0 = warn_lat if chi2ndf_fix0 > _CHI2_NDF_WARN else body_lat
-        lat_fix0.DrawLatex(_COL_EDGES[4] + 0.008, y_mid, f"{chi2ndf_fix0:.2f}")
+        lat_fix0.DrawLatex(_COL_EDGES[3] + 0.008, y_mid, f"{chi2ndf_fix0:.2f}")
+
+        body_lat.DrawLatex(_COL_EDGES[4] + 0.008, y_mid,
+                           f"{f_fix0.GetParameter(1):.4f} #pm {f_fix0.GetParError(1):.4f}")
 
         r2_lat.DrawLatex(_COL_EDGES[5] + 0.008, y_mid,
-                         f"{f_free.GetParameter(2)*1000:.3f} #pm {f_free.GetParError(2)*1000:.3f}  (#times10^{{-3}})")
+                         f"{f_fix0.GetParameter(2)*1000:.3f} #pm {f_fix0.GetParError(2)*1000:.3f}  (#times10^{{-3}})")
 
         y -= row_h
 

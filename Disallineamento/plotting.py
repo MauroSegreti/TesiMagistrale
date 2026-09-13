@@ -43,7 +43,6 @@ def draw_resolution_vs_pt(graphs, filename="plot_res_vs_pt",
         p.SetRightMargin(0.28)
         p.SetLeftMargin(0.11)
         p.SetLogx()
-        p.SetGrid()
     pad1.SetBottomMargin(0.02)
     pad1.SetTopMargin(0.10)
     pad1.SetLogy()
@@ -150,7 +149,6 @@ def draw_estimator_comparison(graphs_q68, graphs_gaus,
     c = ROOT.TCanvas(f"c_{filename}", "q68 vs gaus", 1150, 750)
     c.SetLogx()
     c.SetLogy()
-    c.SetGrid()
     c.SetRightMargin(0.28)
     c.SetLeftMargin(0.11)
 

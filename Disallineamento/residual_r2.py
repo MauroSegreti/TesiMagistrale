@@ -65,7 +65,8 @@ def _r2_with_syst(histos, pt_sums, pt_counts, label):
     def r2_of(graphs, e_i):
         for g in graphs:
             if g["eta_index"] == e_i:
-                return g["fit"].GetParameter(2) * 1e3, g["fit"].GetParError(2) * 1e3
+                f = g["fit_fixed0"]
+                return f.GetParameter(2) * 1e3, f.GetParError(2) * 1e3
         return None, None
 
     out = {}
