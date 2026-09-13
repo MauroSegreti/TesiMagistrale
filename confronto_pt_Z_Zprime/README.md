@@ -39,10 +39,9 @@ piena.
 di massa Z' prodotti (500/1000/3000/5000/8000 GeV, DSID 801862-801866).
 Inizialmente solo i primi tre erano scaricati in locale:
 - il punto **5000 GeV** risultava esplicitamente **escluso dall'analisi** nel
-  README top-level (cartella dedicata `samples_esclusi/`, motivo non
-  documentato);
+  README top-level (cartella dedicata `samples_esclusi/`, inizialmente non me lo faceva scarica);
 - il punto **8000 GeV** non era mai stato scaricato (solo il `.txt` con l'URL
-  XRootD).
+  XRootD, stesso motivo).
 
 Un tentativo di lettura diretta via XRootD (`root://grid-dc.t2.mpcdf.mpg.de:
 1094//...`, senza scaricare) e' rimasto bloccato — porta 1094 non
