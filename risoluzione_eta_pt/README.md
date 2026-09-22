@@ -34,7 +34,7 @@ nella regione di transizione, e risalita netta oltre $|\eta| = 2.5$.
 
 ## Come giro
 
-Stesso schema dell'analisi in $p_T$: 30 job HTCondor in parallelo, uno per file
+Stesso schema dell'analisi in $p_T$: 68 job HTCondor in parallelo, uno per file
 di input. Circa 4 minuti a job.
 
 Setup dell'ambiente, per accedere ai dataset con rucio:

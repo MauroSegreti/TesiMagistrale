@@ -1,0 +1,17 @@
+executable = $(name)
+
+output = logs_zzdisall/$Fnx(name).out
+error  = logs_zzdisall/$Fnx(name).err
+log    = logs_zzdisall/$Fnx(name).log
+
+notification = error
+notify_user  = masegret@cern.ch
+
++JobBatchName = "risoluzione_zzdisall"
++JobFlavour = "espresso"
+getenv = True
+
+# Proxy VOMS trasferito ai nodi: serve per leggere i file remoti via XRootD.
+x509userproxy = /afs/cern.ch/user/m/masegret/.globus_proxy/x509up_disaligned
+
+queue name matching files (jobs_zzdisall/do_*.sh)

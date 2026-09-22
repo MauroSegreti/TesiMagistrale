@@ -66,19 +66,20 @@ def main(outdir, merged=MERGED):
         print(f"[WARN] {n_expected - len(files)} job senza output "
               f"(su {n_expected} attesi) -- si procede con quelli disponibili")
 
+    histograms.check_binning(files, pt_bins=PT_BINS_EXT)
     subprocess.run(["hadd", "-f", merged] + files, check=True)
 
     histos = load_grid(merged)
 
     graphs, results = plotting.build_rms_graphs(histos)
-    plotting.draw_rms_vs_eta(graphs)
+    plotting.draw_rms_vs_eta(graphs, ylabel="RMS")
     plotting.draw_eta_overlay(histos)
     report.build_table_pdf(results)
 
     f = ROOT.TFile.Open(merged)
     for eta in ETA_BINS:
         points = pt_eta.load_points(f, eta)
-        pt_eta.draw(points, eta)
+        pt_eta.draw(points, eta, logx=True, ylabel="RMS")
     f.Close()
 
     totale = sum(r["entries"] for r in results)

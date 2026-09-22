@@ -1,4 +1,4 @@
-Running on host b9g03p5498.cern.ch
+Running on host b9p29p9073.cern.ch
 Input file: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/7a/1f/user.lucam.50435891._000023.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
@@ -25,33 +25,18 @@ Input file: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio
 [7mqueryC              [0m find / whatis container query
 [7mshowVersions        [0m show versions of installed software
 
-[1m[4m30 Nov 2023[0m 
-
-A serious security issue in ROOT's web-based GUI has been identified:
-
-  You should not use the web-based browser until further notice and instead 
-  set the old-style TBrowser as the default. Please see the Twiki page linked 
-  below for instructions on how to do this.
-
-  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
-
-  More details of this issue:
-  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
-
-  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
-
-
-[1m[4m17 Mar 2026[0m
-
-SSL_CERT_DIR is no longer defined by asetup, python or emi.
-If you see SSL issues, read https://cern.ch/fudpr
-or run in a container depending on which OS needed:
-   setupATLAS -c el9 or setupATLAS -c centos7
-
-
-"amsg seen" to mark as seen to suppress above messages
-
-
+Warning: atlas /cvmfs/atlas.cern.ch/repo may be stale
+  2026Sep14 11:15 | lxcvmfs169.cern.ch | 1789377340
+Warning: atlas-condb /cvmfs/atlas-condb.cern.ch/repo/conditions may be stale
+  2026Sep14 06:11 | lxcvmfs132.cern.ch | 1789359083
+Warning: atlas-nightlies /cvmfs/atlas-nightlies.cern.ch/repo may be stale
+  2026Sep13 14:30 | lxcvmfs138.cern.ch | 1789302601
+Warning: sft repo ALRB_cvmfs_sft_repo may be stale
+  2026-09-13 19:43:21 | lxcvmfs145.cern.ch | 1789321401
+Warning: unpacked repo  may be stale
+  2026Sep14 00:17 | lxcvmfs119.cern.ch | 1789337826
+Warning: sft-nightlies repo /cvmfs/sft-nightlies.cern.ch/lcg may be stale
+  2026-09-13 19:55:01 | lxcvmfs173.cern.ch | 1789322101
 ************************************************************************
 Requested:  root ... 
  Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
@@ -67,7 +52,7 @@ Requested:  root ...
    A faster alternative - setup the entire LCG stack with views:
     lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
 ************************************************************************
-X509_USER_PROXY = /pool/condor/dir_2504903/x509up_disaligned
+X509_USER_PROXY = /pool/condor/dir_3427711/x509up_disaligned
 [INFO] Aggiunto file singolo: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/7a/1f/user.lucam.50435891._000023.ANALYSIS.root
 [INFO] Entries totali = 1476395
 
@@ -109,52 +94,52 @@ X509_USER_PROXY = /pool/condor/dir_2504903/x509up_disaligned
 [INFO] 36 istogrammi salvati in output_eta.root
 
 === pT bin 20_30 ===
-  eta 0.0-0.1: entries=17588, RMS=0.0231
-  eta 0.1-1.01: entries=158634, RMS=0.0230
-  eta 1.01-1.3: entries=49365, RMS=0.0277
-  eta 1.3-1.7: entries=65617, RMS=0.0317
-  eta 1.7-2.5: entries=117999, RMS=0.0325
-  eta 2.5-2.8: entries=25302, RMS=0.0449
+  eta 0.0-0.1: entries=17588, RMS=0.0235
+  eta 0.1-1.01: entries=158634, RMS=0.0242
+  eta 1.01-1.3: entries=49365, RMS=0.0296
+  eta 1.3-1.7: entries=65617, RMS=0.0330
+  eta 1.7-2.5: entries=117999, RMS=0.0380
+  eta 2.5-2.8: entries=25302, RMS=0.0670
 
 === pT bin 30_40 ===
-  eta 0.0-0.1: entries=24675, RMS=0.0260
-  eta 0.1-1.01: entries=227228, RMS=0.0245
-  eta 1.01-1.3: entries=71040, RMS=0.0294
-  eta 1.3-1.7: entries=94347, RMS=0.0331
-  eta 1.7-2.5: entries=174984, RMS=0.0335
-  eta 2.5-2.8: entries=39339, RMS=0.0453
+  eta 0.0-0.1: entries=24675, RMS=0.0273
+  eta 0.1-1.01: entries=227228, RMS=0.0261
+  eta 1.01-1.3: entries=71040, RMS=0.0328
+  eta 1.3-1.7: entries=94347, RMS=0.0345
+  eta 1.7-2.5: entries=174984, RMS=0.0393
+  eta 2.5-2.8: entries=39339, RMS=0.0661
 
 === pT bin 40_50 ===
-  eta 0.0-0.1: entries=23881, RMS=0.0283
-  eta 0.1-1.01: entries=215566, RMS=0.0259
-  eta 1.01-1.3: entries=68006, RMS=0.0307
-  eta 1.3-1.7: entries=91112, RMS=0.0346
-  eta 1.7-2.5: entries=170867, RMS=0.0349
-  eta 2.5-2.8: entries=39210, RMS=0.0455
+  eta 0.0-0.1: entries=23881, RMS=0.0307
+  eta 0.1-1.01: entries=215566, RMS=0.0280
+  eta 1.01-1.3: entries=68006, RMS=0.0352
+  eta 1.3-1.7: entries=91112, RMS=0.0361
+  eta 1.7-2.5: entries=170867, RMS=0.0405
+  eta 2.5-2.8: entries=39210, RMS=0.0668
 
 === pT bin 50_80 ===
-  eta 0.0-0.1: entries=10073, RMS=0.0327
-  eta 0.1-1.01: entries=91420, RMS=0.0286
-  eta 1.01-1.3: entries=28296, RMS=0.0330
-  eta 1.3-1.7: entries=36826, RMS=0.0372
-  eta 1.7-2.5: entries=65914, RMS=0.0374
-  eta 2.5-2.8: entries=14003, RMS=0.0476
+  eta 0.0-0.1: entries=10073, RMS=0.0349
+  eta 0.1-1.01: entries=91420, RMS=0.0307
+  eta 1.01-1.3: entries=28296, RMS=0.0382
+  eta 1.3-1.7: entries=36826, RMS=0.0391
+  eta 1.7-2.5: entries=65914, RMS=0.0437
+  eta 2.5-2.8: entries=14003, RMS=0.0708
 
 === pT bin 80_120 ===
-  eta 0.0-0.1: entries=1403, RMS=0.0443
-  eta 0.1-1.01: entries=13067, RMS=0.0352
-  eta 1.01-1.3: entries=3902, RMS=0.0395
-  eta 1.3-1.7: entries=5047, RMS=0.0447
-  eta 1.7-2.5: entries=8819, RMS=0.0439
-  eta 2.5-2.8: entries=1738, RMS=0.0534
+  eta 0.0-0.1: entries=1403, RMS=0.0494
+  eta 0.1-1.01: entries=13067, RMS=0.0371
+  eta 1.01-1.3: entries=3902, RMS=0.0448
+  eta 1.3-1.7: entries=5047, RMS=0.0472
+  eta 1.7-2.5: entries=8819, RMS=0.0525
+  eta 2.5-2.8: entries=1738, RMS=0.0811
 
 === pT bin 120_500 ===
-  eta 0.0-0.1: entries=437, RMS=0.0563
-  eta 0.1-1.01: entries=3802, RMS=0.0445
-  eta 1.01-1.3: entries=1119, RMS=0.0556
-  eta 1.3-1.7: entries=1417, RMS=0.0572
-  eta 1.7-2.5: entries=2314, RMS=0.0546
-  eta 2.5-2.8: entries=350, RMS=0.0711
+  eta 0.0-0.1: entries=437, RMS=0.0732
+  eta 0.1-1.01: entries=3802, RMS=0.0507
+  eta 1.01-1.3: entries=1119, RMS=0.0613
+  eta 1.3-1.7: entries=1417, RMS=0.0664
+  eta 1.7-2.5: entries=2314, RMS=0.0656
+  eta 2.5-2.8: entries=350, RMS=0.0856
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 
 [INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)

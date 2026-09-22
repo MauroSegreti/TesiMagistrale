@@ -16,6 +16,7 @@ import subprocess
 import ROOT
 
 from config import PT_BINS, ETA_BINS
+import histograms
 import plotting
 import report
 import plot_rms_vs_pt_per_eta as pt_eta
@@ -62,6 +63,7 @@ def main(outdir, merged=MERGED):
         print(f"[WARN] {n_expected - len(files)} job senza output "
               f"(su {n_expected} attesi) -- si procede con quelli disponibili")
 
+    histograms.check_binning(files)
     subprocess.run(["hadd", "-f", merged] + files, check=True)
 
     histos = load_grid(merged)

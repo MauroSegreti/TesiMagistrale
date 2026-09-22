@@ -1,5 +1,5 @@
-Running on host b9p22p9817.cern.ch
-Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000042.ANALYSIS.root
+Running on host b9p26p6528.cern.ch
+Input file: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/20/26/user.lucam.50435891._000012.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
 [7m lsetup astyle      [0m  ATLAS style macros
@@ -40,8 +40,9 @@ Requested:  root ...
    A faster alternative - setup the entire LCG stack with views:
     lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
 ************************************************************************
-[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000042.ANALYSIS.root
-[INFO] Entries totali = 4795519
+X509_USER_PROXY = /pool/condor/dir_3094341/x509up_disaligned
+[INFO] Aggiunto file singolo: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/20/26/user.lucam.50435891._000012.ANALYSIS.root
+[INFO] Entries totali = 1476585
 
 [INFO] Inizio loop eventi...
 
@@ -75,74 +76,8 @@ Requested:  root ...
 [INFO] Processati 1350000 eventi
 [INFO] Processati 1400000 eventi
 [INFO] Processati 1450000 eventi
-[INFO] Processati 1500000 eventi
-[INFO] Processati 1550000 eventi
-[INFO] Processati 1600000 eventi
-[INFO] Processati 1650000 eventi
-[INFO] Processati 1700000 eventi
-[INFO] Processati 1750000 eventi
-[INFO] Processati 1800000 eventi
-[INFO] Processati 1850000 eventi
-[INFO] Processati 1900000 eventi
-[INFO] Processati 1950000 eventi
-[INFO] Processati 2000000 eventi
-[INFO] Processati 2050000 eventi
-[INFO] Processati 2100000 eventi
-[INFO] Processati 2150000 eventi
-[INFO] Processati 2200000 eventi
-[INFO] Processati 2250000 eventi
-[INFO] Processati 2300000 eventi
-[INFO] Processati 2350000 eventi
-[INFO] Processati 2400000 eventi
-[INFO] Processati 2450000 eventi
-[INFO] Processati 2500000 eventi
-[INFO] Processati 2550000 eventi
-[INFO] Processati 2600000 eventi
-[INFO] Processati 2650000 eventi
-[INFO] Processati 2700000 eventi
-[INFO] Processati 2750000 eventi
-[INFO] Processati 2800000 eventi
-[INFO] Processati 2850000 eventi
-[INFO] Processati 2900000 eventi
-[INFO] Processati 2950000 eventi
-[INFO] Processati 3000000 eventi
-[INFO] Processati 3050000 eventi
-[INFO] Processati 3100000 eventi
-[INFO] Processati 3150000 eventi
-[INFO] Processati 3200000 eventi
-[INFO] Processati 3250000 eventi
-[INFO] Processati 3300000 eventi
-[INFO] Processati 3350000 eventi
-[INFO] Processati 3400000 eventi
-[INFO] Processati 3450000 eventi
-[INFO] Processati 3500000 eventi
-[INFO] Processati 3550000 eventi
-[INFO] Processati 3600000 eventi
-[INFO] Processati 3650000 eventi
-[INFO] Processati 3700000 eventi
-[INFO] Processati 3750000 eventi
-[INFO] Processati 3800000 eventi
-[INFO] Processati 3850000 eventi
-[INFO] Processati 3900000 eventi
-[INFO] Processati 3950000 eventi
-[INFO] Processati 4000000 eventi
-[INFO] Processati 4050000 eventi
-[INFO] Processati 4100000 eventi
-[INFO] Processati 4150000 eventi
-[INFO] Processati 4200000 eventi
-[INFO] Processati 4250000 eventi
-[INFO] Processati 4300000 eventi
-[INFO] Processati 4350000 eventi
-[INFO] Processati 4400000 eventi
-[INFO] Processati 4450000 eventi
-[INFO] Processati 4500000 eventi
-[INFO] Processati 4550000 eventi
-[INFO] Processati 4600000 eventi
-[INFO] Processati 4650000 eventi
-[INFO] Processati 4700000 eventi
-[INFO] Processati 4750000 eventi
 
-[INFO] Muoni prompt processati = 7802415
-[INFO] Muoni riempiti negli istogrammi (pT 20-3000 GeV) = 6769382
-[INFO] 84 istogrammi salvati in output_eta_ext.root
+[INFO] Muoni prompt processati = 2266313
+[INFO] Muoni riempiti negli istogrammi (pT 20-1750 GeV) = 1964060
+[INFO] 72 istogrammi salvati in output_eta_ext.root
 Exit code: 0

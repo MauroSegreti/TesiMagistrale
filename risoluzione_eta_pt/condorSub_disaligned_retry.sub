@@ -1,0 +1,19 @@
+executable = $(name)
+
+output = logs_disaligned/$Fnx(name).out
+error  = logs_disaligned/$Fnx(name).err
+log    = logs_disaligned/$Fnx(name).log
+
+notification = error
+notify_user  = masegret@cern.ch
+
++JobBatchName = "risoluzione_eta_disaligned"
++JobFlavour = "espresso"
+getenv = True
+
+# Proxy VOMS trasferito ai nodi: serve per leggere i file remoti via XRootD.
+# Va su AFS (non /tmp): lo schedd (bigbird15) e' una macchina diversa da
+# lxplus e non vede /tmp del client, ma vede l'AFS home condivisa.
+x509userproxy = /afs/cern.ch/user/m/masegret/.globus_proxy/x509up_disaligned
+
+queue name matching files (jobs_disaligned/do_6.sh, jobs_disaligned/do_7.sh, jobs_disaligned/do_8.sh, jobs_disaligned/do_22.sh, jobs_disaligned/do_23.sh)

@@ -1,4 +1,4 @@
-Running on host b9p33p5600.cern.ch
+Running on host b9p18p2099.cern.ch
 Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000066.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
@@ -25,6 +25,14 @@ Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190
 [7mqueryC              [0m find / whatis container query
 [7mshowVersions        [0m show versions of installed software
 
+Warning: atlas /cvmfs/atlas.cern.ch/repo may be stale
+  2026Sep14 11:15 | lxcvmfs169.cern.ch | 1789377340
+Warning: atlas-condb /cvmfs/atlas-condb.cern.ch/repo/conditions may be stale
+  2026Sep14 12:11 | lxcvmfs132.cern.ch | 1789380673
+Warning: sft repo ALRB_cvmfs_sft_repo may be stale
+  2026-09-14 11:43:49 | lxcvmfs145.cern.ch | 1789379029
+Warning: unpacked repo  may be stale
+  2026Sep14 00:17 | lxcvmfs119.cern.ch | 1789337826
 ************************************************************************
 Requested:  root ... 
  Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 

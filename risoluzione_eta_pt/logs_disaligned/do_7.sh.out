@@ -1,4 +1,4 @@
-Running on host b9p30p5243.cern.ch
+Running on host b9p06p3480.cern.ch
 Input file: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/6e/52/user.lucam.50435891._000008.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
@@ -25,33 +25,6 @@ Input file: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio
 [7mqueryC              [0m find / whatis container query
 [7mshowVersions        [0m show versions of installed software
 
-[1m[4m30 Nov 2023[0m 
-
-A serious security issue in ROOT's web-based GUI has been identified:
-
-  You should not use the web-based browser until further notice and instead 
-  set the old-style TBrowser as the default. Please see the Twiki page linked 
-  below for instructions on how to do this.
-
-  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
-
-  More details of this issue:
-  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
-
-  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
-
-
-[1m[4m17 Mar 2026[0m
-
-SSL_CERT_DIR is no longer defined by asetup, python or emi.
-If you see SSL issues, read https://cern.ch/fudpr
-or run in a container depending on which OS needed:
-   setupATLAS -c el9 or setupATLAS -c centos7
-
-
-"amsg seen" to mark as seen to suppress above messages
-
-
 ************************************************************************
 Requested:  root ... 
  Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
@@ -67,7 +40,7 @@ Requested:  root ...
    A faster alternative - setup the entire LCG stack with views:
     lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
 ************************************************************************
-X509_USER_PROXY = /pool/condor/dir_708966/x509up_disaligned
+X509_USER_PROXY = /pool/condor/dir_3451432/x509up_disaligned
 [INFO] Aggiunto file singolo: root://grid-dc.t2.mpcdf.mpg.de:1094//atlasgroupdisk/perf-muons/rucio/user/lucam/6e/52/user.lucam.50435891._000008.ANALYSIS.root
 [INFO] Entries totali = 1476630
 
@@ -109,52 +82,52 @@ X509_USER_PROXY = /pool/condor/dir_708966/x509up_disaligned
 [INFO] 36 istogrammi salvati in output_eta.root
 
 === pT bin 20_30 ===
-  eta 0.0-0.1: entries=17266, RMS=0.0231
-  eta 0.1-1.01: entries=157325, RMS=0.0229
-  eta 1.01-1.3: entries=49628, RMS=0.0277
-  eta 1.3-1.7: entries=65251, RMS=0.0318
-  eta 1.7-2.5: entries=117334, RMS=0.0323
-  eta 2.5-2.8: entries=25042, RMS=0.0455
+  eta 0.0-0.1: entries=17266, RMS=0.0240
+  eta 0.1-1.01: entries=157325, RMS=0.0240
+  eta 1.01-1.3: entries=49628, RMS=0.0300
+  eta 1.3-1.7: entries=65251, RMS=0.0329
+  eta 1.7-2.5: entries=117334, RMS=0.0373
+  eta 2.5-2.8: entries=25042, RMS=0.0657
 
 === pT bin 30_40 ===
-  eta 0.0-0.1: entries=24901, RMS=0.0263
-  eta 0.1-1.01: entries=226440, RMS=0.0244
-  eta 1.01-1.3: entries=71624, RMS=0.0295
-  eta 1.3-1.7: entries=95061, RMS=0.0332
-  eta 1.7-2.5: entries=175908, RMS=0.0336
-  eta 2.5-2.8: entries=39493, RMS=0.0453
+  eta 0.0-0.1: entries=24901, RMS=0.0277
+  eta 0.1-1.01: entries=226440, RMS=0.0260
+  eta 1.01-1.3: entries=71624, RMS=0.0329
+  eta 1.3-1.7: entries=95061, RMS=0.0347
+  eta 1.7-2.5: entries=175908, RMS=0.0395
+  eta 2.5-2.8: entries=39493, RMS=0.0673
 
 === pT bin 40_50 ===
-  eta 0.0-0.1: entries=23698, RMS=0.0285
-  eta 0.1-1.01: entries=215702, RMS=0.0260
-  eta 1.01-1.3: entries=68294, RMS=0.0308
-  eta 1.3-1.7: entries=90232, RMS=0.0347
-  eta 1.7-2.5: entries=170564, RMS=0.0349
-  eta 2.5-2.8: entries=39172, RMS=0.0452
+  eta 0.0-0.1: entries=23698, RMS=0.0304
+  eta 0.1-1.01: entries=215702, RMS=0.0279
+  eta 1.01-1.3: entries=68294, RMS=0.0350
+  eta 1.3-1.7: entries=90232, RMS=0.0366
+  eta 1.7-2.5: entries=170564, RMS=0.0410
+  eta 2.5-2.8: entries=39172, RMS=0.0663
 
 === pT bin 50_80 ===
-  eta 0.0-0.1: entries=10164, RMS=0.0335
-  eta 0.1-1.01: entries=91300, RMS=0.0284
-  eta 1.01-1.3: entries=28218, RMS=0.0332
-  eta 1.3-1.7: entries=36570, RMS=0.0373
-  eta 1.7-2.5: entries=65945, RMS=0.0370
-  eta 2.5-2.8: entries=14299, RMS=0.0471
+  eta 0.0-0.1: entries=10164, RMS=0.0366
+  eta 0.1-1.01: entries=91300, RMS=0.0307
+  eta 1.01-1.3: entries=28218, RMS=0.0379
+  eta 1.3-1.7: entries=36570, RMS=0.0389
+  eta 1.7-2.5: entries=65945, RMS=0.0442
+  eta 2.5-2.8: entries=14299, RMS=0.0677
 
 === pT bin 80_120 ===
-  eta 0.0-0.1: entries=1490, RMS=0.0430
-  eta 0.1-1.01: entries=13084, RMS=0.0347
-  eta 1.01-1.3: entries=3901, RMS=0.0404
-  eta 1.3-1.7: entries=5118, RMS=0.0458
-  eta 1.7-2.5: entries=8579, RMS=0.0438
-  eta 2.5-2.8: entries=1643, RMS=0.0521
+  eta 0.0-0.1: entries=1490, RMS=0.0465
+  eta 0.1-1.01: entries=13084, RMS=0.0390
+  eta 1.01-1.3: entries=3901, RMS=0.0459
+  eta 1.3-1.7: entries=5118, RMS=0.0487
+  eta 1.7-2.5: entries=8579, RMS=0.0527
+  eta 2.5-2.8: entries=1643, RMS=0.0709
 
 === pT bin 120_500 ===
-  eta 0.0-0.1: entries=423, RMS=0.0573
-  eta 0.1-1.01: entries=3801, RMS=0.0438
-  eta 1.01-1.3: entries=1147, RMS=0.0551
-  eta 1.3-1.7: entries=1454, RMS=0.0574
-  eta 1.7-2.5: entries=2261, RMS=0.0555
-  eta 2.5-2.8: entries=390, RMS=0.0636
+  eta 0.0-0.1: entries=423, RMS=0.0737
+  eta 0.1-1.01: entries=3801, RMS=0.0471
+  eta 1.01-1.3: entries=1147, RMS=0.0616
+  eta 1.3-1.7: entries=1454, RMS=0.0650
+  eta 1.7-2.5: entries=2261, RMS=0.0647
+  eta 2.5-2.8: entries=390, RMS=0.0945
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 
 [INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)

@@ -1,0 +1,14 @@
+executable = $(name)
+
+output = logs_zzall/$Fnx(name).out
+error  = logs_zzall/$Fnx(name).err
+log    = logs_zzall/$Fnx(name).log
+
+notification = error
+notify_user  = masegret@cern.ch
+
++JobBatchName = "risoluzione_zzall"
++JobFlavour = "microcentury"
+getenv = True
+
+queue name matching files (jobs_zzall/do_41.sh)

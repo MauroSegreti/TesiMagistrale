@@ -1,9 +1,10 @@
 """
 Per ciascun bin di |eta| (stessi 6 di RMS_<eta>.pdf), sovrappone in un
-unico canvas i 4 istogrammi del residuo (la variabile di risoluzione,
+unico canvas gli istogrammi del residuo (la variabile di risoluzione,
 res = pT_true/pT_reco - 1, riempita in event_loop.py) per i bin di pT
-dagli 800 GeV in su: 800-1200, 1200-1750, 1750-2500, 2500-3000 GeV --
-gli ultimi 4 punti "in alto" di ciascun RMS_<eta>.pdf.
+dagli 800 GeV in su: 800-1200, 1200-1750 GeV -- gli ultimi punti "in
+alto" di ciascun RMS_<eta>.pdf (il range adesso si ferma a 1750 GeV,
+tolti i due bin oltre).
 
 Ogni istogramma e' normalizzato ad area 1 (come draw_eta_overlay in
 plotting.py) perche' le statistiche calano di ordini di grandezza
@@ -29,8 +30,6 @@ IMAGES_DIR = "ZZallRMS"
 HIGH_PT_BINS = [
     {"name": "800_1200", "min": 800, "max": 1200},
     {"name": "1200_1750", "min": 1200, "max": 1750},
-    {"name": "1750_2500", "min": 1750, "max": 2500},
-    {"name": "2500_3000", "min": 2500, "max": 3000},
 ]
 
 

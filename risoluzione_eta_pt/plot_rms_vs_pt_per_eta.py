@@ -58,7 +58,7 @@ def load_points(f, eta):
     return points
 
 
-def draw(points, eta):
+def draw(points, eta, logx=False, ylabel="p_{T} resolution RMS"):
     os.makedirs(IMAGES_DIR, exist_ok=True)
 
     print(f"\n=== eta bin [{eta['min']}, {eta['max']}) ===")
@@ -70,6 +70,8 @@ def draw(points, eta):
     c = ROOT.TCanvas(cname, cname, 1200, 750)
     # Margine destro allargato per ospitare la legenda fuori dall'area dati
     c.SetRightMargin(0.38)
+    if logx:
+        c.SetLogx(1)
 
     graphs = []
     for i, pt in enumerate(points):
@@ -89,15 +91,25 @@ def draw(points, eta):
 
     all_y = [pt["y"] for pt in points]
     ymin, ymax = min(all_y) * 0.8, max(all_y) * 1.15
-    all_x = [pt["x"] for pt in points]
-    all_ex = [pt["ex"] for pt in points]
-    xmin = min(x - ex for x, ex in zip(all_x, all_ex))
-    xmax = max(x + ex for x, ex in zip(all_x, all_ex))
 
-    frame = c.DrawFrame(xmin - 0.05 * (xmax - xmin), ymin,
-                         xmax + 0.05 * (xmax - xmin), ymax)
+    if logx:
+        # In scala log il margine additivo (xmin - 0.05*range) puo'
+        # arrivare a 0 o sotto: si scala moltiplicativamente, e si usa il
+        # bordo pT_min/pT_max dei bin invece di x-ex (che per il primo
+        # bin, con ex=meta' larghezza, potrebbe finire vicino a 0).
+        frame_xmin = min(pt["pt_min"] for pt in points) * 0.8
+        frame_xmax = max(pt["pt_max"] for pt in points) * 1.4
+    else:
+        all_x = [pt["x"] for pt in points]
+        all_ex = [pt["ex"] for pt in points]
+        xmin = min(x - ex for x, ex in zip(all_x, all_ex))
+        xmax = max(x + ex for x, ex in zip(all_x, all_ex))
+        frame_xmin = xmin - 0.05 * (xmax - xmin)
+        frame_xmax = xmax + 0.05 * (xmax - xmin)
+
+    frame = c.DrawFrame(frame_xmin, ymin, frame_xmax, ymax)
     frame.GetXaxis().SetTitle("p_{T}^{truth} [GeV]")
-    frame.GetYaxis().SetTitle("p_{T} resolution RMS")
+    frame.GetYaxis().SetTitle(ylabel)
 
     for g in graphs:
         g.Draw("P SAME")

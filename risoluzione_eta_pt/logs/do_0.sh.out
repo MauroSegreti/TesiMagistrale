@@ -1,4 +1,4 @@
-Running on host b9p29p9581.cern.ch
+Running on host b9p26p6528.cern.ch
 Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000001.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
@@ -83,52 +83,52 @@ Requested:  root ...
 [INFO] 36 istogrammi salvati in output_eta.root
 
 === pT bin 20_30 ===
-  eta 0.0-0.1: entries=18360, RMS=0.0212
-  eta 0.1-1.01: entries=184115, RMS=0.0215
-  eta 1.01-1.3: entries=56882, RMS=0.0256
-  eta 1.3-1.7: entries=76242, RMS=0.0305
-  eta 1.7-2.5: entries=137123, RMS=0.0305
-  eta 2.5-2.8: entries=19949, RMS=0.0411
+  eta 0.0-0.1: entries=18360, RMS=0.0220
+  eta 0.1-1.01: entries=184115, RMS=0.0224
+  eta 1.01-1.3: entries=56882, RMS=0.0268
+  eta 1.3-1.7: entries=76242, RMS=0.0318
+  eta 1.7-2.5: entries=137123, RMS=0.0364
+  eta 2.5-2.8: entries=19949, RMS=0.0594
 
 === pT bin 30_40 ===
-  eta 0.0-0.1: entries=28525, RMS=0.0238
-  eta 0.1-1.01: entries=265618, RMS=0.0229
-  eta 1.01-1.3: entries=82025, RMS=0.0258
-  eta 1.3-1.7: entries=109925, RMS=0.0319
-  eta 1.7-2.5: entries=203885, RMS=0.0314
-  eta 2.5-2.8: entries=28666, RMS=0.0398
+  eta 0.0-0.1: entries=28525, RMS=0.0253
+  eta 0.1-1.01: entries=265618, RMS=0.0246
+  eta 1.01-1.3: entries=82025, RMS=0.0282
+  eta 1.3-1.7: entries=109925, RMS=0.0333
+  eta 1.7-2.5: entries=203885, RMS=0.0372
+  eta 2.5-2.8: entries=28666, RMS=0.0574
 
 === pT bin 40_50 ===
-  eta 0.0-0.1: entries=27058, RMS=0.0259
-  eta 0.1-1.01: entries=253872, RMS=0.0240
-  eta 1.01-1.3: entries=78550, RMS=0.0266
-  eta 1.3-1.7: entries=105795, RMS=0.0332
-  eta 1.7-2.5: entries=198926, RMS=0.0320
-  eta 2.5-2.8: entries=26404, RMS=0.0385
+  eta 0.0-0.1: entries=27058, RMS=0.0276
+  eta 0.1-1.01: entries=253872, RMS=0.0262
+  eta 1.01-1.3: entries=78550, RMS=0.0291
+  eta 1.3-1.7: entries=105795, RMS=0.0349
+  eta 1.7-2.5: entries=198926, RMS=0.0384
+  eta 2.5-2.8: entries=26404, RMS=0.0552
 
 === pT bin 50_80 ===
-  eta 0.0-0.1: entries=11600, RMS=0.0297
-  eta 0.1-1.01: entries=106629, RMS=0.0259
-  eta 1.01-1.3: entries=32631, RMS=0.0281
-  eta 1.3-1.7: entries=42911, RMS=0.0357
-  eta 1.7-2.5: entries=76479, RMS=0.0332
-  eta 2.5-2.8: entries=9802, RMS=0.0386
+  eta 0.0-0.1: entries=11600, RMS=0.0311
+  eta 0.1-1.01: entries=106629, RMS=0.0284
+  eta 1.01-1.3: entries=32631, RMS=0.0313
+  eta 1.3-1.7: entries=42911, RMS=0.0372
+  eta 1.7-2.5: entries=76479, RMS=0.0396
+  eta 2.5-2.8: entries=9802, RMS=0.0547
 
 === pT bin 80_120 ===
-  eta 0.0-0.1: entries=1702, RMS=0.0382
-  eta 0.1-1.01: entries=15241, RMS=0.0306
-  eta 1.01-1.3: entries=4534, RMS=0.0309
-  eta 1.3-1.7: entries=5972, RMS=0.0421
-  eta 1.7-2.5: entries=10178, RMS=0.0361
-  eta 2.5-2.8: entries=1191, RMS=0.0397
+  eta 0.0-0.1: entries=1702, RMS=0.0434
+  eta 0.1-1.01: entries=15241, RMS=0.0337
+  eta 1.01-1.3: entries=4534, RMS=0.0368
+  eta 1.3-1.7: entries=5972, RMS=0.0445
+  eta 1.7-2.5: entries=10178, RMS=0.0439
+  eta 2.5-2.8: entries=1191, RMS=0.0609
 
 === pT bin 120_500 ===
-  eta 0.0-0.1: entries=507, RMS=0.0508
-  eta 0.1-1.01: entries=4401, RMS=0.0382
-  eta 1.01-1.3: entries=1357, RMS=0.0401
-  eta 1.3-1.7: entries=1713, RMS=0.0518
-  eta 1.7-2.5: entries=2620, RMS=0.0387
-  eta 2.5-2.8: entries=263, RMS=0.0404
+  eta 0.0-0.1: entries=507, RMS=0.0627
+  eta 0.1-1.01: entries=4401, RMS=0.0436
+  eta 1.01-1.3: entries=1357, RMS=0.0464
+  eta 1.3-1.7: entries=1713, RMS=0.0595
+  eta 1.7-2.5: entries=2620, RMS=0.0498
+  eta 2.5-2.8: entries=263, RMS=0.0678
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 
 [INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)

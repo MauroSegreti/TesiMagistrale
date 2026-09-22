@@ -102,7 +102,7 @@ def draw_eta_overlay(histos):
     return c, clones
 
 
-def draw_rms_vs_eta(graphs):
+def draw_rms_vs_eta(graphs, ylabel="p_{T} resolution RMS"):
     os.makedirs(IMAGES_DIR, exist_ok=True)
 
     c = ROOT.TCanvas("c_rms_vs_eta", "RMS vs eta", 1100, 700)
@@ -124,7 +124,7 @@ def draw_rms_vs_eta(graphs):
     for i, (p, g) in enumerate(zip(PT_BINS, graphs)):
         g.SetTitle("")
         g.GetXaxis().SetTitle("|#eta^{truth}|")
-        g.GetYaxis().SetTitle("p_{T} resolution RMS")
+        g.GetYaxis().SetTitle(ylabel)
         if i == 0:
             g.Draw("AP")
             g.GetYaxis().SetRangeUser(ymin, ymax)

@@ -17,6 +17,7 @@ import subprocess
 import ROOT
 
 from config import PT_BINS, ETA_BINS
+import histograms
 from plotting import build_rms_graphs, draw_rms_vs_eta, draw_eta_overlay
 from report import build_table_pdf
 import style
@@ -51,6 +52,7 @@ def main(outdir, merged="merged_eta.root"):
         raise RuntimeError(f"Nessun output trovato in {outdir}")
     print(f"[INFO] {len(files)} file da unire")
 
+    histograms.check_binning(files)
     subprocess.run(["hadd", "-f", merged] + files, check=True)
 
     histos = load_grid(merged)
