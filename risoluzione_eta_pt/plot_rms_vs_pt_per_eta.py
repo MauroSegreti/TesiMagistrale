@@ -103,12 +103,19 @@ def draw(points, eta):
         g.Draw("P SAME")
 
     # --- Legenda fuori dall'area dati, nel margine destro ---
-    leg = ROOT.TLegend(0.65, 0.16, 0.985, 0.88)
+    # Riquadro e dimensione del testo scalati sul numero di bin di pT: con
+    # solo 6 bin (Z) il riquadro 0.16-0.88 bastava, ma con piu' bin (es. i
+    # 14 fino a 3 TeV di Z+Z') le voci (due righe ciascuna, via
+    # #splitline) iniziano a sovrapporsi se non si allarga il riquadro e
+    # non si rimpicciolisce il testo di conseguenza.
+    n_entries = len(points) + 1  # +1 per la riga della formula sigma_pT
+    leg_y0, leg_y1 = 0.04, 0.94
+    leg = ROOT.TLegend(0.65, leg_y0, 0.985, leg_y1)
     leg.SetBorderSize(1)
     leg.SetFillColor(ROOT.kWhite)
     leg.SetFillStyle(1001)
     leg.SetTextFont(42)
-    leg.SetTextSize(0.022)
+    leg.SetTextSize(min(0.022, 0.30 * (leg_y1 - leg_y0) / n_entries))
     leg.SetHeader(f"|#eta^{{truth}}| #in [{eta['min']:.2f}, {eta['max']:.2f})", "C")
 
     for pt, g in zip(points, graphs):
