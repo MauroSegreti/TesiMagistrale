@@ -1,5 +1,5 @@
-Running on host b9p26p7183.cern.ch
-Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000068.ANALYSIS.root
+Running on host b9p29p9581.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000024.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
 [7m lsetup astyle      [0m  ATLAS style macros
@@ -25,33 +25,6 @@ Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190
 [7mqueryC              [0m find / whatis container query
 [7mshowVersions        [0m show versions of installed software
 
-[1m[4m30 Nov 2023[0m 
-
-A serious security issue in ROOT's web-based GUI has been identified:
-
-  You should not use the web-based browser until further notice and instead 
-  set the old-style TBrowser as the default. Please see the Twiki page linked 
-  below for instructions on how to do this.
-
-  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
-
-  More details of this issue:
-  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
-
-  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
-
-
-[1m[4m17 Mar 2026[0m
-
-SSL_CERT_DIR is no longer defined by asetup, python or emi.
-If you see SSL issues, read https://cern.ch/fudpr
-or run in a container depending on which OS needed:
-   setupATLAS -c el9 or setupATLAS -c centos7
-
-
-"amsg seen" to mark as seen to suppress above messages
-
-
 ************************************************************************
 Requested:  root ... 
  Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
@@ -67,8 +40,8 @@ Requested:  root ...
    A faster alternative - setup the entire LCG stack with views:
     lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
 ************************************************************************
-[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000068.ANALYSIS.root
-[INFO] Entries totali = 4871427
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000024.ANALYSIS.root
+[INFO] Entries totali = 1607219
 
 [INFO] Inizio loop eventi...
 
@@ -105,125 +78,61 @@ Requested:  root ...
 [INFO] Processati 1500000 eventi
 [INFO] Processati 1550000 eventi
 [INFO] Processati 1600000 eventi
-[INFO] Processati 1650000 eventi
-[INFO] Processati 1700000 eventi
-[INFO] Processati 1750000 eventi
-[INFO] Processati 1800000 eventi
-[INFO] Processati 1850000 eventi
-[INFO] Processati 1900000 eventi
-[INFO] Processati 1950000 eventi
-[INFO] Processati 2000000 eventi
-[INFO] Processati 2050000 eventi
-[INFO] Processati 2100000 eventi
-[INFO] Processati 2150000 eventi
-[INFO] Processati 2200000 eventi
-[INFO] Processati 2250000 eventi
-[INFO] Processati 2300000 eventi
-[INFO] Processati 2350000 eventi
-[INFO] Processati 2400000 eventi
-[INFO] Processati 2450000 eventi
-[INFO] Processati 2500000 eventi
-[INFO] Processati 2550000 eventi
-[INFO] Processati 2600000 eventi
-[INFO] Processati 2650000 eventi
-[INFO] Processati 2700000 eventi
-[INFO] Processati 2750000 eventi
-[INFO] Processati 2800000 eventi
-[INFO] Processati 2850000 eventi
-[INFO] Processati 2900000 eventi
-[INFO] Processati 2950000 eventi
-[INFO] Processati 3000000 eventi
-[INFO] Processati 3050000 eventi
-[INFO] Processati 3100000 eventi
-[INFO] Processati 3150000 eventi
-[INFO] Processati 3200000 eventi
-[INFO] Processati 3250000 eventi
-[INFO] Processati 3300000 eventi
-[INFO] Processati 3350000 eventi
-[INFO] Processati 3400000 eventi
-[INFO] Processati 3450000 eventi
-[INFO] Processati 3500000 eventi
-[INFO] Processati 3550000 eventi
-[INFO] Processati 3600000 eventi
-[INFO] Processati 3650000 eventi
-[INFO] Processati 3700000 eventi
-[INFO] Processati 3750000 eventi
-[INFO] Processati 3800000 eventi
-[INFO] Processati 3850000 eventi
-[INFO] Processati 3900000 eventi
-[INFO] Processati 3950000 eventi
-[INFO] Processati 4000000 eventi
-[INFO] Processati 4050000 eventi
-[INFO] Processati 4100000 eventi
-[INFO] Processati 4150000 eventi
-[INFO] Processati 4200000 eventi
-[INFO] Processati 4250000 eventi
-[INFO] Processati 4300000 eventi
-[INFO] Processati 4350000 eventi
-[INFO] Processati 4400000 eventi
-[INFO] Processati 4450000 eventi
-[INFO] Processati 4500000 eventi
-[INFO] Processati 4550000 eventi
-[INFO] Processati 4600000 eventi
-[INFO] Processati 4650000 eventi
-[INFO] Processati 4700000 eventi
-[INFO] Processati 4750000 eventi
-[INFO] Processati 4800000 eventi
-[INFO] Processati 4850000 eventi
 
-[INFO] Muoni prompt processati = 7924802
-[INFO] Muoni riempiti negli istogrammi = 6872532
+[INFO] Muoni prompt processati = 2613681
+[INFO] Muoni riempiti negli istogrammi = 2266305
 [INFO] 36 istogrammi salvati in output_eta.root
 
 === pT bin 20_30 ===
-  eta 0.0-0.1: entries=57032, RMS=0.0214
-  eta 0.1-1.01: entries=566904, RMS=0.0215
-  eta 1.01-1.3: entries=176362, RMS=0.0254
-  eta 1.3-1.7: entries=234435, RMS=0.0305
-  eta 1.7-2.5: entries=422408, RMS=0.0303
-  eta 2.5-2.8: entries=61000, RMS=0.0407
+  eta 0.0-0.1: entries=18765, RMS=0.0214
+  eta 0.1-1.01: entries=186867, RMS=0.0216
+  eta 1.01-1.3: entries=58091, RMS=0.0252
+  eta 1.3-1.7: entries=77194, RMS=0.0307
+  eta 1.7-2.5: entries=139932, RMS=0.0303
+  eta 2.5-2.8: entries=20416, RMS=0.0411
 
 === pT bin 30_40 ===
-  eta 0.0-0.1: entries=88164, RMS=0.0237
-  eta 0.1-1.01: entries=815855, RMS=0.0228
-  eta 1.01-1.3: entries=252070, RMS=0.0260
-  eta 1.3-1.7: entries=339007, RMS=0.0317
-  eta 1.7-2.5: entries=628451, RMS=0.0313
-  eta 2.5-2.8: entries=88385, RMS=0.0398
+  eta 0.0-0.1: entries=29115, RMS=0.0238
+  eta 0.1-1.01: entries=269809, RMS=0.0228
+  eta 1.01-1.3: entries=83395, RMS=0.0261
+  eta 1.3-1.7: entries=112051, RMS=0.0319
+  eta 1.7-2.5: entries=207439, RMS=0.0312
+  eta 2.5-2.8: entries=29066, RMS=0.0393
 
 === pT bin 40_50 ===
-  eta 0.0-0.1: entries=84200, RMS=0.0259
-  eta 0.1-1.01: entries=777759, RMS=0.0239
-  eta 1.01-1.3: entries=242429, RMS=0.0266
-  eta 1.3-1.7: entries=326414, RMS=0.0331
-  eta 1.7-2.5: entries=613915, RMS=0.0319
-  eta 2.5-2.8: entries=82325, RMS=0.0385
+  eta 0.0-0.1: entries=27690, RMS=0.0260
+  eta 0.1-1.01: entries=256264, RMS=0.0240
+  eta 1.01-1.3: entries=79574, RMS=0.0265
+  eta 1.3-1.7: entries=107874, RMS=0.0332
+  eta 1.7-2.5: entries=202344, RMS=0.0320
+  eta 2.5-2.8: entries=26957, RMS=0.0387
 
 === pT bin 50_80 ===
-  eta 0.0-0.1: entries=35931, RMS=0.0295
-  eta 0.1-1.01: entries=328605, RMS=0.0260
-  eta 1.01-1.3: entries=100234, RMS=0.0279
-  eta 1.3-1.7: entries=132043, RMS=0.0354
-  eta 1.7-2.5: entries=235562, RMS=0.0333
-  eta 2.5-2.8: entries=30432, RMS=0.0387
+  eta 0.0-0.1: entries=11652, RMS=0.0292
+  eta 0.1-1.01: entries=108363, RMS=0.0257
+  eta 1.01-1.3: entries=32763, RMS=0.0279
+  eta 1.3-1.7: entries=43269, RMS=0.0357
+  eta 1.7-2.5: entries=77196, RMS=0.0336
+  eta 2.5-2.8: entries=9895, RMS=0.0386
 
 === pT bin 80_120 ===
-  eta 0.0-0.1: entries=4980, RMS=0.0379
-  eta 0.1-1.01: entries=47140, RMS=0.0306
-  eta 1.01-1.3: entries=14266, RMS=0.0319
-  eta 1.3-1.7: entries=18171, RMS=0.0416
-  eta 1.7-2.5: entries=30827, RMS=0.0363
-  eta 2.5-2.8: entries=3751, RMS=0.0400
+  eta 0.0-0.1: entries=1718, RMS=0.0400
+  eta 0.1-1.01: entries=15585, RMS=0.0311
+  eta 1.01-1.3: entries=4559, RMS=0.0320
+  eta 1.3-1.7: entries=6039, RMS=0.0412
+  eta 1.7-2.5: entries=10245, RMS=0.0357
+  eta 2.5-2.8: entries=1219, RMS=0.0366
 
 === pT bin 120_500 ===
-  eta 0.0-0.1: entries=1540, RMS=0.0523
-  eta 0.1-1.01: entries=13684, RMS=0.0382
-  eta 1.01-1.3: entries=4197, RMS=0.0390
-  eta 1.3-1.7: entries=5259, RMS=0.0520
-  eta 1.7-2.5: entries=7967, RMS=0.0405
-  eta 2.5-2.8: entries=828, RMS=0.0433
+  eta 0.0-0.1: entries=447, RMS=0.0524
+  eta 0.1-1.01: entries=4424, RMS=0.0391
+  eta 1.01-1.3: entries=1375, RMS=0.0408
+  eta 1.3-1.7: entries=1723, RMS=0.0502
+  eta 1.7-2.5: entries=2710, RMS=0.0407
+  eta 2.5-2.8: entries=280, RMS=0.0456
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 
 [INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)
+[INFO] Plot overlay eta salvato in images/plot_eta_overlay.png (.pdf)
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 Exit code: 0

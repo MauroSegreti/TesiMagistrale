@@ -1,5 +1,5 @@
-Running on host b9p31p0608.cern.ch
-Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000012.ANALYSIS.root
+Running on host b9p29p0113.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000005.ANALYSIS.root
 [7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
 [7m lsetup asetup      [0m  (or asetup) to setup an Athena release
 [7m lsetup astyle      [0m  ATLAS style macros
@@ -25,33 +25,6 @@ Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190
 [7mqueryC              [0m find / whatis container query
 [7mshowVersions        [0m show versions of installed software
 
-[1m[4m30 Nov 2023[0m 
-
-A serious security issue in ROOT's web-based GUI has been identified:
-
-  You should not use the web-based browser until further notice and instead 
-  set the old-style TBrowser as the default. Please see the Twiki page linked 
-  below for instructions on how to do this.
-
-  https://twiki.cern.ch/twiki/bin/view/AtlasComputing/AtlasComputingArchive/RootBrowserSecurityIssue
-
-  More details of this issue:
-  https://root.cern/about/security/#2023-11-26-open-port-for-control-of-web-gui-allows-read-and-write-access-to-file-system
-
-  [0;31mReason for this message: $HOME/.rootrc is missing[0m 
-
-
-[1m[4m17 Mar 2026[0m
-
-SSL_CERT_DIR is no longer defined by asetup, python or emi.
-If you see SSL issues, read https://cern.ch/fudpr
-or run in a container depending on which OS needed:
-   setupATLAS -c el9 or setupATLAS -c centos7
-
-
-"amsg seen" to mark as seen to suppress above messages
-
-
 ************************************************************************
 Requested:  root ... 
  Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
@@ -67,8 +40,8 @@ Requested:  root ...
    A faster alternative - setup the entire LCG stack with views:
     lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
 ************************************************************************
-[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000012.ANALYSIS.root
-[INFO] Entries totali = 1606260
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000005.ANALYSIS.root
+[INFO] Entries totali = 612108
 
 [INFO] Inizio loop eventi...
 
@@ -85,80 +58,61 @@ Requested:  root ...
 [INFO] Processati 500000 eventi
 [INFO] Processati 550000 eventi
 [INFO] Processati 600000 eventi
-[INFO] Processati 650000 eventi
-[INFO] Processati 700000 eventi
-[INFO] Processati 750000 eventi
-[INFO] Processati 800000 eventi
-[INFO] Processati 850000 eventi
-[INFO] Processati 900000 eventi
-[INFO] Processati 950000 eventi
-[INFO] Processati 1000000 eventi
-[INFO] Processati 1050000 eventi
-[INFO] Processati 1100000 eventi
-[INFO] Processati 1150000 eventi
-[INFO] Processati 1200000 eventi
-[INFO] Processati 1250000 eventi
-[INFO] Processati 1300000 eventi
-[INFO] Processati 1350000 eventi
-[INFO] Processati 1400000 eventi
-[INFO] Processati 1450000 eventi
-[INFO] Processati 1500000 eventi
-[INFO] Processati 1550000 eventi
-[INFO] Processati 1600000 eventi
 
-[INFO] Muoni prompt processati = 2613537
-[INFO] Muoni riempiti negli istogrammi = 2267892
+[INFO] Muoni prompt processati = 996165
+[INFO] Muoni riempiti negli istogrammi = 864490
 [INFO] 36 istogrammi salvati in output_eta.root
 
 === pT bin 20_30 ===
-  eta 0.0-0.1: entries=18909, RMS=0.0215
-  eta 0.1-1.01: entries=187489, RMS=0.0216
-  eta 1.01-1.3: entries=58133, RMS=0.0252
-  eta 1.3-1.7: entries=77509, RMS=0.0307
-  eta 1.7-2.5: entries=139629, RMS=0.0303
-  eta 2.5-2.8: entries=20312, RMS=0.0410
+  eta 0.0-0.1: entries=7240, RMS=0.0218
+  eta 0.1-1.01: entries=71068, RMS=0.0217
+  eta 1.01-1.3: entries=22080, RMS=0.0257
+  eta 1.3-1.7: entries=29384, RMS=0.0307
+  eta 1.7-2.5: entries=53084, RMS=0.0303
+  eta 2.5-2.8: entries=7798, RMS=0.0405
 
 === pT bin 30_40 ===
-  eta 0.0-0.1: entries=28883, RMS=0.0240
-  eta 0.1-1.01: entries=268234, RMS=0.0228
-  eta 1.01-1.3: entries=83177, RMS=0.0257
-  eta 1.3-1.7: entries=112347, RMS=0.0320
-  eta 1.7-2.5: entries=207276, RMS=0.0311
-  eta 2.5-2.8: entries=29240, RMS=0.0393
+  eta 0.0-0.1: entries=11129, RMS=0.0234
+  eta 0.1-1.01: entries=103059, RMS=0.0228
+  eta 1.01-1.3: entries=31770, RMS=0.0261
+  eta 1.3-1.7: entries=42479, RMS=0.0317
+  eta 1.7-2.5: entries=79215, RMS=0.0311
+  eta 2.5-2.8: entries=11207, RMS=0.0393
 
 === pT bin 40_50 ===
-  eta 0.0-0.1: entries=27723, RMS=0.0260
-  eta 0.1-1.01: entries=257355, RMS=0.0239
-  eta 1.01-1.3: entries=79942, RMS=0.0267
-  eta 1.3-1.7: entries=107477, RMS=0.0332
-  eta 1.7-2.5: entries=202752, RMS=0.0320
-  eta 2.5-2.8: entries=27433, RMS=0.0387
+  eta 0.0-0.1: entries=10671, RMS=0.0264
+  eta 0.1-1.01: entries=97516, RMS=0.0239
+  eta 1.01-1.3: entries=30438, RMS=0.0264
+  eta 1.3-1.7: entries=41147, RMS=0.0331
+  eta 1.7-2.5: entries=76862, RMS=0.0318
+  eta 2.5-2.8: entries=10163, RMS=0.0387
 
 === pT bin 50_80 ===
-  eta 0.0-0.1: entries=11809, RMS=0.0296
-  eta 0.1-1.01: entries=108659, RMS=0.0260
-  eta 1.01-1.3: entries=33083, RMS=0.0282
-  eta 1.3-1.7: entries=43661, RMS=0.0355
-  eta 1.7-2.5: entries=77126, RMS=0.0335
-  eta 2.5-2.8: entries=9734, RMS=0.0390
+  eta 0.0-0.1: entries=4490, RMS=0.0291
+  eta 0.1-1.01: entries=41526, RMS=0.0260
+  eta 1.01-1.3: entries=12594, RMS=0.0277
+  eta 1.3-1.7: entries=16555, RMS=0.0352
+  eta 1.7-2.5: entries=29806, RMS=0.0336
+  eta 2.5-2.8: entries=3774, RMS=0.0385
 
 === pT bin 80_120 ===
-  eta 0.0-0.1: entries=1605, RMS=0.0381
-  eta 0.1-1.01: entries=15149, RMS=0.0304
-  eta 1.01-1.3: entries=4541, RMS=0.0327
-  eta 1.3-1.7: entries=5930, RMS=0.0413
-  eta 1.7-2.5: entries=10180, RMS=0.0361
-  eta 2.5-2.8: entries=1282, RMS=0.0376
+  eta 0.0-0.1: entries=692, RMS=0.0371
+  eta 0.1-1.01: entries=5987, RMS=0.0305
+  eta 1.01-1.3: entries=1863, RMS=0.0330
+  eta 1.3-1.7: entries=2355, RMS=0.0420
+  eta 1.7-2.5: entries=3859, RMS=0.0357
+  eta 2.5-2.8: entries=445, RMS=0.0382
 
 === pT bin 120_500 ===
-  eta 0.0-0.1: entries=528, RMS=0.0494
-  eta 0.1-1.01: entries=4628, RMS=0.0388
-  eta 1.01-1.3: entries=1310, RMS=0.0375
-  eta 1.3-1.7: entries=1836, RMS=0.0507
-  eta 1.7-2.5: entries=2719, RMS=0.0416
-  eta 2.5-2.8: entries=292, RMS=0.0429
+  eta 0.0-0.1: entries=183, RMS=0.0568
+  eta 0.1-1.01: entries=1739, RMS=0.0390
+  eta 1.01-1.3: entries=542, RMS=0.0389
+  eta 1.3-1.7: entries=674, RMS=0.0492
+  eta 1.7-2.5: entries=997, RMS=0.0401
+  eta 2.5-2.8: entries=99, RMS=0.0440
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 
 [INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)
+[INFO] Plot overlay eta salvato in images/plot_eta_overlay.png (.pdf)
 [INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
 Exit code: 0

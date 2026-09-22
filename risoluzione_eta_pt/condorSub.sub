@@ -8,7 +8,7 @@ notification = error
 notify_user  = masegret@cern.ch
 
 +JobBatchName = "risoluzione_eta"
-+JobFlavour = "workday"
++JobFlavour = "espresso"
 getenv = True
 
 queue name matching files (jobs/do_*.sh)

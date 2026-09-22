@@ -1,0 +1,142 @@
+Running on host b9p29p9581.cern.ch
+Input file: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000075.ANALYSIS.root
+[7mlsetup              [0m lsetup <tool1> [ <tool2> ...] (see lsetup -h):
+[7m lsetup asetup      [0m  (or asetup) to setup an Athena release
+[7m lsetup astyle      [0m  ATLAS style macros
+[7m lsetup atlantis    [0m  Atlantis: event display
+[7m lsetup centralpage [0m  Find samples
+[7m lsetup eiclient    [0m  Event Index 
+[7m lsetup emi         [0m  EMI: grid middleware user interface 
+[7m lsetup lcgenv      [0m  lcgenv: setup tools from cvmfs SFT repository
+[7m lsetup panda       [0m  Panda: Production ANd Distributed Analysis
+[7m lsetup pyami       [0m  pyAMI: ATLAS Metadata Interface python client
+[7m lsetup root        [0m  ROOT data processing framework
+[7m lsetup rucio       [0m  distributed data management system client
+[7m lsetup scikit      [0m  python data analysis ecosystem
+[7m lsetup views       [0m  Set up a full LCG release
+[7m lsetup xcache      [0m  XRootD local proxy cache
+[7m lsetup xrootd      [0m  XRootD data access
+[7madvancedTools       [0m advanced tools menu
+[7mdiagnostics         [0m diagnostic tools menu
+[7mhelpMe              [0m more help
+[7minstallPip          [0m install relocatable pip modules locally
+[7minstallRpm          [0m install relocatable rpms locally
+[7mprintMenu           [0m show this menu
+[7mqueryC              [0m find / whatis container query
+[7mshowVersions        [0m show versions of installed software
+
+************************************************************************
+Requested:  root ... 
+ Setting up [4mroot 6.40.02-x86_64-el9-gcc15-opt[0m ... 
+  ROOT is from lcgenv -p LCG_110_ATLAS_1 x86_64-el9-gcc15-opt ROOT
+>>>>>>>>>>>>>>>>>>>>>>>>> Information for user <<<<<<<<<<<<<<<<<<<<<<<<<
+ root:
+   Tip for _this_ standalone ROOT and grid (ie prun) submission:
+    avoid --athenaTag if you do not need athena
+    use --rootVer=6.40.02 --cmtConfig=x86_64-el9-gcc15-opt
+ root:
+   Note this ROOT from lcgenv sets up a long list of library paths.
+   This may slow down executables; they look at each library path item.
+   A faster alternative - setup the entire LCG stack with views:
+    lsetup "views LCG_110_ATLAS_1 x86_64-el9-gcc15-opt"
+************************************************************************
+[INFO] Aggiunto file singolo: /eos/user/m/masegret/PerfectAlignment/user.lucam.mc23_13p6TeV.601190.PhPy8EG_AZNLO_Zmumu.MCP_TESTNTUP.mc23e_ANALYSIS.root/user.lucam.51077380._000075.ANALYSIS.root
+[INFO] Entries totali = 1836292
+
+[INFO] Inizio loop eventi...
+
+[INFO] Processati 0 eventi
+[INFO] Processati 50000 eventi
+[INFO] Processati 100000 eventi
+[INFO] Processati 150000 eventi
+[INFO] Processati 200000 eventi
+[INFO] Processati 250000 eventi
+[INFO] Processati 300000 eventi
+[INFO] Processati 350000 eventi
+[INFO] Processati 400000 eventi
+[INFO] Processati 450000 eventi
+[INFO] Processati 500000 eventi
+[INFO] Processati 550000 eventi
+[INFO] Processati 600000 eventi
+[INFO] Processati 650000 eventi
+[INFO] Processati 700000 eventi
+[INFO] Processati 750000 eventi
+[INFO] Processati 800000 eventi
+[INFO] Processati 850000 eventi
+[INFO] Processati 900000 eventi
+[INFO] Processati 950000 eventi
+[INFO] Processati 1000000 eventi
+[INFO] Processati 1050000 eventi
+[INFO] Processati 1100000 eventi
+[INFO] Processati 1150000 eventi
+[INFO] Processati 1200000 eventi
+[INFO] Processati 1250000 eventi
+[INFO] Processati 1300000 eventi
+[INFO] Processati 1350000 eventi
+[INFO] Processati 1400000 eventi
+[INFO] Processati 1450000 eventi
+[INFO] Processati 1500000 eventi
+[INFO] Processati 1550000 eventi
+[INFO] Processati 1600000 eventi
+[INFO] Processati 1650000 eventi
+[INFO] Processati 1700000 eventi
+[INFO] Processati 1750000 eventi
+[INFO] Processati 1800000 eventi
+
+[INFO] Muoni prompt processati = 2987330
+[INFO] Muoni riempiti negli istogrammi = 2591447
+[INFO] 36 istogrammi salvati in output_eta.root
+
+=== pT bin 20_30 ===
+  eta 0.0-0.1: entries=21543, RMS=0.0212
+  eta 0.1-1.01: entries=213892, RMS=0.0215
+  eta 1.01-1.3: entries=65713, RMS=0.0253
+  eta 1.3-1.7: entries=88314, RMS=0.0306
+  eta 1.7-2.5: entries=159492, RMS=0.0304
+  eta 2.5-2.8: entries=23227, RMS=0.0406
+
+=== pT bin 30_40 ===
+  eta 0.0-0.1: entries=33114, RMS=0.0241
+  eta 0.1-1.01: entries=307636, RMS=0.0228
+  eta 1.01-1.3: entries=95957, RMS=0.0259
+  eta 1.3-1.7: entries=127699, RMS=0.0319
+  eta 1.7-2.5: entries=236910, RMS=0.0311
+  eta 2.5-2.8: entries=33499, RMS=0.0393
+
+=== pT bin 40_50 ===
+  eta 0.0-0.1: entries=31575, RMS=0.0257
+  eta 0.1-1.01: entries=293881, RMS=0.0240
+  eta 1.01-1.3: entries=90875, RMS=0.0265
+  eta 1.3-1.7: entries=123728, RMS=0.0331
+  eta 1.7-2.5: entries=230832, RMS=0.0319
+  eta 2.5-2.8: entries=30578, RMS=0.0381
+
+=== pT bin 50_80 ===
+  eta 0.0-0.1: entries=13554, RMS=0.0290
+  eta 0.1-1.01: entries=124308, RMS=0.0258
+  eta 1.01-1.3: entries=37752, RMS=0.0278
+  eta 1.3-1.7: entries=49987, RMS=0.0355
+  eta 1.7-2.5: entries=89035, RMS=0.0335
+  eta 2.5-2.8: entries=11324, RMS=0.0385
+
+=== pT bin 80_120 ===
+  eta 0.0-0.1: entries=1939, RMS=0.0387
+  eta 0.1-1.01: entries=17545, RMS=0.0306
+  eta 1.01-1.3: entries=5159, RMS=0.0314
+  eta 1.3-1.7: entries=6818, RMS=0.0425
+  eta 1.7-2.5: entries=11516, RMS=0.0368
+  eta 2.5-2.8: entries=1452, RMS=0.0407
+
+=== pT bin 120_500 ===
+  eta 0.0-0.1: entries=511, RMS=0.0555
+  eta 0.1-1.01: entries=5131, RMS=0.0377
+  eta 1.01-1.3: entries=1545, RMS=0.0378
+  eta 1.3-1.7: entries=2035, RMS=0.0505
+  eta 1.7-2.5: entries=3065, RMS=0.0394
+  eta 2.5-2.8: entries=306, RMS=0.0403
+[INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
+
+[INFO] Plot salvato in images/plot_RMS_vs_eta.png (.pdf)
+[INFO] Plot overlay eta salvato in images/plot_eta_overlay.png (.pdf)
+[INFO] Tabella salvata in images/table_RMS_vs_eta.pdf
+Exit code: 0
